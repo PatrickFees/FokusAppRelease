@@ -1,0 +1,121 @@
+.shared-priority-buttons .priority-button {
+    --priority-color: var(--priority-keine-color);
+    --priority-text-color: var(--priority-keine-text);
+    min-width: 5.5rem;
+    padding: 0.65rem 1.3rem;
+    font-size: 0.9rem;
+    border-radius: var(--radius-pill);
+    border: none;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: var(--priority-color);
+    color: var(--priority-text-color);
+    box-shadow: 0 12px 26px color-mix(in srgb, var(--priority-color) 45%, rgba(15, 23, 42, 0.25));
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.shared-priority-buttons .priority-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px color-mix(in srgb, var(--priority-color) 55%, rgba(15, 23, 42, 0.28));
+}
+
+.shared-priority-buttons .priority-button:not(:disabled):active {
+    transform: translateY(0);
+    filter: brightness(0.96);
+}
+
+.shared-priority-buttons .priority-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+.shared-priority-buttons .priority-button.selected {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px color-mix(in srgb, var(--priority-color) 65%, rgba(15, 23, 42, 0.32));
+}
+
+.shared-priority-buttons .priority-button:not(.selected) {
+    opacity: 0.9;
+}
+
+.shared-priority-buttons .priority-button:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--priority-color) 45%, var(--color-accent) 20%);
+    outline-offset: 2px;
+}
+
+.shared-priority-buttons .priority-keine {
+    --priority-color: var(--priority-keine-color);
+    --priority-text-color: var(--priority-keine-text);
+}
+
+.shared-priority-buttons .priority-wenig {
+    --priority-color: var(--priority-wenig-color);
+    --priority-text-color: var(--priority-wenig-text);
+}
+
+.shared-priority-buttons .priority-mittel {
+    --priority-color: var(--priority-mittel-color);
+    --priority-text-color: var(--priority-mittel-text);
+}
+
+.shared-priority-buttons .priority-hoch {
+    --priority-color: var(--priority-hoch-color);
+    --priority-text-color: var(--priority-hoch-text);
+}
+
+.shared-priority-buttons .priority-dringend {
+    --priority-color: var(--priority-dringend-color);
+    --priority-text-color: var(--priority-dringend-text);
+}
+
+.popup-action-button {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.popup-action-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.popup-action-button:not(:disabled):active {
+    transform: translateY(0);
+    filter: brightness(0.97);
+}
+
+.popup-action-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .popup-action-button {
+        transition: none;
+    }
+
+    .popup-action-button:not(:disabled):hover {
+        transform: none;
+    }
+}
+
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pill-button {
+    border: none;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+}

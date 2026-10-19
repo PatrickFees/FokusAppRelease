@@ -1,0 +1,61 @@
+<div class="form-group time-selector">
+    <label>@Label</label>
+
+    <div class="time-controls">
+        <button type="button"
+                class="popup-action-button pill-button timer-step-button"
+                aria-label="@DecreaseAriaLabel"
+                @onclick="DecreaseAsync">
+            -
+        </button>
+
+        <button type="button"
+                class="time-display"
+                aria-label="@ManualInputAriaLabel"
+                @onclick="OpenManualInputAsync">
+            @Display
+        </button>
+
+        <button type="button"
+                class="popup-action-button pill-button timer-step-button"
+                aria-label="@IncreaseAriaLabel"
+                @onclick="IncreaseAsync">
+            +
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Display { get; set; } = string.Empty;
+
+    [Parameter]
+    public string DecreaseAriaLabel { get; set; } = string.Empty;
+
+    [Parameter]
+    public string IncreaseAriaLabel { get; set; } = string.Empty;
+
+    [Parameter]
+    public string ManualInputAriaLabel { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback OnDecrease { get; set; }
+
+    [Parameter]
+    public EventCallback OnIncrease { get; set; }
+
+    [Parameter]
+    public EventCallback OnManualInput { get; set; }
+
+    private Task DecreaseAsync()
+        => OnDecrease.InvokeAsync();
+
+    private Task IncreaseAsync()
+        => OnIncrease.InvokeAsync();
+
+    private Task OpenManualInputAsync()
+        => OnManualInput.InvokeAsync();
+}

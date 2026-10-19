@@ -1,0 +1,16 @@
+.page[b-wcxgn5qpmj] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-wcxgn5qpmj] {
+    flex: 1;
+}
+
+@media (min-width: 641px) {
+    article[b-wcxgn5qpmj] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}

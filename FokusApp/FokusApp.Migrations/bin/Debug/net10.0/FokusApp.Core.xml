@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FokusApp.Core</name>
+    </assembly>
+    <members>
+        <member name="M:FokusApp.Core.Interfaces.IDataTransferFileService.OpenImportFileAsync(System.String)">
+            <summary>
+            Lets the user pick a file to import. Returns <c>null</c> if the selection was canceled.
+            </summary>
+        </member>
+        <member name="T:FokusApp.Core.Services.Interfaces.IDayChangeService">
+            <summary>
+            Meldet den Wechsel des Kalendertags (z. B. über Mitternacht), damit Ansichten, die auf
+            "heute" stehen, dem Datum folgen können.
+            </summary>
+        </member>
+        <member name="E:FokusApp.Core.Services.Interfaces.IDayChangeService.DayChanged">
+            <summary>Wird ausgelöst, wenn sich das lokale Datum gegenüber dem zuletzt bekannten geändert hat.</summary>
+        </member>
+        <member name="P:FokusApp.Core.Services.Interfaces.IDayChangeService.Today">
+            <summary>Das zuletzt festgestellte lokale Datum (ohne Uhrzeit).</summary>
+        </member>
+        <member name="M:FokusApp.Core.Services.Interfaces.IDayChangeService.CheckNow">
+            <summary>Prüft sofort auf einen Datumswechsel, z. B. beim Zurückkehren in die App.</summary>
+        </member>
+        <member name="T:FokusApp.Core.Services.StartupDataFactory">
+            <summary>
+            Erzeugt die Startdaten der App (Klingeltöne, Einstellung, Beispielaufgaben). Wird beim ersten Start
+            und beim Zurücksetzen auf die Startdaten verwendet.
+            </summary>
+        </member>
+    </members>
+</doc>

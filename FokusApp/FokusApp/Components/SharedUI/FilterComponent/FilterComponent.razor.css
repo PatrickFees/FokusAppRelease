@@ -1,0 +1,93 @@
+.timer-task-inline-filter {
+    border: 1px solid #cbd5f5;
+    border-radius: 1rem;
+    background: var(--color-surface-alt);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+    padding: 0.75rem;
+}
+
+.timer-task-picker-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.timer-task-search {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid #cbd5f5;
+    border-radius: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    box-sizing: border-box;
+}
+
+.timer-task-search:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.timer-task-priority-filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.timer-task-day-filter {
+    width: 100%;
+}
+
+.timer-task-day-filter ::deep .task-day-button {
+    width: 100%;
+}
+
+.timer-task-filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.timer-task-sort-button {
+    align-self: flex-start;
+    border: 2px solid rgba(37, 99, 235, 0.35);
+    background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface-alt));
+    color: var(--color-accent-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.timer-task-sort-button:hover,
+.timer-task-sort-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+    outline: none;
+}
+
+.timer-task-reset-button {
+    align-self: flex-start;
+    border: 2px solid rgba(100, 116, 139, 0.35);
+    background: var(--color-surface-alt);
+    color: #334155;
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.timer-task-reset-button:hover,
+.timer-task-reset-button:focus-visible {
+    transform: translateY(-1px);
+    background: var(--color-surface);
+    box-shadow: 0 10px 20px rgba(100, 116, 139, 0.18);
+    outline: none;
+}

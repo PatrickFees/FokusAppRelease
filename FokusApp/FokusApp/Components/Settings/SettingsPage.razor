@@ -1,0 +1,150 @@
+@page "/einstellungen"
+@page "/settings"
+@inherits ObservableComponentBase
+@inject FokusApp.Components.Settings.ISettingsViewModel ViewModel
+@inject FokusApp.Core.Services.Interfaces.IAppLocalizationService LocalizationService
+@using FokusApp.Core.Enums
+@using FokusApp.Components.PopUps.ConfirmDialog
+
+<PageTitle>@Localizer["Settings"]</PageTitle>
+
+<div class="settings-page">
+    <h1>@Localizer["Settings"]</h1>
+
+    <section class="settings-section">
+        <h2>@Localizer["Language"]</h2>
+        <p class="settings-description">@Localizer["LanguageDescription"]</p>
+        <label class="settings-label" for="languageSelect">@Localizer["Language"]</label>
+        <select id="languageSelect"
+                class="settings-select"
+                value="@LocalizationService.CurrentLanguage"
+                @onchange="OnLanguageSelectionChanged">
+            <option value="@AppLanguage.German">@Localizer["German"]</option>
+            <option value="@AppLanguage.English">@Localizer["English"]</option>
+        </select>
+    </section>
+
+    <section class="settings-section">
+        <h2>@Localizer["RingtoneTitle"]</h2>
+        <p class="settings-description">
+            @Localizer["RingtoneDescription"]
+        </p>
+
+        @if (ViewModel.AvailableRingtones.Count > 0)
+        {
+            <label class="settings-label" for="ringtoneSelect">@Localizer["Ringtone"]</label>
+            <select id="ringtoneSelect"
+                    class="settings-select"
+                    value="@ViewModel.SelectedRingtonePath"
+                    @onchange="OnRingtoneSelectionChanged">
+                @foreach (var ringtone in ViewModel.AvailableRingtones)
+                {
+                    <option value="@ringtone.FilePath">@FormatRingtoneLabel(ringtone.FilePath)</option>
+                }
+            </select>
+
+            @if (SelectedRingtoneLabel is string selectedRingtoneLabel)
+            {
+                <p class="settings-selection">@Localizer["CurrentlySelected", selectedRingtoneLabel]</p>
+            }
+
+            <div class="settings-actions">
+                <button type="button"
+                        class="btn btn-primary settings-preview-button"
+                        @onclick="ViewModel.PlaySelectedRingtoneAsync"
+                        disabled="@string.IsNullOrWhiteSpace(ViewModel.SelectedRingtonePath)">
+                    @Localizer["Play"]
+                </button>
+            </div> 
+        }
+        else
+        {
+            <p class="settings-empty">@Localizer["NoRingtones"]</p>
+        }
+    </section>
+
+    <section class="settings-section">
+        <h2>@Localizer["DataImportExport"]</h2>
+        <p class="settings-description">
+            @Localizer["DataImportExportDescription"]
+        </p>
+
+        <div class="settings-actions settings-transfer-actions">
+            <button type="button"
+                    class="btn btn-primary settings-transfer-button"
+                    @onclick="ViewModel.ExportDataAsync">
+                @Localizer["ExportFile"]
+            </button>
+            <button type="button"
+                    class="btn btn-secondary settings-transfer-button"
+                    @onclick="ViewModel.ImportDataAsync">
+                @Localizer["Import"]
+            </button>
+            <button type="button"
+                    class="btn btn-secondary settings-transfer-button settings-reset-button"
+                    @onclick="ViewModel.RequestResetData">
+                @Localizer["ResetData"]
+            </button>
+        </div>
+
+        <p class="settings-description settings-reset-description">@Localizer["ResetDataDescription"]</p>
+
+        @if (!string.IsNullOrWhiteSpace(ViewModel.DataTransferMessage))
+        {
+            <p class="settings-transfer-message @(ViewModel.IsDataTransferMessageSuccess ? "success" : "error")">
+                @ViewModel.DataTransferMessage
+            </p>
+        }
+    </section>
+
+    <ConfirmDialogPopUp IsOpen="ViewModel.IsImportCanceledPopupOpen"
+                        Title="@Localizer["ImportCanceledTitle"]"
+                        Message="@Localizer["ImportCanceledMessage"]"
+                        ConfirmText="@Localizer["Ok"]"
+                        OnConfirm="ViewModel.CloseImportCanceledPopup" />
+
+    <ConfirmDialogPopUp IsOpen="ViewModel.IsResetConfirmationOpen"
+                        Title="@Localizer["ResetConfirmTitle"]"
+                        Message="@Localizer["ResetConfirmMessage"]"
+                        ConfirmText="@Localizer["ResetConfirmAction"]"
+                        CancelText="@Localizer["Cancel"]"
+                        IsDestructive="true"
+                        OnConfirm="ViewModel.ConfirmResetDataAsync"
+                        OnCancel="ViewModel.CancelResetData" />
+</div>
+
+@code {
+    private string? SelectedRingtoneLabel => string.IsNullOrWhiteSpace(ViewModel.SelectedRingtonePath)
+        ? null
+        : FormatRingtoneLabel(ViewModel.SelectedRingtonePath);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+
+    private async Task OnRingtoneSelectionChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        await ViewModel.SelectRingtoneAsync(args.Value?.ToString());
+    }
+
+    private async Task OnLanguageSelectionChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        if (Enum.TryParse<AppLanguage>(args.Value?.ToString(), out var language))
+        {
+            await LocalizationService.SetLanguageAsync(language);
+            ViewModel.ClearDataTransferMessage();
+        }
+    }
+
+    private static string FormatRingtoneLabel(string filePath)
+    {
+        var fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+
+        return string.IsNullOrWhiteSpace(fileName)
+            ? filePath
+            : fileName.Replace('_', ' ');
+    }
+}

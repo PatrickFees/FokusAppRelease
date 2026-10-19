@@ -1,0 +1,33 @@
+.global-error-boundary[b-o9iz9xztcn] {
+    margin: 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(153, 27, 27, 0.35);
+    background: linear-gradient(135deg, rgba(254, 226, 226, 0.95) 0%, rgba(254, 242, 242, 0.95) 100%);
+    color: #7f1d1d;
+    box-shadow: 0 16px 26px rgba(127, 29, 29, 0.18);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.global-error-boundary h1[b-o9iz9xztcn] {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.global-error-boundary p[b-o9iz9xztcn] {
+    margin: 0;
+}
+
+.global-error-recover-button[b-o9iz9xztcn] {
+    border: none;
+    border-radius: 0.7rem;
+    min-height: 2.2rem;
+    padding: 0.45rem 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+    cursor: pointer;
+    align-self: flex-start;
+}

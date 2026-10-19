@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FocusAppTests</name>
+    </assembly>
+    <members>
+        <member name="T:FocusAppTests.Architecture.PresentationSourceRulesTests">
+            <summary>
+            Prüft Regeln aus CodingGuideline.md am Quelltext von FokusApp.Presentation
+            (die Dateien werden über FocusAppTests.csproj in den Ausgabeordner kopiert).
+            </summary>
+        </member>
+        <member name="T:FocusAppTests.Components.ComponentTestContext">
+            <summary>
+            Gemeinsame Basis der Komponententests: echte Lokalisierung (Deutsch, Texte aus den Resx-Dateien der App),
+            lose JS-Interop und der in <c>_Imports.razor</c> injizierte <see cref="T:FokusApp.Services.ITaskPriorityFormatter"/>.
+            </summary>
+        </member>
+        <member name="M:FocusAppTests.Components.ComponentTestContext.AddFilterComponentServices">
+            <summary>
+            Registriert, was <c>FilterComponent</c> braucht: das echte <c>FilterComponentViewModel</c> (Tag "heute" = 13.10.2026)
+            und einen Kalender-Popup-Substituten. So prüfen die Seitentests die Verdrahtung mit der echten Filterlogik.
+            </summary>
+        </member>
+        <member name="T:FocusAppTests.DataBase.SqliteTestDatabase">
+            <summary>
+            Eigene SQLite-Dateien (App- und Fehlerdatenbank) in einem Temp-Verzeichnis pro Testinstanz,
+            mit je einer eigenen <see cref="T:Microsoft.EntityFrameworkCore.IDbContextFactory`1"/>. Die Konfiguration entspricht <c>MauiProgram.cs</c>.
+            </summary>
+        </member>
+        <member name="T:FocusAppTests.Fakes.FakeNavigationManager">
+            <summary>
+            Minimaler <see cref="T:Microsoft.AspNetCore.Components.NavigationManager"/> für ViewModel-Tests: merkt sich Navigationsziele
+            und löst <c>LocationChanged</c> aus, ohne Blazor-Host.
+            </summary>
+        </member>
+        <member name="T:FocusAppTests.Fakes.InMemoryTaskRepository">
+            <summary>
+            Zustandsbehaftetes Fake mit denselben Kategorie-Regeln und derselben Sortierung wie das echte <c>TaskRepository</c>.
+            </summary>
+        </member>
+        <member name="M:FocusAppTests.Localization.LocalizationResourceTests.PlaceholderPattern">
+            <remarks>
+            Pattern:<br/>
+            <code>\\{\\d+\\}</code><br/>
+            Explanation:<br/>
+            <code>
+            ○ Match '{'.<br/>
+            ○ Match a Unicode digit atomically at least once.<br/>
+            ○ Match '}'.<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="F:FocusAppTests.ViewModels.TestTasks.Today">
+            <summary>Fester "heute"-Tag der Tests, bewusst verschieden von <see cref="F:FocusAppTests.ViewModels.TestTasks.Day"/>.</summary>
+        </member>
+        <member name="T:FocusAppTests.ViewModels.TestTexts">
+            <summary>
+            Liefert einen <see cref="T:FokusApp.Services.IUiTextProvider"/>, der Schlüssel und Argumente sichtbar zurückgibt,
+            z. B. "RegularTemplateOption:Sport|Hoch". So prüfen Tests Texte, ohne Resx-Dateien zu laden.
+            </summary>
+        </member>
+        <member name="P:FokusApp.Components.PopUps.ConfirmDialog.ConfirmDialogPopUp.CancelText">
+            <summary>Ohne Text gibt es keinen Abbrechen-Knopf (reiner Hinweisdialog).</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderPattern_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the PlaceholderPattern method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.PlaceholderPattern_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderPattern_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderPattern_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderPattern_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderPattern_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderPattern_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderPattern_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderPattern_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
+            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
+        </member>
+    </members>
+</doc>

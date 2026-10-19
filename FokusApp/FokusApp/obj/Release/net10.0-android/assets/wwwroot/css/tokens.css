@@ -1,0 +1,44 @@
+:root {
+    /* Farben - Oberflaeche & Text */
+    --color-surface: #f8fafc;
+    --color-surface-alt: #ffffff;
+    --color-ink: #0f172a;
+    --color-ink-muted: #475569;
+
+    /* Farben - Akzent */
+    --color-accent: #2563eb;
+    --color-accent-strong: #1d4ed8;
+
+    /* Farben - Prioritaet (kanonische, helle Palette, siehe CssKonzept.md) */
+    --priority-keine-color: #85efff;
+    --priority-keine-text: #0f172a;
+    --priority-wenig-color: #4ff0a2;
+    --priority-wenig-text: #0f172a;
+    --priority-mittel-color: #eddc1c;
+    --priority-mittel-text: #0f172a;
+    --priority-hoch-color: #ed8f1c;
+    --priority-hoch-text: #0f172a;
+    --priority-dringend-color: #ed571c;
+    --priority-dringend-text: #ffffff;
+
+    /* Abstaende */
+    --space-xs: 0.35rem;
+    --space-sm: 0.65rem;
+    --space-md: 1rem;
+    --space-lg: 1.3rem;
+    --space-xl: 2rem;
+
+    /* Rundungen */
+    --radius-sm: 0.6rem;
+    --radius-md: 0.9rem;
+    --radius-pill: 999px;
+
+    /* Schatten / Elevation */
+    --shadow-sm: 0 10px 22px rgba(37, 99, 235, 0.2);
+    --shadow-md: 0 12px 26px rgba(37, 99, 235, 0.25);
+    --shadow-lg: 0 18px 34px rgba(37, 99, 235, 0.3);
+
+    /* Uebergaenge */
+    --transition-fast: 0.2s ease;
+    --transition-standard: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+}

@@ -1,0 +1,109 @@
+@implements IDisposable
+@inject NavigationManager NavigationManager
+@inject FokusApp.Core.Services.Interfaces.IAppLocalizationService LocalizationService
+@inject FokusApp.Core.Services.Interfaces.IAppStartupStateService StartupState
+@using System
+@using FokusApp.Services
+@using FokusApp.Components.Layout
+@using FokusApp.Core.Services.Interfaces
+
+@if (StartupState.Status == AppStartupStatus.Loading)
+{
+    <main class="startup-state" role="status" aria-live="polite">
+        <div class="startup-spinner" aria-hidden="true"></div>
+        <h1>@Localizer["StartupLoadingTitle"]</h1>
+        <p>@Localizer["StartupLoadingDescription"]</p>
+    </main>
+}
+else if (StartupState.Status == AppStartupStatus.Failed)
+{
+    <main class="startup-state startup-state-failed" role="alert" aria-live="assertive">
+        <h1>@Localizer["StartupFailedTitle"]</h1>
+        <p>@Localizer["StartupFailedDescription"]</p>
+        @if (StartupState.Failure is not null)
+        {
+            <details>
+                <summary>@Localizer["TechnicalDetails"]</summary>
+                <p class="startup-failure-message">@StartupState.Failure.Message</p>
+            </details>
+        }
+    </main>
+}
+else
+{
+    <Router AppAssembly="@typeof(MauiProgram).Assembly">
+        <Found Context="routeData">
+            <GlobalErrorBoundary>
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
+            </GlobalErrorBoundary>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+    </Router>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        NotificationNavigationBridge.RouteRequested += HandleRouteRequested;
+        LocalizationService.LanguageChanged += HandleLanguageChanged;
+        StartupState.StateChanged += HandleStartupStateChanged;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        if (!firstRender)
+        {
+            return;
+        }
+
+        if (NotificationNavigationBridge.TryConsumePendingRoute(out var pendingRoute))
+        {
+            NavigateIfNeeded(pendingRoute);
+        }
+    }
+
+    private void HandleRouteRequested(object? sender, string route)
+    {
+        _ = InvokeAsync(() => NavigateIfNeeded(route));
+    }
+
+    private void HandleLanguageChanged(object? sender, EventArgs args)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleStartupStateChanged(object? sender, EventArgs args)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    private void NavigateIfNeeded(string route)
+    {
+        if (string.IsNullOrWhiteSpace(route))
+        {
+            return;
+        }
+
+        var currentPath = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        var normalizedCurrentPath = string.IsNullOrWhiteSpace(currentPath)
+            ? "/"
+            : $"/{currentPath}";
+
+        if (string.Equals(normalizedCurrentPath, route, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        NavigationManager.NavigateTo(route, forceLoad: false);
+    }
+
+    public void Dispose()
+    {
+        NotificationNavigationBridge.RouteRequested -= HandleRouteRequested;
+        LocalizationService.LanguageChanged -= HandleLanguageChanged;
+        StartupState.StateChanged -= HandleStartupStateChanged;
+    }
+}

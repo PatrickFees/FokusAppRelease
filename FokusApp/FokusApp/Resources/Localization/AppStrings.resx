@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Settings" xml:space="preserve"><value>Einstellungen</value></data>
+  <data name="Language" xml:space="preserve"><value>Sprache</value></data>
+  <data name="LanguageDescription" xml:space="preserve"><value>Wähle die Sprache der App.</value></data>
+  <data name="German" xml:space="preserve"><value>Deutsch</value></data>
+  <data name="English" xml:space="preserve"><value>Englisch</value></data>
+  <data name="RingtoneTitle" xml:space="preserve"><value>Klingelton auswählen</value></data>
+  <data name="RingtoneDescription" xml:space="preserve"><value>Wähle den Klingelton, der beim Ablauf des Fokus-Timers abgespielt werden soll.</value></data>
+  <data name="Ringtone" xml:space="preserve"><value>Klingelton</value></data>
+  <data name="CurrentlySelected" xml:space="preserve"><value>Aktuell ausgewählt: {0}</value></data>
+  <data name="Play" xml:space="preserve"><value>Abspielen</value></data>
+  <data name="NoRingtones" xml:space="preserve"><value>Es wurden keine Klingeltöne gefunden.</value></data>
+  <data name="DataImportExport" xml:space="preserve"><value>Datenimport / -export</value></data>
+  <data name="DataImportExportDescription" xml:space="preserve"><value>Exportiere alle App-Daten in eine Datei oder importiere bestehende Daten aus einer JSON-Datei.</value></data>
+  <data name="ExportFile" xml:space="preserve"><value>Exportieren (FokosAppData.json)</value></data>
+  <data name="Import" xml:space="preserve"><value>Importieren</value></data>
+  <data name="Work" xml:space="preserve"><value>Arbeit</value></data>
+  <data name="Private" xml:space="preserve"><value>Privat</value></data>
+  <data name="TaskFocus" xml:space="preserve"><value>Aufgabenfokus</value></data>
+  <data name="ToggleScope" xml:space="preserve"><value>Fokus zwischen Arbeit und Privat wechseln</value></data>
+  <data name="NavigationMenu" xml:space="preserve"><value>Navigationsmenü</value></data>
+  <data name="FocusTimer" xml:space="preserve"><value>Fokus-Timer</value></data>
+  <data name="Tasks" xml:space="preserve"><value>Aufgaben</value></data>
+  <data name="Calender" xml:space="preserve"><value>Calender</value></data>
+  <data name="Errors" xml:space="preserve"><value>Fehler</value></data>
+  <data name="NavTimer" xml:space="preserve"><value>Timer</value></data>
+  <data name="NavCalendar" xml:space="preserve"><value>Kalender</value></data>
+  <data name="CollapseCalendar" xml:space="preserve"><value>Kalender einklappen</value></data>
+  <data name="ExpandCalendar" xml:space="preserve"><value>Kalender ausklappen</value></data>
+  <data name="NavManagement" xml:space="preserve"><value>Verwaltung</value></data>
+  <data name="SelectTask" xml:space="preserve"><value>Aufgabe auswählen</value></data>
+  <data name="HideFilters" xml:space="preserve"><value>Filter ausblenden</value></data>
+  <data name="ShowFilters" xml:space="preserve"><value>Filter anzeigen</value></data>
+  <data name="NoOpenTasks" xml:space="preserve"><value>Keine offenen Aufgaben verfügbar.</value></data>
+  <data name="Priority" xml:space="preserve"><value>Priorität: {0}</value></data>
+  <data name="PriorityNone" xml:space="preserve"><value>Keine</value></data>
+  <data name="PriorityLow" xml:space="preserve"><value>Wenig</value></data>
+  <data name="PriorityMedium" xml:space="preserve"><value>Mittel</value></data>
+  <data name="PriorityHigh" xml:space="preserve"><value>Hoch</value></data>
+  <data name="PriorityUrgent" xml:space="preserve"><value>Dringend</value></data>
+  <data name="Unknown" xml:space="preserve"><value>Unbekannt</value></data>
+  <data name="Break" xml:space="preserve"><value>Pause</value></data>
+  <data name="MinutesShort" xml:space="preserve"><value>Min.</value></data>
+  <data name="TimerHint" xml:space="preserve"><value>Ziehe am äußeren Ring oder tippe auf die Zeit, um die Minuten einzustellen.</value></data>
+  <data name="NotificationPermissionHint" xml:space="preserve"><value>Benachrichtigungen sind deaktiviert. Sperrbildschirm-Hinweise sind eventuell nicht sichtbar.</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="EndBreak" xml:space="preserve"><value>Pause beenden</value></data>
+  <data name="Reset" xml:space="preserve"><value>Zurücksetzen</value></data>
+  <data name="SetTimer" xml:space="preserve"><value>Timer einstellen</value></data>
+  <data name="AddTask" xml:space="preserve"><value>Aufgabe hinzufügen</value></data>
+  <data name="TaskOverviewIntro" xml:space="preserve"><value>Behalte den Überblick über deine anstehenden Aufgaben und bereits erledigten To-dos.</value></data>
+  <data name="CloseFilters" xml:space="preserve"><value>Filter schließen</value></data>
+  <data name="ActiveTasks" xml:space="preserve"><value>Aktive Aufgaben</value></data>
+  <data name="RegularTasksCount" xml:space="preserve"><value>Regelmäßige Aufgaben ({0})</value></data>
+  <data name="CompletedTasksCount" xml:space="preserve"><value>Fertige Aufgaben ({0})</value></data>
+  <data name="RegularTask" xml:space="preserve"><value>Regelmäßige Aufgabe</value></data>
+  <data name="OneTimeTask" xml:space="preserve"><value>Einmalige Aufgabe</value></data>
+  <data name="OneTimeTasks" xml:space="preserve"><value>Einmalige Aufgaben</value></data>
+  <data name="Status" xml:space="preserve"><value>Status: {0}</value></data>
+  <data name="TaskCurrentlyRunning" xml:space="preserve"><value>Aufgabe läuft aktuell</value></data>
+  <data name="Edit" xml:space="preserve"><value>Bearbeiten</value></data>
+  <data name="Delete" xml:space="preserve"><value>Löschen</value></data>
+  <data name="CreatedOn" xml:space="preserve"><value>Erstellt am {0:d}</value></data>
+  <data name="TemplateWithoutDate" xml:space="preserve"><value>Vorlage ohne Datum</value></data>
+  <data name="CompletedOn" xml:space="preserve"><value>Abgeschlossen: {0:d}</value></data>
+  <data name="Active" xml:space="preserve"><value>Aktiv</value></data>
+  <data name="Open" xml:space="preserve"><value>Offen</value></data>
+  <data name="Template" xml:space="preserve"><value>Vorlage</value></data>
+  <data name="AddForYouTask" xml:space="preserve"><value>For-You-Aufgabe hinzufügen</value></data>
+  <data name="AddToDoTask" xml:space="preserve"><value>To-do-Aufgabe hinzufügen</value></data>
+  <data name="TaskTypeForYou" xml:space="preserve"><value>For You</value></data>
+  <data name="TaskTypeToDo" xml:space="preserve"><value>To Do</value></data>
+  <data name="StartTask" xml:space="preserve"><value>Aufgabe starten</value></data>
+  <data name="StopTask" xml:space="preserve"><value>Aufgabe stoppen</value></data>
+  <data name="NoTasksForDay" xml:space="preserve"><value>Keine Aufgaben für diesen Tag.</value></data>
+  <data name="Done" xml:space="preserve"><value>Erledigt</value></data>
+  <data name="Task" xml:space="preserve"><value>Aufgabe</value></data>
+  <data name="CompleteDirectly" xml:space="preserve"><value>Direkt erledigt</value></data>
+  <data name="CloseTaskPopup" xml:space="preserve"><value>Aufgaben-Popup schließen</value></data>
+  <data name="NoTask" xml:space="preserve"><value>Ohne Aufgabe</value></data>
+  <data name="NoTasksForFilters" xml:space="preserve"><value>Keine Aufgaben mit diesen Filtern gefunden.</value></data>
+  <data name="SearchTask" xml:space="preserve"><value>Aufgabe suchen</value></data>
+  <data name="DateNewestFirst" xml:space="preserve"><value>Datum: Neueste zuerst</value></data>
+  <data name="DateOldestFirst" xml:space="preserve"><value>Datum: Älteste zuerst</value></data>
+  <data name="ResetFilters" xml:space="preserve"><value>Filter zurücksetzen</value></data>
+  <data name="RegularSuffix" xml:space="preserve"><value>{0} (regelmäßig)</value></data>
+  <data name="Untitled" xml:space="preserve"><value>Ohne Titel</value></data>
+  <data name="RegularTemplateOption" xml:space="preserve"><value>{0} ({1})</value></data>
+  <data name="EditTask" xml:space="preserve"><value>Aufgabe bearbeiten</value></data>
+  <data name="NewTask" xml:space="preserve"><value>Neue Aufgabe</value></data>
+  <data name="RegularTasks" xml:space="preserve"><value>Regelmäßige Aufgaben</value></data>
+  <data name="IsRegular" xml:space="preserve"><value>Ist regelmäßig</value></data>
+  <data name="DescribeTask" xml:space="preserve"><value>Beschreibe deine Aufgabe</value></data>
+  <data name="FocusTime" xml:space="preserve"><value>Fokuszeit</value></data>
+  <data name="DecreaseFocusTime" xml:space="preserve"><value>Fokuszeit verringern</value></data>
+  <data name="IncreaseFocusTime" xml:space="preserve"><value>Fokuszeit erhöhen</value></data>
+  <data name="SetFocusTimeManually" xml:space="preserve"><value>Fokuszeit manuell einstellen</value></data>
+  <data name="DecreaseBreakTime" xml:space="preserve"><value>Pausenzeit verringern</value></data>
+  <data name="IncreaseBreakTime" xml:space="preserve"><value>Pausenzeit erhöhen</value></data>
+  <data name="SetBreakTimeManually" xml:space="preserve"><value>Pausenzeit manuell einstellen</value></data>
+  <data name="TaskType" xml:space="preserve"><value>Aufgabentyp</value></data>
+  <data name="Update" xml:space="preserve"><value>Aktualisieren</value></data>
+  <data name="Save" xml:space="preserve"><value>Speichern</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Abbrechen</value></data>
+  <data name="SetFocusTime" xml:space="preserve"><value>Fokuszeit einstellen</value></data>
+  <data name="SetBreakTime" xml:space="preserve"><value>Pausenzeit einstellen</value></data>
+  <data name="CloseRegularTasks" xml:space="preserve"><value>Regelmäßige Aufgaben schließen</value></data>
+  <data name="NoRegularTasks" xml:space="preserve"><value>Keine regelmäßigen Aufgaben vorhanden.</value></data>
+  <data name="Copy" xml:space="preserve"><value>Kopieren</value></data>
+  <data name="CopyRegularTask" xml:space="preserve"><value>Regelmäßige Aufgabe kopieren</value></data>
+  <data name="EditRegularTask" xml:space="preserve"><value>Regelmäßige Aufgabe bearbeiten</value></data>
+  <data name="EnterMinutesDescription" xml:space="preserve"><value>Gib die gewünschte Anzahl an Minuten ein.</value></data>
+  <data name="MinutesMaximum" xml:space="preserve"><value>Minuten (max. {0})</value></data>
+  <data name="EnterMinutesError" xml:space="preserve"><value>Gib eine gültige Zeit in Minuten ein.</value></data>
+  <data name="Apply" xml:space="preserve"><value>Übernehmen</value></data>
+  <data name="PreviousMonth" xml:space="preserve"><value>Vorheriger Monat</value></data>
+  <data name="NextMonth" xml:space="preserve"><value>Nächster Monat</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Aktualisieren</value></data>
+  <data name="NoSavedErrors" xml:space="preserve"><value>Keine Fehler gespeichert.</value></data>
+  <data name="Share" xml:space="preserve"><value>Teilen</value></data>
+  <data name="ShareError" xml:space="preserve"><value>Fehler teilen</value></data>
+  <data name="ErrorsLoadFailed" xml:space="preserve"><value>Fehler konnten nicht geladen werden.</value></data>
+  <data name="UnexpectedErrorTitle" xml:space="preserve"><value>Ein Fehler ist aufgetreten</value></data>
+  <data name="UnexpectedErrorDescription" xml:space="preserve"><value>Der Fehler wurde gespeichert. Du findest ihn auf der Seite „Fehler“ im Navigationsmenü.</value></data>
+  <data name="ReloadView" xml:space="preserve"><value>Ansicht neu laden</value></data>
+  <data name="DataActionFailed" xml:space="preserve"><value>Datenaktion fehlgeschlagen.</value></data>
+  <data name="ExportShareTitle" xml:space="preserve"><value>FokusApp-Daten exportieren</value></data>
+  <data name="ExportCreated" xml:space="preserve"><value>Export erstellt: {0}</value></data>
+  <data name="ImportPickerTitle" xml:space="preserve"><value>FokusApp-Daten importieren</value></data>
+  <data name="ImportCanceled" xml:space="preserve"><value>Import abgebrochen.</value></data>
+  <data name="ImportReadFailed" xml:space="preserve"><value>Die Importdatei konnte nicht gelesen werden.</value></data>
+  <data name="ImportInvalid" xml:space="preserve"><value>Die Importdatei enthält keine gültigen FokusApp-Daten.</value></data>
+  <data name="ImportCompleted" xml:space="preserve"><value>Import erfolgreich abgeschlossen.</value></data>
+  <data name="NotificationRemainingTime" xml:space="preserve"><value>Restliche Zeit {0}</value></data>
+  <data name="NotificationBreakRemaining" xml:space="preserve"><value>Pause – restliche Zeit</value></data>
+  <data name="NotificationStop" xml:space="preserve"><value>Stoppen</value></data>
+  <data name="NotificationResume" xml:space="preserve"><value>Fortsetzen</value></data>
+  <data name="NotificationStartBreak" xml:space="preserve"><value>Pause beginnen</value></data>
+  <data name="NotificationBreakCompleted" xml:space="preserve"><value>Pause beendet</value></data>
+  <data name="NotificationTimerCompleted" xml:space="preserve"><value>Timer beendet: {0}</value></data>
+  <data name="NotificationBreakElapsed" xml:space="preserve"><value>Die Pause ist abgelaufen.</value></data>
+  <data name="NotificationTaskElapsedWithBreak" xml:space="preserve"><value>Die Aufgabenzeit ist abgelaufen. Pause: {0:00} Min.</value></data>
+  <data name="NotificationTaskElapsed" xml:space="preserve"><value>Die Aufgabenzeit ist abgelaufen.</value></data>
+  <data name="NotificationRunningChannel" xml:space="preserve"><value>Fokus-Timer</value></data>
+  <data name="NotificationCompletedChannel" xml:space="preserve"><value>Timer-Ende</value></data>
+  <data name="StartupLoadingTitle" xml:space="preserve"><value>FokusApp wird gestartet</value></data>
+  <data name="StartupLoadingDescription" xml:space="preserve"><value>Deine Daten und Einstellungen werden geladen.</value></data>
+  <data name="StartupFailedTitle" xml:space="preserve"><value>FokusApp konnte nicht gestartet werden</value></data>
+  <data name="StartupFailedDescription" xml:space="preserve"><value>Beim Laden der Daten ist ein Fehler aufgetreten. Der Fehler wurde protokolliert. Bitte starte die App erneut.</value></data>
+  <data name="TechnicalDetails" xml:space="preserve"><value>Technische Details</value></data>
+  <data name="Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="ImportCanceledTitle" xml:space="preserve"><value>Import abgebrochen</value></data>
+  <data name="ImportCanceledMessage" xml:space="preserve"><value>Es wurde nichts importiert. Deine vorhandenen Daten sind unverändert.</value></data>
+  <data name="ResetData" xml:space="preserve"><value>Auf Startdaten zurücksetzen</value></data>
+  <data name="ResetDataDescription" xml:space="preserve"><value>Setzt alle App-Daten auf den Zustand beim ersten Start zurück.</value></data>
+  <data name="ResetConfirmTitle" xml:space="preserve"><value>Auf Startdaten zurücksetzen?</value></data>
+  <data name="ResetConfirmMessage" xml:space="preserve"><value>Alle Aufgaben und Einstellungen werden gelöscht und durch die Startdaten ersetzt. Das lässt sich nicht rückgängig machen. Exportiere deine Daten vorher, wenn du sie behalten möchtest.</value></data>
+  <data name="ResetConfirmAction" xml:space="preserve"><value>Zurücksetzen</value></data>
+  <data name="ResetCompleted" xml:space="preserve"><value>Die App-Daten wurden auf die Startdaten zurückgesetzt.</value></data>
+  <data name="Today" xml:space="preserve"><value>Heute</value></data>
+  <data name="CalendarWeekLabel" xml:space="preserve"><value>Kalenderwoche {0}</value></data>
+</root>

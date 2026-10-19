@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FokusApp</name>
+    </assembly>
+    <members>
+        <member name="P:FokusApp.Components.PopUps.ConfirmDialog.ConfirmDialogPopUp.CancelText">
+            <summary>Ohne Text gibt es keinen Abbrechen-Knopf (reiner Hinweisdialog).</summary>
+        </member>
+        <member name="T:FokusApp.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+    </members>
+</doc>

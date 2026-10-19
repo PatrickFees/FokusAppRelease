@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\obj\\Debug\\net10.0-android\\scopedcss\\bundle\\FokusApp.styles.css",
+      "PackagePath": "staticwebassets\\FokusApp.styles.css"
+    },
+    {
+      "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\css\\shared.css",
+      "PackagePath": "staticwebassets\\css\\shared.css"
+    },
+    {
+      "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\css\\tokens.css",
+      "PackagePath": "staticwebassets\\css\\tokens.css"
+    },
+    {
+      "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\js\\navFan.js",
+      "PackagePath": "staticwebassets\\js\\navFan.js"
+    },
+    {
+      "Id": "C:\\Users\\patri\\.nuget\\packages\\microsoft.aspnetcore.components.webview\\10.0.0\\staticwebassets\\blazor.modules.json",
+      "PackagePath": "staticwebassets\\_framework\\blazor.modules.json"
+    },
+    {
+      "Id": "C:\\Users\\patri\\.nuget\\packages\\microsoft.aspnetcore.components.webview\\10.0.0\\staticwebassets\\blazor.webview.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webview.js"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-android\\staticwebassets\\msbuild.FokusApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-android\\staticwebassets\\msbuild.FokusApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-android\\staticwebassets\\msbuild.build.FokusApp.props",
+      "PackagePath": "build\\FokusApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-android\\staticwebassets\\msbuild.buildMultiTargeting.FokusApp.props",
+      "PackagePath": "buildMultiTargeting\\FokusApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0-android\\staticwebassets\\msbuild.buildTransitive.FokusApp.props",
+      "PackagePath": "buildTransitive\\FokusApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

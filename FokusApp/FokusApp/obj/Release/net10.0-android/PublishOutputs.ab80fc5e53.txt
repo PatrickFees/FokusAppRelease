@@ -1,0 +1,3 @@
+C:\MySpace\FokusApp\FokusApp\FokusApp\bin\Release\net10.0-android\publish\com.companyname.fokusapp-Signed.apk
+C:\MySpace\FokusApp\FokusApp\FokusApp\bin\Release\net10.0-android\publish\com.companyname.fokusapp.apk
+C:\MySpace\FokusApp\FokusApp\FokusApp\bin\Release\net10.0-android\publish\_Microsoft.Android.Resource.Designer.dll
