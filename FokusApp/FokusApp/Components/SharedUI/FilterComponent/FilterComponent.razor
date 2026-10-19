@@ -1,0 +1,198 @@
+@using System
+@using System.Collections.Generic
+@using FokusApp.Components.SharedUI.FilterComponent
+@using FokusApp.Components.SharedUI.TaskDayButton
+@using FokusApp.Components.PopUps.Calendar
+@using FokusApp.Core.Enums
+@inherits ObservableComponentBase
+@inject IFilterComponentViewModel ViewModel
+
+@if (IsOpen)
+{
+    <div class="timer-task-inline-filter" @onclick:stopPropagation="true">
+        @FilterControls
+    </div>
+}
+
+@code {
+
+    private bool _initializedForOpenCycle;
+    private string _searchInputElementKey = $"task-filter-search-{Guid.NewGuid():N}";
+    private string _searchInputName = $"task-filter-search-{Guid.NewGuid():N}";
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public bool ShowDateSortToggle { get; set; }
+
+    [Parameter]
+    public bool ResetFiltersOnOpen { get; set; } = true;
+
+    [Parameter]
+    public string? InitialSearchText { get; set; }
+
+    [Parameter]
+    public IReadOnlyCollection<TaskPriority> InitialSelectedPriorities { get; set; } = [];
+
+    [Parameter]
+    public bool InitialIsSortDescending { get; set; } = true;
+
+    [Parameter]
+    public DateTime? InitialSelectedDate { get; set; }
+
+    [Parameter]
+    public EventCallback<FilterModel> OnFiltersChanged { get; set; }
+
+    private RenderFragment FilterControls =>@<div class="timer-task-picker-filters">
+        <input type="search"
+               @key="_searchInputElementKey"
+               class="timer-task-search"
+               placeholder="@Localizer["SearchTask"]"
+               name="@_searchInputName"
+               autocomplete="off"
+               autocorrect="off"
+               autocapitalize="off"
+               spellcheck="false"
+               value="@ViewModel.Model.SearchText"
+               @oninput="HandleSearchInputChanged" />
+        <div class="timer-task-priority-filters shared-priority-buttons">
+            @foreach (var priority in Enum.GetValues<TaskPriority>())
+            {
+                var isPrioritySelected = ViewModel.Model.SelectedPriorities.Contains(priority);
+                <button type="button"
+                        class="priority-button @(PriorityFormatter.GetCssClass(priority)) @(isPrioritySelected ? "selected" : string.Empty)"
+                        @onclick="() => TogglePriorityFilter(priority)">
+                    @PriorityFormatter.Format(priority)
+                </button>
+            }
+        </div>
+        <div class="timer-task-day-filter">
+            <TaskDayButton Model="FilterDayButtonModel" OnClick="OpenDayCalendar" />
+        </div>
+        <div class="timer-task-filter-actions">
+            @if (ShowDateSortToggle)
+            {
+                <button type="button" class="timer-task-sort-button" @onclick="ToggleSortDirection">
+                    @(ViewModel.Model.IsSortDescending ? Localizer["DateNewestFirst"] : Localizer["DateOldestFirst"])
+                </button>
+            }
+            <button type="button" class="timer-task-reset-button" @onclick="ResetFilters">
+                @Localizer["ResetFilters"]
+            </button>
+        </div>
+        <CalendarPopup IsOpen=ViewModel.IsDayCalendarOpen
+                   InitialDate="@(ViewModel.DisplayDate)"
+                       OnConfirm="ConfirmDaySelection"
+                       OnCancel="CloseDayCalendar" />
+    </div>
+    ;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Observe(ViewModel);
+        Observe(ViewModel.Model);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        if (!IsOpen)
+        {
+            if (ViewModel.IsOpen)
+            {
+                ViewModel.CloseCommand.Execute(null);
+            }
+
+            _initializedForOpenCycle = false;
+            ViewModel.ResetLastNotifiedFilterPayload();
+            return;
+        }
+
+        if (!_initializedForOpenCycle)
+        {
+            RotateSearchInputIdentity();
+            ViewModel.Open(
+                resetFilters: ResetFiltersOnOpen,
+                initialSearchText: InitialSearchText,
+                initialSelectedPriorities: InitialSelectedPriorities,
+                initialIsSortDescending: InitialIsSortDescending,
+                initialSelectedDate: InitialSelectedDate);
+
+            _initializedForOpenCycle = true;
+            return;
+        }
+
+        await NotifyFiltersChangedIfNeededAsync();
+    }
+
+    private void TogglePriorityFilter(TaskPriority priority)
+    {
+        ViewModel.TogglePriorityFilterCommand.Execute(priority);
+    }
+
+    private void ToggleSortDirection()
+    {
+        ViewModel.ToggleSortDirectionCommand.Execute(null);
+    }
+
+    private void ResetFilters()
+    {
+        ViewModel.ResetFiltersCommand.Execute(null);
+    }
+
+    private void HandleSearchInputChanged(ChangeEventArgs args)
+    {
+        ViewModel.Model.SearchText = args.Value?.ToString() ?? string.Empty;
+    }
+
+    protected override async Task OnObservedPropertyChangedAsync(System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        await NotifyFiltersChangedIfNeededAsync();
+    }
+
+    private async Task NotifyFiltersChangedIfNeededAsync()
+    {
+        if (!OnFiltersChanged.HasDelegate)
+        {
+            return;
+        }
+
+        if (ViewModel.HasFilterChanged())
+        {
+            var payload = ViewModel.CreateFilterPayload();
+            await OnFiltersChanged.InvokeAsync(payload);
+            ViewModel.MarkFilterChangesNotified();
+        }
+    }
+
+    private void RotateSearchInputIdentity()
+    {
+        var uniqueSuffix = Guid.NewGuid().ToString("N");
+        _searchInputElementKey = $"task-filter-search-{uniqueSuffix}";
+        _searchInputName = $"task-filter-search-{uniqueSuffix}";
+    }
+
+    private TaskDayButtonModel FilterDayButtonModel => new()
+    {
+        SelectedDate = ViewModel.DisplayDate,
+        IsEnabled = true
+    };
+
+    private void OpenDayCalendar()
+    {
+        ViewModel.OpenDayCalendar();
+    }
+
+    private void CloseDayCalendar()
+    {
+        ViewModel.CloseDayCalendar();
+    }
+
+    private void ConfirmDaySelection(DateTime selectedDate)
+    {
+        ViewModel.SelectDate(selectedDate);
+    }
+}

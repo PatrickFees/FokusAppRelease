@@ -1,0 +1,328 @@
+@using FokusApp.Components.PopUps.Calendar
+@using FokusApp.Components.PopUps.TaskEdit
+@using FokusApp.Components.PopUps.RegularTemplateList
+@using FokusApp.Components.PopUps.TimeInputDialog
+@using FokusApp.Components.SharedUI
+@using FokusApp.Components.SharedUI.FilterComponent
+@using FokusApp.Components.SharedUI.TaskDayButton
+@using FokusApp.Core.Enums
+@using Microsoft.AspNetCore.Components.Web
+@inherits ObservableComponentBase
+@inject ITaskEditPopUpViewModel ViewModel
+
+@if (IsOpen)
+{
+<div class="modal-backdrop popup-overlay">
+    <div class="modal-content"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="@_dialogTitleId"
+         tabindex="-1"
+         @ref="_dialogElement"
+         @onkeydown="HandleModalKeyDown">
+
+        <h2 id="@_dialogTitleId">@(ViewModel.IsUpdateMode ? Localizer["EditTask"] : Localizer["NewTask"])</h2>
+
+        <div class="regular-task-toolbar">
+            <button type="button"
+                    class="regular-template-list-button"
+                    disabled="@(!ViewModel.HasRegularTemplateOptions)"
+                    @onclick="OpenRegularTemplateListPopup">
+                <span class="regular-template-list-button-icon" aria-hidden="true"></span>
+                @Localizer["RegularTasks"]
+            </button>
+
+            <div class="form-check regularity-toggle">
+                <input id="@_taskRegularityInputId"
+                        class="form-check-input"
+                        type="checkbox"
+                        checked="@ViewModel.Model.IsRegularTask"
+                        disabled="@ViewModel.IsRegularTaskLocked"
+                        @onchange="OnRegularityChanged" />
+                <label class="form-check-label" for="@_taskRegularityInputId">@Localizer["IsRegular"]</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="@_taskNoteInputId">@Localizer["Task"]</label>
+            <textarea id="@_taskNoteInputId"
+                        class="form-control"
+                        rows="4"
+                        placeholder="@Localizer["DescribeTask"]"
+                        @bind="ViewModel.Model.Note"></textarea>
+        </div>
+
+        <div class="form-group priority-selector">
+            <div class="priority-selector-header">
+            <span class="priority-badge @PriorityFormatter.GetCssClass(ViewModel.Model.Priority)">
+                      
+                @Localizer["Priority", PriorityFormatter.Format(ViewModel.Model.Priority)]
+                </span>
+            </div>
+            <input id="@_prioritySliderInputId"
+                class="priority-slider @PriorityFormatter.GetCssClass(ViewModel.Model.Priority)"
+                    type="range"
+                    min="0"
+                    max="@ViewModel.MaximumPriorityIndex"
+                    step="1"
+                    aria-label="@Localizer["Priority", PriorityFormatter.Format(ViewModel.Model.Priority)]"
+                value="@ViewModel.SelectedPriorityIndex"
+                    @oninput="OnPrioritySliderInput" />
+        </div>
+
+        <TaskTimerSelector Label="@Localizer["FocusTime"]"
+                           Display="@ViewModel.FocusTimerDisplay"
+                           DecreaseAriaLabel="@Localizer["DecreaseFocusTime"]"
+                           IncreaseAriaLabel="@Localizer["IncreaseFocusTime"]"
+                           ManualInputAriaLabel="@Localizer["SetFocusTimeManually"]"
+                           OnDecrease="() => ViewModel.AdjustTimer(TimerType.FocusTimer, -ViewModel.TimerStepMinutes)"
+                           OnIncrease="() => ViewModel.AdjustTimer(TimerType.FocusTimer, ViewModel.TimerStepMinutes)"
+                           OnManualInput="() => OpenTimerInputDialog(TimerType.FocusTimer)" />
+
+        <TaskTimerSelector Label="@Localizer["Break"]"
+                           Display="@ViewModel.BreakTimerDisplay"
+                           DecreaseAriaLabel="@Localizer["DecreaseBreakTime"]"
+                           IncreaseAriaLabel="@Localizer["IncreaseBreakTime"]"
+                           ManualInputAriaLabel="@Localizer["SetBreakTimeManually"]"
+                           OnDecrease="() => ViewModel.AdjustTimer(TimerType.BreakTimer, -ViewModel.TimerStepMinutes)"
+                           OnIncrease="() => ViewModel.AdjustTimer(TimerType.BreakTimer, ViewModel.TimerStepMinutes)"
+                           OnManualInput="() => OpenTimerInputDialog(TimerType.BreakTimer)" />
+
+        <div class="form-group positivity-selector">
+            <label>@Localizer["TaskType"]</label>
+            <div class="positivity-buttons">
+                <button type="button"
+                    class="positivity-button pill-button @(ViewModel.HasSelectedTaskPositivity && ViewModel.Model.IsPositive ? "selected" : string.Empty)"
+                    aria-pressed="@(ViewModel.HasSelectedTaskPositivity && ViewModel.Model.IsPositive)"
+                        @onclick="() => ViewModel.SelectTaskPositivity(true)">
+                    @Localizer["TaskTypeForYou"]
+                </button>
+                <button type="button"
+                    class="positivity-button pill-button @(ViewModel.HasSelectedTaskPositivity && !ViewModel.Model.IsPositive ? "selected" : string.Empty)"
+                    aria-pressed="@(ViewModel.HasSelectedTaskPositivity && !ViewModel.Model.IsPositive)"
+                        @onclick="() => ViewModel.SelectTaskPositivity(false)">
+                    @Localizer["TaskTypeToDo"]
+                </button>
+            </div>
+        </div>
+
+    @if (ViewModel.IsTaskDateAllowed)
+        {
+            <div class="form-group">
+                <TaskDayButton Model="@ViewModel.TaskDayButtonModel" OnClick="OpenTaskDatePopup" />
+            </div>
+        }
+
+        <div class="modal-actions">
+        <button class="popup-action-button popup-action-button--pill popup-action-button--primary" @onclick="HandleSaveAsync" disabled="@(!ViewModel.CanSave)"> @(ViewModel.IsUpdateMode ? Localizer["Update"] : Localizer["Save"]) </button>
+      
+                    
+            <button class="popup-action-button popup-action-button--pill popup-action-button--secondary" @onclick="HandleCancelAsync">@Localizer["Cancel"]</button>
+        </div>
+    </div>
+</div>
+
+<CalendarPopup IsOpen="@(ViewModel.ShowCalendarPopup)"
+                InitialDate="ViewModel.CalendarDate"
+                OnConfirm="OnCalendarPopUpTaskDateConfirmed"
+                OnCancel="ViewModel.CloseCalendarPopup" />
+
+<TimeInputDialogPopUp IsOpen="_showTimeInputDialog"
+                      InitialMinutes="_timeInputInitialMinutes"
+                      Title="@_timeInputTitle"
+                      OnConfirm="OnTimerInputConfirmed"
+                      OnCancel="CloseTimeInputDialog" />
+
+<RegularTemplateListPopUp IsOpen="_showRegularTemplateListPopup"
+                          Options="ViewModel.RegularTemplateOptions"
+                          OnCopy="CopyRegularTemplateAsync"
+                          OnEdit="EditRegularTemplateAsync"
+                          OnCancel="CloseRegularTemplateListPopup" />
+}
+
+@code {
+
+    private readonly string _taskNoteInputId = $"task-note";
+    private readonly string _taskRegularityInputId = $"task-regularity";
+    private readonly string _prioritySliderInputId = $"task-priority";
+    private readonly string _dialogTitleId = $"task-edit-title";
+
+    private bool _showRegularTemplateListPopup;
+    private bool _showTimeInputDialog;
+    private bool _initializedForOpenCycle;
+    private bool _focusDialogAfterRender;
+    private int _timeInputInitialMinutes;
+    private string? _timeInputTitle;
+    private TimerType _activeTimerType = TimerType.FocusTimer;
+    private ElementReference _dialogElement;
+
+    [Parameter]
+    public TaskEditPopUpInputModel? Model { get; set; }
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback<TaskEditPopUpClosePayload> OnClose { get; set; }
+ 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Observe(ViewModel);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (!IsOpen)
+        {
+            _initializedForOpenCycle = false;
+            ResetLocalPopupState();
+
+            return;
+        }
+
+        if (!_initializedForOpenCycle)
+        {
+            ViewModel.Open(Model);
+            ResetLocalPopupState();
+            _initializedForOpenCycle = true;
+            _focusDialogAfterRender = true;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!IsOpen || !_focusDialogAfterRender)
+        {
+            return;
+        }
+
+        _focusDialogAfterRender = false;
+        await _dialogElement.FocusAsync();
+    }
+
+    private void OnRegularityChanged(ChangeEventArgs args)
+    {
+        bool.TryParse(args.Value?.ToString(), out var parsed);
+        ViewModel.SetRegularity(parsed);
+    }
+
+    private void OnPrioritySliderInput(ChangeEventArgs args)
+    {
+        int.TryParse(args.Value?.ToString(), out var sliderValue);
+        ViewModel.SetPriorityIndex(sliderValue);
+    }
+
+    private void OpenTaskDatePopup()
+    {
+        ViewModel.RequestOpeningCalendarPopUp();
+    }
+
+    private void OpenRegularTemplateListPopup()
+    {
+        if ( ViewModel.HasRegularTemplateOptions)
+            _showRegularTemplateListPopup = true;
+    }
+
+    private void OpenTimerInputDialog(TimerType timerType)
+    {
+        _activeTimerType = timerType;
+        _timeInputInitialMinutes = ViewModel.GetTimerMinutes(timerType);
+        _timeInputTitle = GetTimerInputTitle(timerType);
+        _showTimeInputDialog = true;
+    }
+
+    private void OnTimerInputConfirmed(int minutes)
+    {
+        ViewModel.SetTimerMinutes(_activeTimerType, minutes);
+        _showTimeInputDialog = false;
+    }
+
+    private void CloseRegularTemplateListPopup()
+    {
+        _showRegularTemplateListPopup = false;
+    }
+
+    private Task CopyRegularTemplateAsync(Guid taskId)
+        => CloseAsync(TaskEditPopUpCloseAction.CopyRegularTemplate, taskId);
+
+    private Task EditRegularTemplateAsync(Guid taskId)
+        => CloseAsync(TaskEditPopUpCloseAction.EditRegularTemplate, taskId);
+
+    private async Task HandleSaveAsync()
+    {
+        await CloseAsync(TaskEditPopUpCloseAction.Save, regularTemplateTaskId:null);
+    }
+
+    private async Task HandleCancelAsync()
+    {
+        await CloseAsync(TaskEditPopUpCloseAction.Cancel, regularTemplateTaskId:null);
+    }
+
+    private async Task CloseAsync(TaskEditPopUpCloseAction action, Guid? regularTemplateTaskId )
+    {
+        var payload = ViewModel.CreateClosePayload(action, regularTemplateTaskId);
+        ViewModel.Close();
+        await OnClose.InvokeAsync(payload);
+        
+
+        ResetLocalPopupState();
+
+    }
+
+    private void CloseTimeInputDialog()
+    {
+        _showTimeInputDialog = false;
+    }
+
+    private async Task HandleModalKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key != "Escape")
+        {
+            return;
+        }
+
+        if (_showTimeInputDialog)
+        {
+            CloseTimeInputDialog();
+            return;
+        }
+
+        if (_showRegularTemplateListPopup)
+        {
+            CloseRegularTemplateListPopup();
+            return;
+        }
+
+        if (ViewModel.ShowCalendarPopup)
+        {
+            ViewModel.CloseCalendarPopup();
+            return;
+        }
+
+        await HandleCancelAsync();
+    }
+
+    private void OnCalendarPopUpTaskDateConfirmed(DateTime selectedDate)
+    {
+        ViewModel.SetDate(selectedDate);
+    }
+
+    private string GetTimerInputTitle(TimerType timerType) => timerType switch
+    {
+        TimerType.FocusTimer => Localizer["SetFocusTime"],
+        TimerType.BreakTimer => Localizer["SetBreakTime"],
+        _ => Localizer["SetTimer"]
+    };
+
+    private void ResetLocalPopupState()
+    {
+        _showRegularTemplateListPopup = false;
+        _showTimeInputDialog = false;
+    }
+
+}

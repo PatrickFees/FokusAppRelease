@@ -1,0 +1,82 @@
+.todo-action-overlay {
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 1100;
+    padding: 1rem;
+}
+
+.todo-action-popup {
+    width: min(20rem, 100%);
+    background: var(--color-surface);
+    border-radius: 1rem;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 18px 34px rgba(15, 23, 42, 0.28);
+}
+
+.todo-action-popup h3 {
+    margin: 0 0 0.25rem;
+    color: var(--color-ink);
+    font-size: 1.05rem;
+}
+
+.todo-action-button {
+    min-height: 2.7rem;
+    border: none;
+    border-radius: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+.todo-action-button:hover {
+    transform: translateY(-1px);
+}
+
+.todo-action-button:active {
+    transform: translateY(0);
+    filter: brightness(0.98);
+}
+
+.todo-action-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+}
+
+.todo-action-button.start {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 50%, var(--color-ink) 100%);
+    color: var(--color-surface);
+}
+
+.todo-action-start-icon {
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(248,250,252,0.95)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M12 7.5v5l3 2'/%3E%3C/svg%3E");
+}
+
+.todo-action-button.done {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    color: var(--color-surface);
+}
+
+.todo-action-button.delete {
+    background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+    color: var(--color-surface);
+}
+
+.todo-action-button.edit {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    color: var(--color-surface);
+}

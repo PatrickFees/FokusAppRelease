@@ -1,0 +1,15 @@
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.csproj.AssemblyReference.cache
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.AssemblyInfoInputs.cache
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.AssemblyInfo.cs
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.csproj.CoreCompileInputs.cache
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.sourcelink.json
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\bin\Debug\net9.0\FokusAppCore.deps.json
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\bin\Debug\net9.0\FokusAppCore.runtimeconfig.json
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\bin\Debug\net9.0\FokusAppCore.dll
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\bin\Debug\net9.0\FokusAppCore.pdb
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.dll
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\refint\FokusAppCore.dll
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.pdb
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\FokusAppCore.genruntimeconfig.cache
+C:\MySpace\FokusApp\FokusApp\FokusAppCore\obj\Debug\net9.0\ref\FokusAppCore.dll

@@ -1,0 +1,66 @@
+@using FokusApp.Core.Models
+@using FokusApp.Core.Enums
+
+<section class="todo-book-section">
+    <div class="todo-book-section-header">
+        <h2>@Title</h2>
+        <button type="button"
+                class="todo-book-add-button"
+                aria-label="@AddButtonAriaLabel"
+                @onclick="OnAdd">
+            +
+        </button>
+    </div>
+    <div class="todo-book-divider"></div>
+
+    @if (Tasks.Count == 0)
+    {
+        <p class="todo-book-empty">@Localizer["NoTasksForDay"]</p>
+    }
+    else
+    {
+        <ul class="todo-book-task-list">
+            @foreach (var task in Tasks)
+            {
+                <li @key="task.Id"
+                    class="todo-book-task-item @(task.IsDone ? "is-done" : string.Empty)"
+                    role="button"
+                    tabindex="0"
+                    @onclick="() => HandleTaskClick(task.Id)">
+                    <p class="todo-book-task-note">@task.Note</p>
+                    <div class="todo-book-task-meta">
+                        <span class="task-priority priority-label @PriorityFormatter.GetCssClass(task.Priority)">@Localizer["Priority", PriorityFormatter.Format(task.Priority)]</span>
+                        @if (task.IsDone)
+                        {
+                            <span class="todo-book-task-state">@Localizer["Done"]</span>
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string AddButtonAriaLabel { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<TaskDto> Tasks { get; set; } = [];
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> OnTaskClick { get; set; }
+
+    private Task HandleTaskClick(Guid? taskId)
+    {
+        return taskId.HasValue
+            ? OnTaskClick.InvokeAsync(taskId.Value)
+            : Task.CompletedTask;
+    }
+}

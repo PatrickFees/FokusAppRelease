@@ -1,0 +1,131 @@
+@using FokusApp.Core
+@inherits ComponentBase
+
+@if (IsOpen)
+{
+    <div class="timer-input-overlay popup-overlay" @onclick="CloseDialog">
+        <div class="timer-input-dialog" @onclick:stopPropagation>
+            <h2 class="timer-input-title">@_dialogTitle</h2>
+            <p class="timer-input-description">@Localizer["EnterMinutesDescription"]</p>
+            <form class="timer-input-form" @onsubmit="SubmitAsync" @onsubmit:preventDefault>
+                <label class="timer-input-label" for="@_minuteInputId">@Localizer["MinutesMaximum", MaximumMinutes]</label>
+            
+                <input id="@_minuteInputId"
+                       type="number"
+                       inputmode="numeric"
+                       min="1"
+                       max="@MaximumMinutes"
+                       value="@_minuteInput"
+                       @oninput="OnMinuteInputChanged"
+                       class="timer-input-field" />
+                @if (_errorOccured)
+                {
+                    <p class="timer-input-error">@Localizer["EnterMinutesError"]</p>
+                }
+                <div class="timer-input-actions">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseDialog">@Localizer["Cancel"]</button>
+                    <button type="submit" class="btn btn-primary">@Localizer["Apply"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+@code {
+    private readonly string _minuteInputId = $"time-input-minute-{Guid.NewGuid():N}";
+    private bool _initializedForOpenCycle;
+
+    private string _minuteInput = string.Empty;
+    private bool _errorOccured;
+    private int MaximumMinutes => AppConstants.MaximumMinutes;
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public int InitialMinutes { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    private string _dialogTitle => string.IsNullOrWhiteSpace(Title) ? Localizer["SetTimer"] : Title;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        
+        if (!IsOpen)
+        {
+            _initializedForOpenCycle = false;
+            return;
+        }
+
+        if (!_initializedForOpenCycle)
+        {
+            Open(InitialMinutes);
+            _initializedForOpenCycle = true;
+        }
+    }
+
+    private void Open(int initialMinutes)
+    {
+        var parsedInitialMinutes = ParseNonNegativeMinutes(initialMinutes.ToString());
+        _minuteInput = parsedInitialMinutes.ToString();
+        _errorOccured = false;
+    }
+
+    private void OnMinuteInputChanged(ChangeEventArgs args)
+    {
+        _minuteInput = args.Value?.ToString() ?? string.Empty;
+        _errorOccured = false;
+    }
+
+    private async Task SubmitAsync()
+    {
+        if (!IsInputRight())
+        {
+            return;
+        }
+
+        var minutes = GetMinutes();
+        await OnConfirm.InvokeAsync(minutes);
+    }
+
+    private async Task CloseDialog()
+    {
+        await OnCancel.InvokeAsync();
+    }
+
+    private int GetMinutes()
+    {
+        return ParseNonNegativeMinutes(_minuteInput);
+    }
+
+    private bool IsInputRight()
+    {
+        var parsed = ParseNonNegativeMinutes(_minuteInput);
+        var isError = parsed < AppConstants.MinimumMinutes || parsed > MaximumMinutes || string.IsNullOrWhiteSpace(_minuteInput);
+        _errorOccured = isError;
+        return !isError;
+    }
+
+    private int ParseNonNegativeMinutes(string minute)
+    {
+        try
+        {
+            var parsedMinutes = Int32.Parse(minute);
+            var minutesWithinRange = Math.Clamp(parsedMinutes, 0, MaximumMinutes);
+            return minutesWithinRange <= 0 ? 0 : minutesWithinRange;
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+}

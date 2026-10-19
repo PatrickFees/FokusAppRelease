@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <DefaultItemExcludes>$(DefaultItemExcludes);artifacts\**;bin\**;obj\**;TestResults\**</DefaultItemExcludes>
+    <!-- Die Razor-Komponenten der App werden hier mitkompiliert (siehe unten). Ihr Namespace entsteht aus
+         RootNamespace plus Ordnerpfad und muss deshalb dem der App entsprechen. -->
+    <RootNamespace>FokusApp</RootNamespace>
+    <EnableDefaultCssItems>false</EnableDefaultCssItems>
+    <UiRoot>..\FokusApp\</UiRoot>
+    <!-- Die Testklassen liegen im Namespace FocusAppTests und nicht unter dem RootNamespace. -->
+    <NoWarn>$(NoWarn);IDE0130</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bunit" Version="2.*" />
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.0.0" />
+    <PackageReference Include="NSubstitute" Version="5.3.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\FokusApp\Resources\Localization\AppStrings*.resx" Link="Localization\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\FokusApp.Presentation\**\*.cs" Exclude="..\FokusApp.Presentation\obj\**;..\FokusApp.Presentation\bin\**" Link="PresentationSources\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- Razor-Komponenten der MAUI-App (nur Targets für Android, iOS, MacCatalyst und Windows) per Link mitkompilieren,
+       damit sie mit bUnit getestet werden können. Ausgenommen sind Komponenten, die sich nur mit MAUI kompilieren
+       lassen: Routes.razor (MauiProgram) und ErrorPage.razor (Clipboard, Share, DeviceInfo). -->
+  <ItemGroup>
+    <RazorComponent Include="$(UiRoot)Components\**\*.razor" Exclude="$(UiRoot)Components\Routes.razor;$(UiRoot)Components\ErrorComponent\ErrorPage.razor" Link="Components\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="$(UiRoot)Components\**\*.cs" Link="Components\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="$(UiRoot)Services\IUiBackPressService.cs" Link="Services\IUiBackPressService.cs" />
+    <Compile Include="$(UiRoot)Resources\Localization\AppStrings.cs" Link="Resources\Localization\AppStrings.cs" />
+    <EmbeddedResource Include="$(UiRoot)Resources\Localization\AppStrings*.resx" Link="Resources\Localization\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FokusApp.Core\FokusApp.Core.csproj" />
+    <ProjectReference Include="..\FokusApp.Presentation\FokusApp.Presentation.csproj" />
+    <ProjectReference Include="..\FokusApp.Migrations\FokusApp.Migrations.csproj" />
+  </ItemGroup>
+
+</Project>

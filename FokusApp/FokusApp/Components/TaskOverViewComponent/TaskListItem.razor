@@ -1,0 +1,139 @@
+@using FokusApp.Core.Models
+@using FokusApp.Core.Enums
+
+<li @key="Task.Id"
+    class="task-item @(_areActionsVisible ? "show-actions" : string.Empty)"
+    @onpointerdown="HandlePointerDown"
+    @onpointerup="HandlePointerUp"
+    @onpointerleave="ResetSwipeTracking"
+    @onpointercancel="ResetSwipeTracking">
+    <div class="task-swipe-hint">&lt;</div>
+    <div class="task-item-content" @onclick="HideActions">
+        <div class="task-item-header">
+            <span class="task-title">@GetTaskLabel(Task)</span>
+            <span class="task-priority priority-label @PriorityFormatter.GetCssClass(Task.Priority)">@Localizer["Priority", PriorityFormatter.Format(Task.Priority)]</span>
+        </div>
+        <p class="task-description">@Task.Note</p>
+        <div class="task-meta">
+            <span class="task-due-date">@GetTaskDateLabel(Task, ListType)</span>
+            @if (!string.IsNullOrWhiteSpace(TaskStatusLabel))
+            {
+                <span class="task-estimate">@Localizer["Status", TaskStatusLabel]</span>
+            }
+        </div>
+    </div>
+    <div class="task-item-actions">
+        @if (IsRunning)
+        {
+            <button type="button" class="task-action running" disabled>
+                @Localizer["TaskCurrentlyRunning"]
+            </button>
+        }
+        else
+        {
+            <button type="button" class="task-action edit" @onclick:stopPropagation="true" @onclick="HandleEditAsync">
+                @Localizer["Edit"]
+            </button>
+            <button type="button" class="task-action delete" @onclick:stopPropagation="true" @onclick="HandleDeleteAsync">
+                @Localizer["Delete"]
+            </button>
+        }
+    </div>
+</li>
+
+@code {
+    private const double SwipeThreshold = 45;
+
+    private double? _swipeStartX;
+    private bool _areActionsVisible;
+
+    public enum TaskListItemType
+    {
+        Active,
+        Regular,
+        Completed
+    }
+
+    [Parameter, EditorRequired]
+    public TaskDto Task { get; set; } = null!;
+
+    [Parameter, EditorRequired]
+    public TaskListItemType ListType { get; set; }
+
+    [Parameter]
+    public bool IsRunning { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> OnDelete { get; set; }
+
+    private string TaskStatusLabel => GetTaskStatusLabel(Task, ListType);
+
+    private string GetTaskLabel(TaskDto task) => task.IsRegularTask ? Localizer["RegularTask"] : Localizer["OneTimeTask"];
+
+    private string GetTaskDateLabel(TaskDto task, TaskListItemType taskListType) => taskListType switch
+    {
+        TaskListItemType.Active => Localizer["CreatedOn", task.CreationDate],
+        TaskListItemType.Regular => Localizer["TemplateWithoutDate"],
+        TaskListItemType.Completed => Localizer["CompletedOn", task.CreationDate],
+        _ => string.Empty
+    };
+
+    private string GetTaskStatusLabel(TaskDto task, TaskListItemType taskListType) => taskListType switch
+    {
+        TaskListItemType.Active => IsRunning ? Localizer["Active"] : Localizer["Open"],
+        TaskListItemType.Regular => Localizer["Template"],
+        _ => string.Empty
+    };
+
+    private void HandlePointerDown(PointerEventArgs args)
+    {
+        _swipeStartX = args.ClientX;
+    }
+
+    private void HandlePointerUp(PointerEventArgs args)
+    {
+        if (_swipeStartX.HasValue)
+        {
+            var swipeDelta = args.ClientX - _swipeStartX.Value;
+            _areActionsVisible = swipeDelta switch
+            {
+                <= -SwipeThreshold => true,
+                >= SwipeThreshold => false,
+                _ => _areActionsVisible
+            };
+        }
+
+        ResetSwipeTracking();
+    }
+
+    private void HideActions()
+    {
+        _areActionsVisible = false;
+    }
+
+    private async Task HandleEditAsync()
+    {
+        HideActions();
+        if (Task.Id is Guid taskId)
+        {
+            await OnEdit.InvokeAsync(taskId);
+        }
+    }
+
+    private async Task HandleDeleteAsync()
+    {
+        HideActions();
+        if (Task.Id is Guid taskId)
+        {
+            await OnDelete.InvokeAsync(taskId);
+        }
+    }
+
+    private void ResetSwipeTracking()
+    {
+        _swipeStartX = null;
+    }
+}
