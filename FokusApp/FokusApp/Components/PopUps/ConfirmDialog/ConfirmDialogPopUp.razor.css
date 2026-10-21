@@ -1,5 +1,5 @@
 .confirm-dialog-overlay {
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--color-overlay);
     z-index: 1100;
     padding: 1.5rem;
 }
@@ -27,7 +27,7 @@
 .confirm-dialog-message {
     margin: 0;
     font-size: 0.95rem;
-    color: #475569;
+    color: var(--color-ink-muted);
     text-align: left;
 }
 

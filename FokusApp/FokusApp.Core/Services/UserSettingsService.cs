@@ -36,6 +36,22 @@ public sealed class UserSettingsService : IUserSettingsService
         }
     }
 
+    public AppColorTheme CurrentTheme
+    {
+        get
+        {
+            _cacheLock.EnterReadLock();
+            try
+            {
+                return NormalizeTheme(_currentSetting?.Theme);
+            }
+            finally
+            {
+                _cacheLock.ExitReadLock();
+            }
+        }
+    }
+
     public async Task InitializeAsync()
     {
         if (_initialized)
@@ -168,6 +184,46 @@ public sealed class UserSettingsService : IUserSettingsService
         }
     }
 
+    public async Task SetThemeAsync(AppColorTheme theme)
+    {
+        var normalizedTheme = NormalizeTheme((int)theme);
+        SettingEntity? updatedSetting;
+
+        _cacheLock.EnterReadLock();
+        try
+        {
+            if (_currentSetting is null || _currentSetting.Theme == (int)normalizedTheme)
+            {
+                return;
+            }
+
+            updatedSetting = new SettingEntity
+            {
+                Id = _currentSetting.Id,
+                Theme = (int)normalizedTheme,
+                Language = _currentSetting.Language,
+                RingtoneId = _currentSetting.RingtoneId,
+                Ringtone = _currentSetting.Ringtone
+            };
+        }
+        finally
+        {
+            _cacheLock.ExitReadLock();
+        }
+
+        await _settingRepository.UpdateAsync(updatedSetting).ConfigureAwait(false);
+
+        _cacheLock.EnterWriteLock();
+        try
+        {
+            _currentSetting = updatedSetting;
+        }
+        finally
+        {
+            _cacheLock.ExitWriteLock();
+        }
+    }
+
     private async Task LoadSettingsAsync()
     {
         var settings = await _settingRepository.GetAllAsync().ConfigureAwait(false);
@@ -214,6 +270,10 @@ public sealed class UserSettingsService : IUserSettingsService
             RingtoneFilePath = ringtone.RingtoneFilePath
         };
     }
+
+    private static AppColorTheme NormalizeTheme(int? theme) => theme is { } value && Enum.IsDefined((AppColorTheme)value)
+        ? (AppColorTheme)value
+        : AppColorTheme.System;
 
     private static AppLanguage NormalizeLanguage(int? language) => language switch
     {

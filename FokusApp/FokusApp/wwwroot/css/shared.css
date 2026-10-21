@@ -119,3 +119,9 @@
     text-transform: uppercase;
     cursor: pointer;
 }
+
+.priority-symbol {
+    font-size: 0.75em;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}

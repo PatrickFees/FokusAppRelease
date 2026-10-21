@@ -63,7 +63,7 @@
                 <button type="button"
                         class="priority-button @(PriorityFormatter.GetCssClass(priority)) @(isPrioritySelected ? "selected" : string.Empty)"
                         @onclick="() => TogglePriorityFilter(priority)">
-                    @PriorityFormatter.Format(priority)
+                    <span class="priority-symbol" aria-hidden="true">@PriorityFormatter.GetSymbol(priority)</span> @PriorityFormatter.Format(priority)
                 </button>
             }
         </div>

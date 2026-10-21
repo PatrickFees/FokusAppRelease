@@ -277,6 +277,51 @@ public class UserSettingsServiceTests
         };
     }
 
+    [Theory]
+    [InlineData(0, AppColorTheme.System)]
+    [InlineData(1, AppColorTheme.White)]
+    [InlineData(2, AppColorTheme.Dark)]
+    [InlineData(5, AppColorTheme.Red)]
+    [InlineData(99, AppColorTheme.System)]
+    [InlineData(-1, AppColorTheme.System)]
+    public async Task CurrentTheme_StoredThemeValue_IsNormalizedToKnownTheme(int storedTheme, AppColorTheme expected)
+    {
+        var setting = CreateSetting(CreateRingtone("Raw/Eins.mp3"), (int)AppLanguage.German);
+        setting.Theme = storedTheme;
+        SetStoredSettings(setting);
+        await _service.InitializeAsync();
+
+        Assert.Equal(expected, _service.CurrentTheme);
+    }
+
+    [Fact]
+    public async Task SetThemeAsync_NewTheme_PersistsThemeAndKeepsOtherSettings()
+    {
+        var ringtone = CreateRingtone("Raw/Eins.mp3");
+        var setting = CreateSetting(ringtone, (int)AppLanguage.English);
+        SetStoredSettings(setting);
+        await _service.InitializeAsync();
+
+        await _service.SetThemeAsync(AppColorTheme.Pink);
+
+        Assert.Equal(AppColorTheme.Pink, _service.CurrentTheme);
+        Assert.Equal((int)AppColorTheme.Pink, _updatedSetting!.Theme);
+        Assert.Equal((int)AppLanguage.English, _updatedSetting.Language);
+        Assert.Equal(ringtone.Id, _updatedSetting.RingtoneId);
+    }
+
+    [Fact]
+    public async Task SetThemeAsync_SameTheme_DoesNotWrite()
+    {
+        var setting = CreateSetting(CreateRingtone("Raw/Eins.mp3"), (int)AppLanguage.German);
+        SetStoredSettings(setting);
+        await _service.InitializeAsync();
+
+        await _service.SetThemeAsync(AppColorTheme.System);
+
+        await _settingRepository.DidNotReceive().UpdateAsync(Arg.Any<SettingEntity>());
+    }
+
     private static SettingEntity CreateSetting(RingtonesEntity ringtone, int language)
     {
         return new SettingEntity

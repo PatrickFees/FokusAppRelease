@@ -1,5 +1,5 @@
 .timer-task-inline-filter {
-    border: 1px solid #cbd5f5;
+    border: 1px solid var(--color-border);
     border-radius: 1rem;
     background: var(--color-surface-alt);
     box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
@@ -15,7 +15,7 @@
 .timer-task-search {
     width: 100%;
     padding: 0.65rem 0.8rem;
-    border: 1px solid #cbd5f5;
+    border: 1px solid var(--color-border);
     border-radius: 0.75rem;
     font-size: 0.95rem;
     color: var(--color-ink);
@@ -25,7 +25,7 @@
 .timer-task-search:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 0 0 3px rgb(var(--color-accent-rgb) / 0.15);
 }
 
 .timer-task-priority-filters {
@@ -51,7 +51,7 @@
 
 .timer-task-sort-button {
     align-self: flex-start;
-    border: 2px solid rgba(37, 99, 235, 0.35);
+    border: 2px solid rgb(var(--color-accent-rgb) / 0.35);
     background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface-alt));
     color: var(--color-accent-strong);
     border-radius: var(--radius-pill);
@@ -66,7 +66,7 @@
 .timer-task-sort-button:hover,
 .timer-task-sort-button:focus-visible {
     transform: translateY(-1px);
-    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+    box-shadow: 0 10px 20px rgb(var(--color-accent-rgb) / 0.22);
     outline: none;
 }
 
@@ -74,7 +74,7 @@
     align-self: flex-start;
     border: 2px solid rgba(100, 116, 139, 0.35);
     background: var(--color-surface-alt);
-    color: #334155;
+    color: var(--color-ink-muted);
     border-radius: var(--radius-pill);
     padding: 0.5rem 0.85rem;
     font-size: 0.82rem;
@@ -87,7 +87,7 @@
 .timer-task-reset-button:hover,
 .timer-task-reset-button:focus-visible {
     transform: translateY(-1px);
-    background: var(--color-surface);
+    background: var(--color-surface-2);
     box-shadow: 0 10px 20px rgba(100, 116, 139, 0.18);
     outline: none;
 }

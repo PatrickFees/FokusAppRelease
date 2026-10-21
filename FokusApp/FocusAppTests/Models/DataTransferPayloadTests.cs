@@ -257,8 +257,11 @@ public class DataTransferPayloadTests
     [InlineData(1, true)]
     [InlineData(2, true)]
     [InlineData(-1, false)]
-    [InlineData(3, false)]
-    public void IsValid_SettingTheme_MustBeUnspecifiedLightOrDark(int theme, bool expected)
+    [InlineData(3, true)]
+    [InlineData(4, true)]
+    [InlineData(5, true)]
+    [InlineData(6, false)]
+    public void IsValid_SettingTheme_MustBeKnownAppColorTheme(int theme, bool expected)
     {
         var payload = CreateValidPayload();
         payload.Settings = [new SettingDataTransferModel(SettingId, theme, 0, RingtoneId)];

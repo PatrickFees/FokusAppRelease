@@ -56,7 +56,7 @@
             <div class="priority-selector-header">
             <span class="priority-badge @PriorityFormatter.GetCssClass(ViewModel.Model.Priority)">
                       
-                @Localizer["Priority", PriorityFormatter.Format(ViewModel.Model.Priority)]
+                <span class="priority-symbol" aria-hidden="true">@PriorityFormatter.GetSymbol(ViewModel.Model.Priority)</span> @Localizer["Priority", PriorityFormatter.Format(ViewModel.Model.Priority)]
                 </span>
             </div>
             <input id="@_prioritySliderInputId"

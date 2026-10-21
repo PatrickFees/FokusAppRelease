@@ -3,6 +3,7 @@
 @inherits ObservableComponentBase
 @inject FokusApp.Components.Settings.ISettingsViewModel ViewModel
 @inject FokusApp.Core.Services.Interfaces.IAppLocalizationService LocalizationService
+@inject FokusApp.Core.Services.Interfaces.IAppThemeService ThemeService
 @using FokusApp.Core.Enums
 @using FokusApp.Components.PopUps.ConfirmDialog
 
@@ -10,6 +11,30 @@
 
 <div class="settings-page">
     <h1>@Localizer["Settings"]</h1>
+
+    <section class="settings-section">
+        <h2>@Localizer["ThemeTitle"]</h2>
+        <p class="settings-description">@Localizer["ThemeDescription"]</p>
+        <div class="theme-options" role="radiogroup" aria-label="@Localizer["ThemeTitle"]">
+            @foreach (var theme in ThemeOptions)
+            {
+                var isSelected = ThemeService.SelectedTheme == theme;
+                <button type="button"
+                        class="theme-option"
+                        role="radio"
+                        aria-checked="@(isSelected ? "true" : "false")"
+                        data-theme-option="@theme"
+                        @onclick="() => OnThemeSelected(theme)">
+                    <span class="theme-swatch theme-swatch-@theme.ToString().ToLowerInvariant()" aria-hidden="true">
+                        <span class="theme-swatch-card"></span>
+                        <span class="theme-swatch-accent"></span>
+                        <span class="theme-swatch-bar"></span>
+                    </span>
+                    <span>@Localizer[$"Theme{theme}"]</span>
+                </button>
+            }
+        </div>
+    </section>
 
     <section class="settings-section">
         <h2>@Localizer["Language"]</h2>
@@ -114,6 +139,8 @@
 </div>
 
 @code {
+    private static readonly AppColorTheme[] ThemeOptions = Enum.GetValues<AppColorTheme>();
+
     private string? SelectedRingtoneLabel => string.IsNullOrWhiteSpace(ViewModel.SelectedRingtonePath)
         ? null
         : FormatRingtoneLabel(ViewModel.SelectedRingtonePath);
@@ -128,6 +155,11 @@
     private async Task OnRingtoneSelectionChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
     {
         await ViewModel.SelectRingtoneAsync(args.Value?.ToString());
+    }
+
+    private async Task OnThemeSelected(AppColorTheme theme)
+    {
+        await ThemeService.SetThemeAsync(theme);
     }
 
     private async Task OnLanguageSelectionChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)

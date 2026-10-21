@@ -1,7 +1,8 @@
 /*#if (SampleContent)*/
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: #fff
+    background: var(--color-bg);
+    color: var(--color-ink);
 }
 
 a, .btn-link {
@@ -124,7 +125,7 @@ h1:focus {
         position: sticky;
         top: 0;
         height: env(safe-area-inset-top);
-        background-color: #f7f7f7;
+        background-color: var(--color-bg);
         width: 100%;
         z-index: 1;
     }

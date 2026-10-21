@@ -23,13 +23,13 @@
             @foreach (var task in Tasks)
             {
                 <li @key="task.Id"
-                    class="todo-book-task-item @(task.IsDone ? "is-done" : string.Empty)"
+                    class="todo-book-task-item @PriorityFormatter.GetCssClass(task.Priority) @(task.IsDone ? "is-done" : string.Empty)"
                     role="button"
                     tabindex="0"
                     @onclick="() => HandleTaskClick(task.Id)">
                     <p class="todo-book-task-note">@task.Note</p>
                     <div class="todo-book-task-meta">
-                        <span class="task-priority priority-label @PriorityFormatter.GetCssClass(task.Priority)">@Localizer["Priority", PriorityFormatter.Format(task.Priority)]</span>
+                        <span class="task-priority priority-label @PriorityFormatter.GetCssClass(task.Priority)"><span class="priority-symbol" aria-hidden="true">@PriorityFormatter.GetSymbol(task.Priority)</span> @Localizer["Priority", PriorityFormatter.Format(task.Priority)]</span>
                         @if (task.IsDone)
                         {
                             <span class="todo-book-task-state">@Localizer["Done"]</span>

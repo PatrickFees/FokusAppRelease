@@ -7,6 +7,14 @@
   <data name="Settings" xml:space="preserve"><value>Einstellungen</value></data>
   <data name="Language" xml:space="preserve"><value>Sprache</value></data>
   <data name="LanguageDescription" xml:space="preserve"><value>Wähle die Sprache der App.</value></data>
+  <data name="ThemeTitle" xml:space="preserve"><value>Design</value></data>
+  <data name="ThemeDescription" xml:space="preserve"><value>Wähle das Farbdesign der App.</value></data>
+  <data name="ThemeSystem" xml:space="preserve"><value>Wie System</value></data>
+  <data name="ThemeWhite" xml:space="preserve"><value>Weiß</value></data>
+  <data name="ThemeDark" xml:space="preserve"><value>Dunkel</value></data>
+  <data name="ThemePink" xml:space="preserve"><value>Rosa</value></data>
+  <data name="ThemeBlue" xml:space="preserve"><value>Blau</value></data>
+  <data name="ThemeRed" xml:space="preserve"><value>Rot</value></data>
   <data name="German" xml:space="preserve"><value>Deutsch</value></data>
   <data name="English" xml:space="preserve"><value>Englisch</value></data>
   <data name="RingtoneTitle" xml:space="preserve"><value>Klingelton auswählen</value></data>

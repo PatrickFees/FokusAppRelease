@@ -1,5 +1,6 @@
 using FokusApp.Core.Services;
 using FokusApp.Core.Services.Interfaces;
+using FokusApp.Services;
 using System.Globalization;
 
 namespace FokusApp; 
@@ -12,6 +13,8 @@ public partial class App : Application
     private readonly IAppStartupStateService _appStartupStateService;
     private readonly IAppDataCoordinator _appDataCoordinator;
     private readonly IDayChangeService _dayChangeService;
+    private readonly IAppThemeService _appThemeService;
+    private readonly MauiSystemThemeProvider _systemThemeProvider;
 
     public App(
         MainPage mainPage,
@@ -20,7 +23,9 @@ public partial class App : Application
         IAppLocalizationService appLocalizationService,
         IAppStartupStateService appStartupStateService,
         IAppDataCoordinator appDataCoordinator,
-        IDayChangeService dayChangeService)
+        IDayChangeService dayChangeService,
+        IAppThemeService appThemeService,
+        MauiSystemThemeProvider systemThemeProvider)
     {
         InitializeComponent();
         _mainPage = mainPage;
@@ -30,6 +35,9 @@ public partial class App : Application
         _appStartupStateService = appStartupStateService;
         _appDataCoordinator = appDataCoordinator;
         _dayChangeService = dayChangeService;
+        _appThemeService = appThemeService;
+        _systemThemeProvider = systemThemeProvider;
+        _systemThemeProvider.Attach(this);
         RegisterGlobalErrorHandlers();
         _ = RunStartupInitAsync();
     }
@@ -48,6 +56,7 @@ public partial class App : Application
             await _startupDataChecker.EnsureFirstStartDataAsync();
             await _appDataCoordinator.InitializeAsync().ConfigureAwait(false);
             await _appLocalizationService.InitializeAsync();
+            await _appThemeService.InitializeAsync();
             _appStartupStateService.MarkReady();
         }
         catch (Exception ex)

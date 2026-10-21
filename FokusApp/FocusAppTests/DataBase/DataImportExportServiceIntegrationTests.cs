@@ -142,6 +142,7 @@ public class DataImportExportServiceIntegrationTests : IDisposable
             textProvider,
             Substitute.For<IAppDataCoordinator>(),
             Substitute.For<IAppLocalizationService>(),
+            Substitute.For<IAppThemeService>(),
             _timeProvider);
     }
 }

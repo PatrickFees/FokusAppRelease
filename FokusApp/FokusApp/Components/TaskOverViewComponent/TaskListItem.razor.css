@@ -4,15 +4,15 @@
     flex-direction: column;
     overflow: hidden;
     padding: 0;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid color-mix(in srgb, var(--priority-color, var(--priority-keine-color)) 55%, var(--color-surface-alt));
     border-radius: 10px;
-    background: var(--bs-body-bg, var(--color-surface-alt));
+    background: color-mix(in srgb, var(--priority-color, var(--priority-keine-color)) 30%, var(--color-surface-alt));
     touch-action: pan-y;
 }
 
 .priority-label {
     --priority-color: var(--priority-keine-color);
-    color: var(--priority-color);
+    color: var(--color-ink);
     font-weight: 700;
 }
 
@@ -51,7 +51,7 @@
     align-items: center;
     justify-content: center;
     background: linear-gradient(180deg, rgba(148, 163, 184, 0.1) 0%, rgba(148, 163, 184, 0.22) 100%);
-    color: rgba(15, 23, 42, 0.45);
+    color: var(--color-ink-subtle);
     font-size: 1.5rem;
     font-weight: 700;
     pointer-events: none;
@@ -153,17 +153,13 @@
 
 .task-priority,
 .task-meta {
-    color: var(--bs-secondary-color, #5c5c5c);
+    color: var(--color-ink);
 }
 
-    .task-priority.priority-label,
-    .task-meta .priority-label {
-        color: var(--priority-color);
-    }
 
 .task-description {
     margin: 0;
-    color: var(--bs-body-color, #212529);
+    color: var(--color-ink);
 }
 
 .task-meta {
