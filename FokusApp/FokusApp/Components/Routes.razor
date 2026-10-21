@@ -2,6 +2,8 @@
 @inject NavigationManager NavigationManager
 @inject FokusApp.Core.Services.Interfaces.IAppLocalizationService LocalizationService
 @inject FokusApp.Core.Services.Interfaces.IAppStartupStateService StartupState
+@inject FokusApp.Core.Services.Interfaces.IAppThemeService ThemeService
+@inject Microsoft.JSInterop.IJSRuntime JS
 @using System
 @using FokusApp.Services
 @using FokusApp.Components.Layout
@@ -48,6 +50,7 @@ else
         NotificationNavigationBridge.RouteRequested += HandleRouteRequested;
         LocalizationService.LanguageChanged += HandleLanguageChanged;
         StartupState.StateChanged += HandleStartupStateChanged;
+        ThemeService.ThemeChanged += HandleThemeChanged;
     }
 
     protected override void OnAfterRender(bool firstRender)
@@ -58,6 +61,8 @@ else
         {
             return;
         }
+
+        _ = ApplyThemeAsync();
 
         if (NotificationNavigationBridge.TryConsumePendingRoute(out var pendingRoute))
         {
@@ -73,6 +78,23 @@ else
     private void HandleLanguageChanged(object? sender, EventArgs args)
     {
         _ = InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleThemeChanged(object? sender, EventArgs args)
+    {
+        _ = InvokeAsync(ApplyThemeAsync);
+    }
+
+    private async Task ApplyThemeAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("fokusTheme.apply", ThemeService.EffectiveTheme.ToString().ToLowerInvariant());
+        }
+        catch (Microsoft.JSInterop.JSException)
+        {
+            // The WebView may not be ready yet; the next theme change applies it.
+        }
     }
 
     private void HandleStartupStateChanged(object? sender, EventArgs args)
@@ -105,5 +127,6 @@ else
         NotificationNavigationBridge.RouteRequested -= HandleRouteRequested;
         LocalizationService.LanguageChanged -= HandleLanguageChanged;
         StartupState.StateChanged -= HandleStartupStateChanged;
+        ThemeService.ThemeChanged -= HandleThemeChanged;
     }
 }

@@ -22,6 +22,7 @@ public sealed class DataImportExportService : IDataImportExportService
     private readonly IDataTransferTextProvider _textProvider;
     private readonly IAppDataCoordinator _appDataCoordinator;
     private readonly IAppLocalizationService _appLocalizationService;
+    private readonly IAppThemeService _appThemeService;
     private readonly TimeProvider _timeProvider;
 
     public DataImportExportService(
@@ -33,6 +34,7 @@ public sealed class DataImportExportService : IDataImportExportService
         IDataTransferTextProvider textProvider,
         IAppDataCoordinator appDataCoordinator,
         IAppLocalizationService appLocalizationService,
+        IAppThemeService appThemeService,
         TimeProvider timeProvider)
     {
         _taskRepository = taskRepository;
@@ -43,6 +45,7 @@ public sealed class DataImportExportService : IDataImportExportService
         _textProvider = textProvider;
         _appDataCoordinator = appDataCoordinator;
         _appLocalizationService = appLocalizationService;
+        _appThemeService = appThemeService;
         _timeProvider = timeProvider;
     }
 
@@ -107,6 +110,7 @@ public sealed class DataImportExportService : IDataImportExportService
 
         await _appDataCoordinator.ReloadAsync().ConfigureAwait(false);
         await _appLocalizationService.ReloadAsync().ConfigureAwait(false);
+        await _appThemeService.ReloadAsync().ConfigureAwait(false);
         return DataTransferResult.Success(_textProvider.GetText("ImportCompleted"));
     }
 
@@ -123,6 +127,7 @@ public sealed class DataImportExportService : IDataImportExportService
 
         await _appDataCoordinator.ReloadAsync().ConfigureAwait(false);
         await _appLocalizationService.ReloadAsync().ConfigureAwait(false);
+        await _appThemeService.ReloadAsync().ConfigureAwait(false);
         return DataTransferResult.Success(_textProvider.GetText("ResetCompleted"));
     }
 

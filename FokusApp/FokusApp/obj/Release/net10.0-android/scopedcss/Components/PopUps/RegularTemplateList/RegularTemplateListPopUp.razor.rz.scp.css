@@ -1,7 +1,7 @@
 .regular-template-list-backdrop[b-b883avz8iq] {
     z-index: 1060;
     padding: 1rem;
-    background: rgba(15, 23, 42, 0.38);
+    background: var(--color-overlay);
 }
 
 .regular-template-list-popup[b-b883avz8iq] {
@@ -49,7 +49,7 @@
 
 .regular-template-empty[b-b883avz8iq] {
     margin: 0;
-    color: #475569;
+    color: var(--color-ink-muted);
 }
 
 .regular-template-list[b-b883avz8iq] {
@@ -70,14 +70,14 @@
     padding: 0.65rem;
     border: 1px solid rgba(15, 23, 42, 0.12);
     border-radius: 0.5rem;
-    background: var(--color-surface);
+    background: var(--color-surface-2);
 }
 
 .regular-template-list-text[b-b883avz8iq] {
     min-width: 0;
     overflow-wrap: anywhere;
     font-weight: 600;
-    color: #1f2937;
+    color: var(--color-ink);
 }
 
 .regular-template-list-actions[b-b883avz8iq] {
@@ -89,7 +89,7 @@
 .regular-template-icon-button[b-b883avz8iq] {
     width: 2.25rem;
     height: 2.25rem;
-    color: var(--color-surface);
+    color: var(--color-on-accent);
     background-repeat: no-repeat;
     background-position: center;
     transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;

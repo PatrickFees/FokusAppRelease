@@ -1,9 +1,9 @@
-<api type="release" assembly-name="FokusApp" mvid="c044f28646df45f7a2e112f657022e9f">
-  <module assembly-name="FokusApp" mvid="c044f28646df45f7a2e112f657022e9f" mvid-bytes="hvJEwN9G90Wi4RL2VwIunw==">
+<api type="release" assembly-name="FokusApp" mvid="594940a57b8e4d4f80b74b936c901e4f">
+  <module assembly-name="FokusApp" mvid="594940a57b8e4d4f80b74b936c901e4f" mvid-bytes="pUBJWY57T02At0uTbJAeTw==">
     <types-scratch>
       <entry key="crc64a5242fd7da013cd8/MainActivity" java-name="crc64a5242fd7da013cd8/MainActivity" managed-type-name="FokusApp.MainActivity" token="33554446" />
       <entry key="crc64a5242fd7da013cd8/MainApplication" java-name="crc64a5242fd7da013cd8/MainApplication" managed-type-name="FokusApp.MainApplication" token="33554447" />
-      <entry key="crc642cfb22bc037d1c68/TimerAndAudioServiceAndroid" java-name="crc642cfb22bc037d1c68/TimerAndAudioServiceAndroid" managed-type-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid" token="33554478" />
+      <entry key="crc642cfb22bc037d1c68/TimerAndAudioServiceAndroid" java-name="crc642cfb22bc037d1c68/TimerAndAudioServiceAndroid" managed-type-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid" token="33554479" />
     </types-scratch>
   </module>
 </api>

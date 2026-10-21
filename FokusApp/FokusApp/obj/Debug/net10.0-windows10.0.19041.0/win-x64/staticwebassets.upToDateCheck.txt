@@ -1,7 +1,9 @@
 wwwroot\css\app.css
 wwwroot\css\shared.css
+wwwroot\css\themes.css
 wwwroot\css\tokens.css
 wwwroot\index.html
 wwwroot\js\navFan.js
+wwwroot\js\theme.js
 C:\Users\patri\.nuget\packages\microsoft.aspnetcore.components.webview\10.0.0\build\..\staticwebassets\blazor.modules.json
 C:\Users\patri\.nuget\packages\microsoft.aspnetcore.components.webview\10.0.0\build\..\staticwebassets\blazor.webview.js

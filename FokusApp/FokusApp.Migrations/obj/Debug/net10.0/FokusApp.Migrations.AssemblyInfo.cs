@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FokusApp.Migrations")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0f6e89419efa5bc8fb7fca3b3d492ceb3790a05")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f66ae0f65be4ee91dad8ae995f1404a7c8d69866")]
 [assembly: System.Reflection.AssemblyProductAttribute("FokusApp.Migrations")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FokusApp.Migrations")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

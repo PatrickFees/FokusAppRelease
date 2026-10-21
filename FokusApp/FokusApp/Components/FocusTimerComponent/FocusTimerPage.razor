@@ -116,7 +116,7 @@
             @if (!string.IsNullOrWhiteSpace(ViewModel.SelectedTask.Note))
             {
                 <p class="timer-task-details">
-                    <span class="timer-task-priority priority-label @(PriorityFormatter.GetCssClass(ViewModel.SelectedTaskPriority))">@Localizer["Priority", PriorityFormatter.Format(ViewModel.SelectedTaskPriority)]</span>
+                    <span class="timer-task-priority priority-label @(PriorityFormatter.GetCssClass(ViewModel.SelectedTaskPriority))"><span class="priority-symbol" aria-hidden="true">@PriorityFormatter.GetSymbol(ViewModel.SelectedTaskPriority)</span> @Localizer["Priority", PriorityFormatter.Format(ViewModel.SelectedTaskPriority)]</span>
                     <span class="timer-task-note">@ViewModel.SelectedTaskNote</span>
                 </p>
             }

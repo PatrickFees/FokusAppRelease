@@ -94,8 +94,7 @@ public sealed class DataTransferPayload
 
     private static bool IsValidDuration(int minutes) => minutes is >= 0 and <= MaximumTimerMinutes;
 
-    // Persisted MAUI AppTheme values: Unspecified, Light and Dark.
-    private static bool IsSupportedTheme(int theme) => theme is >= 0 and <= 2;
+    private static bool IsSupportedTheme(int theme) => Enum.IsDefined((AppColorTheme)theme);
 }
 
 public sealed record SettingDataTransferModel(Guid Id, int Theme, int Language, Guid RingtoneId)

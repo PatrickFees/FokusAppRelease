@@ -17,8 +17,8 @@
     border-radius: var(--radius-pill);
     min-height: 2.4rem;
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 60%, var(--color-ink) 100%);
-    color: var(--color-surface);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 60%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
     font-weight: 700;
     cursor: pointer;
 }
@@ -30,7 +30,7 @@
 
 .errors-status[b-c4i2tszrs1] {
     margin: 0;
-    color: #334155;
+    color: var(--color-ink-muted);
     font-weight: 600;
 }
 
@@ -46,7 +46,7 @@
     gap: 0.75rem;
     border-radius: 1rem;
     border: 1px solid rgba(30, 41, 59, 0.14);
-    background: var(--color-surface);
+    background: var(--color-surface-2);
     box-shadow: 0 12px 22px rgba(15, 23, 42, 0.12);
     padding: 1rem;
 }
@@ -110,7 +110,7 @@
     min-height: 2rem;
     padding: 0.3rem 0.8rem;
     background: #1e293b;
-    color: var(--color-surface);
+    color: var(--color-on-accent);
     font-weight: 700;
     cursor: pointer;
 }

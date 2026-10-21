@@ -12,15 +12,43 @@ public class SettingsPageTests : ComponentTestContext
 {
     private readonly ISettingsViewModel _viewModel = Substitute.For<ISettingsViewModel>();
     private readonly IAppLocalizationService _localization = Substitute.For<IAppLocalizationService>();
+    private readonly IAppThemeService _themeService = Substitute.For<IAppThemeService>();
 
     public SettingsPageTests()
     {
         _viewModel.AvailableRingtones.Returns(CreateRingtones());
         _viewModel.SelectedRingtonePath.Returns("Raw/Hello_Sunshine.mp3");
         _localization.CurrentLanguage.Returns(AppLanguage.German);
+        _themeService.SelectedTheme.Returns(AppColorTheme.System);
 
         Services.AddSingleton(_viewModel);
         Services.AddSingleton(_localization);
+        Services.AddSingleton(_themeService);
+    }
+
+    [Fact]
+    public void Render_ShowsOneOptionPerThemeWithSelectedThemeChecked()
+    {
+        _themeService.SelectedTheme.Returns(AppColorTheme.Dark);
+
+        var cut = Render<SettingsPage>();
+
+        var options = cut.FindAll("button.theme-option");
+        var checkedOptions = cut.FindAll("button.theme-option[aria-checked=true]");
+        Assert.Equal(Enum.GetValues<AppColorTheme>().Length, options.Count);
+        Assert.Single(checkedOptions);
+        Assert.Equal("Dark", checkedOptions[0].GetAttribute("data-theme-option"));
+    }
+
+    [Fact]
+    public void ClickThemeOption_SetsTheme()
+    {
+        var cut = Render<SettingsPage>();
+        var pinkOption = cut.Find("button.theme-option[data-theme-option=Pink]");
+
+        pinkOption.Click();
+
+        _themeService.Received(1).SetThemeAsync(AppColorTheme.Pink);
     }
 
     [Fact]

@@ -18,8 +18,8 @@
     padding: 0.85rem 0.6rem 0;
     box-sizing: border-box;
     overflow: hidden;
-    background: linear-gradient(160deg, #0f172a 0%, #1e1b4b 60%, #312e81 100%);
-    color: var(--color-surface);
+    background: linear-gradient(160deg, var(--shell-from) 0%, var(--shell-mid) 60%, var(--shell-to) 100%);
+    color: var(--color-on-shell);
     border-radius: 1.45rem;
     box-shadow: 0 22px 36px rgba(15, 23, 42, 0.3);
     border: 1px solid rgba(226, 232, 240, 0.2);
@@ -46,7 +46,7 @@
 .calender-today-button[b-fdlqaa3pss] {
     border: 1px solid rgba(226, 232, 240, 0.3);
     background: rgba(248, 250, 252, 0.08);
-    color: var(--color-surface);
+    color: var(--color-on-shell);
     border-radius: var(--radius-pill);
     cursor: pointer;
 }
@@ -117,7 +117,7 @@
     border: 0;
     border-radius: 0.5rem;
     background: transparent;
-    color: var(--color-surface);
+    color: var(--color-on-shell);
     font-weight: 700;
     cursor: pointer;
     user-select: none;
@@ -235,7 +235,7 @@
     border: 1px solid rgba(248, 250, 252, 0.3);
     border-radius: 50%;
     background: rgba(15, 23, 42, 0.85);
-    color: var(--color-surface);
+    color: var(--color-on-shell);
     cursor: pointer;
 }
 

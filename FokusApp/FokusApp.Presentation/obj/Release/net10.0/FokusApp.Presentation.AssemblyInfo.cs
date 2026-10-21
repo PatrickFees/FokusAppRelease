@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FokusApp.Presentation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f66ae0f65be4ee91dad8ae995f1404a7c8d69866")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1f7db9db2c3c97be9e4ec3e6e993f2041071a44c")]
 [assembly: System.Reflection.AssemblyProductAttribute("FokusApp.Presentation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FokusApp.Presentation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

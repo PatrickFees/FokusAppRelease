@@ -27,6 +27,7 @@ public class DataImportExportServiceTests
     private readonly IDataTransferTextProvider _textProvider = Substitute.For<IDataTransferTextProvider>();
     private readonly IAppDataCoordinator _coordinator = Substitute.For<IAppDataCoordinator>();
     private readonly IAppLocalizationService _localizationService = Substitute.For<IAppLocalizationService>();
+    private readonly IAppThemeService _themeService = Substitute.For<IAppThemeService>();
     private readonly FakeTimeProvider _timeProvider = new(Now);
     private readonly DataImportExportService _service;
 
@@ -45,6 +46,7 @@ public class DataImportExportServiceTests
             _textProvider,
             _coordinator,
             _localizationService,
+            _themeService,
             _timeProvider);
     }
 
@@ -154,6 +156,7 @@ public class DataImportExportServiceTests
         Assert.Equal(taskId, importedTasks!.Single().Id);
         await _coordinator.Received(1).ReloadAsync();
         await _localizationService.Received(1).ReloadAsync();
+        await _themeService.Received(1).ReloadAsync();
     }
 
     [Fact]
@@ -237,6 +240,7 @@ public class DataImportExportServiceTests
         Assert.All(replacedTasks, task => Assert.Equal(Now.Date, task.TaskDate));
         await _coordinator.Received(1).ReloadAsync();
         await _localizationService.Received(1).ReloadAsync();
+        await _themeService.Received(1).ReloadAsync();
     }
 
     [Fact]

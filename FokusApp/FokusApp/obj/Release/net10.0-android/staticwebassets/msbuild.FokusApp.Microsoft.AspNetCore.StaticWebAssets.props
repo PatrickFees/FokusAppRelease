@@ -12,12 +12,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>bmjvlnbfma</Fingerprint>
-      <Integrity>7SlBwksvscKyb8mn35W6PE3wTxMv4cfuiM+zOQoDPhg=</Integrity>
+      <Fingerprint>zsupj1va08</Fingerprint>
+      <Integrity>M2+1A5+brkA3n/3dpRotUNyld4q4XniCpx058T6rTY4=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>4091</FileLength>
-      <LastWriteTime>Fri, 02 Oct 2026 07:38:04 GMT</LastWriteTime>
+      <FileLength>4140</FileLength>
+      <LastWriteTime>Mon, 19 Oct 2026 21:48:37 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\app.css'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\shared.css'))">
@@ -32,13 +32,33 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>2181td9os4</Fingerprint>
-      <Integrity>5v/LisPZbqJztxNr9zaBsmYOXdUzcHhpZ1JKXvb3E/M=</Integrity>
+      <Fingerprint>nxj2jb2mdw</Fingerprint>
+      <Integrity>a3ASrxVJsup3OpGp9mpxdWIXwsULJoVTVl+sijp9i+w=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>3379</FileLength>
-      <LastWriteTime>Thu, 01 Oct 2026 07:10:28 GMT</LastWriteTime>
+      <FileLength>3356</FileLength>
+      <LastWriteTime>Mon, 19 Oct 2026 21:48:37 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\shared.css'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\themes.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>FokusApp</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>css/themes.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>tj55ta5bzj</Fingerprint>
+      <Integrity>p59ji2htBu3XFjitHe2Eanx9ze65V2XOGJxzF3XJ/t4=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>4289</FileLength>
+      <LastWriteTime>Mon, 19 Oct 2026 21:48:37 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\themes.css'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\tokens.css'))">
       <SourceType>Package</SourceType>
@@ -52,12 +72,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>gv5mh6utrh</Fingerprint>
-      <Integrity>xI9soKjImaTTDeuqNuu7YGw3qXFzB+M+eTxydOPMKSA=</Integrity>
+      <Fingerprint>uo60c23yuh</Fingerprint>
+      <Integrity>3qX8TIe1BmJ6IBXYNGjbD3rBhJbQKmQOteR9NOK3RdA=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>1369</FileLength>
-      <LastWriteTime>Thu, 01 Oct 2026 07:10:28 GMT</LastWriteTime>
+      <FileLength>2434</FileLength>
+      <LastWriteTime>Mon, 19 Oct 2026 21:48:37 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\tokens.css'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\FokusApp.styles.css'))">
@@ -72,12 +92,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName>ScopedCss</AssetTraitName>
       <AssetTraitValue>ApplicationBundle</AssetTraitValue>
-      <Fingerprint>0n7032mokl</Fingerprint>
-      <Integrity>rLFr5/4YgSwy1ryTbkeFO3dBe9+XdfJ/oB1jesh+i0o=</Integrity>
+      <Fingerprint>34mmvkttt5</Fingerprint>
+      <Integrity>c3iSfTNAJmU1KKHcHkl2xe/nshi1zESBTfVVm55TpQE=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>75883</FileLength>
-      <LastWriteTime>Mon, 19 Oct 2026 20:10:21 GMT</LastWriteTime>
+      <FileLength>80254</FileLength>
+      <LastWriteTime>Mon, 19 Oct 2026 21:49:09 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\FokusApp.styles.css'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))">
@@ -92,12 +112,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>hzbyrkuax2</Fingerprint>
-      <Integrity>02Njy/jGX5SEr8QHSxO4Yv4L/FYQpQ2oDurk5ix4kJU=</Integrity>
+      <Fingerprint>in8uqgz1s0</Fingerprint>
+      <Integrity>TpETRoxAGn8SLdzYg8ig+nAoc8NPXIty7B7/EFA1GC4=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>936</FileLength>
-      <LastWriteTime>Thu, 01 Oct 2026 07:10:28 GMT</LastWriteTime>
+      <FileLength>1000</FileLength>
+      <LastWriteTime>Mon, 19 Oct 2026 21:48:37 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\navFan.js'))">
@@ -119,6 +139,26 @@
       <FileLength>2974</FileLength>
       <LastWriteTime>Mon, 19 Oct 2026 19:59:19 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\navFan.js'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\theme.js'))">
+      <SourceType>Package</SourceType>
+      <SourceId>FokusApp</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>js/theme.js</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>whg4c6x785</Fingerprint>
+      <Integrity>fJ9I2xkCkjKNk3RmNEJWEPtH5BY0gG2U3U3rV+7t3XU=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>137</FileLength>
+      <LastWriteTime>Mon, 19 Oct 2026 21:48:37 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\theme.js'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\_framework\blazor.modules.json'))">
       <SourceType>Package</SourceType>

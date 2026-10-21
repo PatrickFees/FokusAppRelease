@@ -11,7 +11,7 @@
 0x680a433c781bb3d di:133 mi:133 do:9121055 ds:9990 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.Collection.Jvm
 0x7c57877c7ba78ad di:78 mi:78 do:4343724 ds:9675 ddo:0 dds:0 cdo:0 cds:0 ru/Microsoft.Maui.Controls.resources.dll
 0x7dcdc7460a0c5e4 di:2 mi:2 do:74472 ds:10180 ddo:0 dds:0 cdo:0 cds:0 System.Collections.NonGeneric
-0x8da3c7dbc340741 di:163 mi:163 do:10295723 ds:13312 ddo:0 dds:0 cdo:0 cds:0 en/FokusApp.resources.dll
+0x8da3c7dbc340741 di:163 mi:163 do:10300233 ds:13824 ddo:0 dds:0 cdo:0 cds:0 en/FokusApp.resources.dll
 0x8f3c9788ee2153c di:138 mi:138 do:9368219 ds:18008 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.DrawerLayout
 0x9d144a7e214d457 di:39 mi:39 do:1778358 ds:64472 ddo:0 dds:0 cdo:0 cds:0 System.Security.Cryptography
 0xb3b632c3bbee20c di:79 mi:79 do:4353399 ds:9666 ddo:0 dds:0 cdo:0 cds:0 sk/Microsoft.Maui.Controls.resources
@@ -20,7 +20,7 @@
 0xc3ca6cc978e2aae di:75 mi:75 do:4314722 ds:9671 ddo:0 dds:0 cdo:0 cds:0 pt-BR/Microsoft.Maui.Controls.resources
 0xc59ad9fbbd43abe di:53 mi:53 do:3495852 ds:615649 ddo:0 dds:0 cdo:0 cds:0 Mono.Android
 0x102a31b45304b1da di:137 mi:137 do:9362806 ds:5413 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.CustomView
-0x10a6fa3e9d5ee60e di:160 mi:160 do:10132300 ds:17477 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Migrations.dll
+0x10a6fa3e9d5ee60e di:160 mi:160 do:10133727 ds:17476 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Migrations.dll
 0x10f6cfcbcf801616 di:17 mi:17 do:596509 ds:12734 ddo:0 dds:0 cdo:0 cds:0 System.IO.Compression.Brotli
 0x125b7f94acb989db di:149 mi:149 do:9570313 ds:111186 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.RecyclerView.dll
 0x13f1e880c25d96d1 di:63 mi:63 do:4198605 ds:9674 ddo:0 dds:0 cdo:0 cds:0 he/Microsoft.Maui.Controls.resources
@@ -71,14 +71,14 @@
 0x3be6248c2bc7dc8c di:118 mi:118 do:7246386 ds:24582 ddo:0 dds:0 cdo:0 cds:0 Microsoft.JSInterop.dll
 0x3be99b43dd39dd37 di:150 mi:150 do:9681499 ds:6000 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.SavedState.SavedState.Android
 0x3c7c495f58ac5ee9 di:156 mi:156 do:9986594 ds:32195 ddo:0 dds:0 cdo:0 cds:0 Xamarin.Kotlin.StdLib
-0x3cdce1f9610469be di:160 mi:160 do:10132300 ds:17477 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Migrations
+0x3cdce1f9610469be di:160 mi:160 do:10133727 ds:17476 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Migrations
 0x3da7781d6333a8fe di:125 mi:125 do:8880349 ds:2771 ddo:0 dds:0 cdo:0 cds:0 SQLitePCLRaw.batteries_v2
 0x3e7f8912b96e5065 di:92 mi:92 do:4605872 ds:60870 ddo:0 dds:0 cdo:0 cds:0 Microsoft.AspNetCore.Components.WebView.dll
 0x3f6f5914291cdcf7 di:111 mi:111 do:7165198 ds:3003 ddo:0 dds:0 cdo:0 cds:0 Microsoft.Extensions.Hosting.Abstractions
 0x43375950ec7c1b6a di:48 mi:48 do:2258304 ds:3069 ddo:0 dds:0 cdo:0 cds:0 netstandard.dll
 0x434c4e1d9284cdae di:53 mi:53 do:3495852 ds:615649 ddo:0 dds:0 cdo:0 cds:0 Mono.Android.dll
 0x43950f84de7cc79a di:74 mi:74 do:4305056 ds:9666 ddo:0 dds:0 cdo:0 cds:0 pl/Microsoft.Maui.Controls.resources.dll
-0x439cd2a34ac0cca1 di:162 mi:162 do:10203308 ds:92415 ddo:0 dds:0 cdo:0 cds:0 FokusApp.dll
+0x439cd2a34ac0cca1 di:162 mi:162 do:10204856 ds:95377 ddo:0 dds:0 cdo:0 cds:0 FokusApp.dll
 0x4515080865a951a5 di:156 mi:156 do:9986594 ds:32195 ddo:0 dds:0 cdo:0 cds:0 Xamarin.Kotlin.StdLib.dll
 0x45c40276a42e283e di:12 mi:12 do:522875 ds:13544 ddo:0 dds:0 cdo:0 cds:0 System.Diagnostics.TraceSource
 0x45fcc9fd66f25095 di:105 mi:105 do:7102130 ds:21257 ddo:0 dds:0 cdo:0 cds:0 Microsoft.Extensions.DependencyModel
@@ -98,7 +98,7 @@
 0x4e32f00cb0937401 di:52 mi:52 do:3482038 ds:13814 ddo:0 dds:0 cdo:0 cds:0 Mono.Android.Runtime
 0x4f21ee6ef9eb527e di:55 mi:55 do:4121188 ds:9674 ddo:0 dds:0 cdo:0 cds:0 ca/Microsoft.Maui.Controls.resources
 0x4fd5f3ee53d0a4f0 di:127 mi:127 do:8909350 ds:2634 ddo:0 dds:0 cdo:0 cds:0 SQLitePCLRaw.lib.e_sqlite3.android
-0x506586cf3ba5b629 di:161 mi:161 do:10149777 ds:53531 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Presentation
+0x506586cf3ba5b629 di:161 mi:161 do:10151203 ds:53653 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Presentation
 0x5112ed116d87baf8 di:89 mi:89 do:4444119 ds:7057 ddo:0 dds:0 cdo:0 cds:0 CommunityToolkit.Mvvm
 0x5131bbe80989093f di:142 mi:142 do:9467886 ds:12326 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.Lifecycle.ViewModel.Android.dll
 0x51bb8a2afe774e32 di:15 mi:15 do:560927 ds:2385 ddo:0 dds:0 cdo:0 cds:0 System.Drawing
@@ -168,7 +168,7 @@
 0x82f6403342e12049 di:83 mi:83 do:4392082 ds:9677 ddo:0 dds:0 cdo:0 cds:0 uk/Microsoft.Maui.Controls.resources
 0x83c14ba66c8e2b8c di:86 mi:86 do:4421095 ds:9670 ddo:0 dds:0 cdo:0 cds:0 zh-Hans/Microsoft.Maui.Controls.resources
 0x83de69860da6cbdd di:108 mi:108 do:7131792 ds:4186 ddo:0 dds:0 cdo:0 cds:0 Microsoft.Extensions.FileProviders.Composite
-0x852955234ef97304 di:161 mi:161 do:10149777 ds:53531 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Presentation.dll
+0x852955234ef97304 di:161 mi:161 do:10151203 ds:53653 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Presentation.dll
 0x86b3e00c36b84509 di:101 mi:101 do:7041896 ds:9520 ddo:0 dds:0 cdo:0 cds:0 Microsoft.Extensions.Configuration.dll
 0x87c4b8a492b176ad di:96 mi:96 do:5941521 ds:8296 ddo:0 dds:0 cdo:0 cds:0 Microsoft.EntityFrameworkCore.Abstractions
 0x87f6569b25707834 di:17 mi:17 do:596509 ds:12734 ddo:0 dds:0 cdo:0 cds:0 System.IO.Compression.Brotli.dll
@@ -190,7 +190,7 @@
 0x91fa41a87223399f di:55 mi:55 do:4121188 ds:9674 ddo:0 dds:0 cdo:0 cds:0 ca/Microsoft.Maui.Controls.resources.dll
 0x93cfa73ab28d6e35 di:71 mi:71 do:4276049 ds:9678 ddo:0 dds:0 cdo:0 cds:0 ms/Microsoft.Maui.Controls.resources
 0x944077d8ca3c6580 di:18 mi:18 do:609243 ds:17720 ddo:0 dds:0 cdo:0 cds:0 System.IO.Compression.dll
-0x94e68b2add1bcd0d di:163 mi:163 do:10295723 ds:13312 ddo:0 dds:0 cdo:0 cds:0 en/FokusApp.resources
+0x94e68b2add1bcd0d di:163 mi:163 do:10300233 ds:13824 ddo:0 dds:0 cdo:0 cds:0 en/FokusApp.resources
 0x967fc325e09bfa8c di:60 mi:60 do:4169599 ds:9679 ddo:0 dds:0 cdo:0 cds:0 es/Microsoft.Maui.Controls.resources
 0x9732d8dbddea3d9a di:67 mi:67 do:4237341 ds:9673 ddo:0 dds:0 cdo:0 cds:0 id/Microsoft.Maui.Controls.resources
 0x978be80e5210d31b di:123 mi:123 do:8739607 ds:110370 ddo:0 dds:0 cdo:0 cds:0 Microsoft.Maui.Graphics.dll
@@ -257,7 +257,7 @@
 0xc28c50f32f81cc73 di:69 mi:69 do:4256695 ds:9684 ddo:0 dds:0 cdo:0 cds:0 ja/Microsoft.Maui.Controls.resources.dll
 0xc2a3bca55b573141 di:19 mi:19 do:626963 ds:19541 ddo:0 dds:0 cdo:0 cds:0 System.IO.FileSystem.Watcher
 0xc2bcfec99f69365e di:154 mi:154 do:9732020 ds:14099 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.ViewPager2.dll
-0xc3cc416033a7b1b7 di:162 mi:162 do:10203308 ds:92415 ddo:0 dds:0 cdo:0 cds:0 FokusApp
+0xc3cc416033a7b1b7 di:162 mi:162 do:10204856 ds:95377 ddo:0 dds:0 cdo:0 cds:0 FokusApp
 0xc472ce300460ccb6 di:95 mi:95 do:4796708 ds:1144813 ddo:0 dds:0 cdo:0 cds:0 Microsoft.EntityFrameworkCore.dll
 0xc5293b19e4dc230e di:146 mi:146 do:9532086 ds:8454 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.Navigation.Fragment
 0xc74d70d4aa96cef3 di:147 mi:147 do:9540540 ds:20141 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.Navigation.Runtime.Android
@@ -299,10 +299,10 @@
 0xe332bacb3eb4a806 di:51 mi:51 do:3464328 ds:17710 ddo:0 dds:0 cdo:0 cds:0 Mono.Android.Export.dll
 0xe3811d68d4fe8463 di:75 mi:75 do:4314722 ds:9671 ddo:0 dds:0 cdo:0 cds:0 pt-BR/Microsoft.Maui.Controls.resources.dll
 0xe494f7ced4ecd10a di:66 mi:66 do:4227654 ds:9687 ddo:0 dds:0 cdo:0 cds:0 hu/Microsoft.Maui.Controls.resources.dll
-0xe5b9c3bba59849e9 di:159 mi:159 do:10054153 ds:78147 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Core.dll
+0xe5b9c3bba59849e9 di:159 mi:159 do:10054153 ds:79574 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Core.dll
 0xe89a2a9ef110899b di:15 mi:15 do:560927 ds:2385 ddo:0 dds:0 cdo:0 cds:0 System.Drawing.dll
 0xe9772100456fb4b4 di:90 mi:90 do:4451176 ds:124317 ddo:0 dds:0 cdo:0 cds:0 Microsoft.AspNetCore.Components.dll
-0xeaa4fe436a4db9bb di:159 mi:159 do:10054153 ds:78147 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Core
+0xeaa4fe436a4db9bb di:159 mi:159 do:10054153 ds:79574 ddo:0 dds:0 cdo:0 cds:0 FokusApp.Core
 0xed19c616b3fcb7eb di:152 mi:152 do:9703834 ds:5453 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.VersionedParcelable.dll
 0xedc632067fb20ff3 di:24 mi:24 do:963590 ds:10287 ddo:0 dds:0 cdo:0 cds:0 System.Memory.dll
 0xef72742e1bcca27a di:122 mi:122 do:8691907 ds:47700 ddo:0 dds:0 cdo:0 cds:0 Microsoft.Maui.Essentials.dll

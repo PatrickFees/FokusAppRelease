@@ -26,6 +26,29 @@ public class TaskPriorityFormatterTests
         Assert.Equal(expectedKey, text);
     }
 
+    [Theory]
+    [InlineData(TaskPriority.Keine, "●○○○○")]
+    [InlineData(TaskPriority.Wenig, "●●○○○")]
+    [InlineData(TaskPriority.Mittel, "●●●○○")]
+    [InlineData(TaskPriority.Hoch, "●●●●○")]
+    [InlineData(TaskPriority.Dringend, "●●●●●")]
+    public void GetSymbol_Priority_ShowsLevelWithoutColor(TaskPriority priority, string expected)
+    {
+        var symbol = _formatter.GetSymbol(priority);
+
+        Assert.Equal(expected, symbol);
+    }
+
+    [Fact]
+    public void GetSymbol_UndefinedPriority_ShowsNoFilledMarker()
+    {
+        var undefined = (TaskPriority)99;
+
+        var symbol = _formatter.GetSymbol(undefined);
+
+        Assert.Equal("○○○○○", symbol);
+    }
+
     [Fact]
     public void Format_UndefinedPriority_UsesUnknownText()
     {

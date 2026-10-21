@@ -48,6 +48,9 @@ public static class MauiProgram
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddLocalization();
         builder.Services.AddSingleton<IAppLocalizationService, AppLocalizationService>();
+        builder.Services.AddSingleton<MauiSystemThemeProvider>();
+        builder.Services.AddSingleton<ISystemThemeProvider>(services => services.GetRequiredService<MauiSystemThemeProvider>());
+        builder.Services.AddSingleton<IAppThemeService, AppThemeService>();
         builder.Services.AddSingleton<IAppStartupStateService, AppStartupStateService>();
         builder.Services.AddSingleton(AudioManager.Current);
         builder.Services.AddSingleton<ITimerSessionController, TimerSessionController>();

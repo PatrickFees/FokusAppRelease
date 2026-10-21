@@ -1,13 +1,13 @@
 .calendar-popup-backdrop[b-d2i1utx2xu] {
     z-index: 1200;
-    background: rgba(15, 23, 42, 0.58);
+    background: var(--color-overlay);
     padding: 1rem;
 }
 
 .calendar-popup-shell[b-d2i1utx2xu] {
     width: min(980px, 96vw);
     height: min(92vh, 860px);
-    background: #f8fbff;
+    background: var(--color-surface-alt);
     border-radius: 1.2rem;
     box-shadow: 0 30px 55px rgba(15, 23, 42, 0.35);
     display: grid;
@@ -22,8 +22,8 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1rem;
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 55%, #1e3a8a 100%);
-    color: var(--color-surface);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 55%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
 }
 
 .calendar-popup-header h2[b-d2i1utx2xu] {
@@ -40,8 +40,8 @@
     border-radius: var(--radius-pill);
     border: none;
     font-size: 1.7rem;
-    color: #1e3a8a;
-    background: var(--color-surface);
+    color: var(--color-accent-deep);
+    background: var(--color-surface-2);
     box-shadow: 0 8px 18px rgba(15, 23, 42, 0.2);
     transition: transform 0.2s ease, filter 0.2s ease;
 }
@@ -77,7 +77,7 @@
 .weekday-header-cell[b-d2i1utx2xu] {
     text-align: center;
     font-weight: 700;
-    color: #334155;
+    color: var(--color-ink-muted);
     padding: 0.4rem 0;
 }
 
@@ -101,7 +101,7 @@
 
 .calendar-day-button:hover[b-d2i1utx2xu] {
     transform: translateY(-1px);
-    box-shadow: 0 10px 18px rgba(37, 99, 235, 0.18);
+    box-shadow: 0 10px 18px rgb(var(--color-accent-rgb) / 0.18);
 }
 
 .calendar-day-button:active[b-d2i1utx2xu] {
@@ -114,13 +114,13 @@
 
 .calendar-day-button.is-today[b-d2i1utx2xu] {
     box-shadow: inset 0 0 0 2px var(--color-accent);
-    background: #dbeafe;
+    background: var(--color-accent-soft);
 }
 
 .calendar-day-button.is-selected[b-d2i1utx2xu] {
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 60%, #1e3a8a 100%);
-    color: var(--color-surface);
-    box-shadow: 0 12px 22px rgba(29, 78, 216, 0.35);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 60%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
+    box-shadow: 0 12px 22px rgb(var(--color-accent-rgb) / 0.35);
 }
 
 .calendar-day-button:focus-visible[b-d2i1utx2xu] {
@@ -133,7 +133,7 @@
     justify-content: flex-end;
     gap: 0.75rem;
     padding: 1rem;
-    background: #eef2ff;
+    background: var(--color-accent-soft);
 }
 
 .calendar-popup-actions .btn[b-d2i1utx2xu] {
@@ -147,15 +147,15 @@
 }
 
 .calendar-popup-actions .btn-secondary[b-d2i1utx2xu] {
-    color: #1e3a8a;
+    color: var(--color-accent-deep);
     background: transparent;
-    border: 2px solid rgba(37, 99, 235, 0.6);
+    border: 2px solid rgb(var(--color-accent-rgb) / 0.6);
 }
 
 .calendar-popup-actions .btn-primary[b-d2i1utx2xu] {
-    color: var(--color-surface);
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 60%, #1e3a8a 100%);
-    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.28);
+    color: var(--color-on-accent);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 60%, var(--color-accent-deep) 100%);
+    box-shadow: 0 12px 24px rgb(var(--color-accent-rgb) / 0.28);
 }
 
 @media (max-width: 680px) {

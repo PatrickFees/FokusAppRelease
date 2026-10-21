@@ -1,12 +1,12 @@
 .todo-action-overlay {
-    background: rgba(15, 23, 42, 0.45);
+    background: var(--color-overlay);
     z-index: 1100;
     padding: 1rem;
 }
 
 .todo-action-popup {
     width: min(20rem, 100%);
-    background: var(--color-surface);
+    background: var(--color-surface-2);
     border-radius: 1rem;
     padding: 1.2rem;
     display: flex;
@@ -52,8 +52,8 @@
     align-items: center;
     justify-content: center;
     gap: 0.45rem;
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 50%, var(--color-ink) 100%);
-    color: var(--color-surface);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 50%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
 }
 
 .todo-action-start-icon {
@@ -68,15 +68,15 @@
 
 .todo-action-button.done {
     background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-    color: var(--color-surface);
+    color: var(--color-on-accent);
 }
 
 .todo-action-button.delete {
     background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
-    color: var(--color-surface);
+    color: var(--color-on-accent);
 }
 
 .todo-action-button.edit {
     background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-    color: var(--color-surface);
+    color: var(--color-on-accent);
 }

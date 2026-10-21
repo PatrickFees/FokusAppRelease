@@ -1,6 +1,6 @@
 .todo-book-section {
-    background: rgba(253, 246, 206, 0.93);
-    border: 2px solid rgba(234, 179, 8, 0.35);
+    background: var(--color-paper);
+    border: 2px solid var(--color-paper-border);
     border-radius: 1.15rem;
     padding: 0.95rem;
     color: var(--color-ink);
@@ -23,22 +23,22 @@
 .todo-book-add-button {
     width: 2.1rem;
     height: 2.1rem;
-    border: 2px solid #60a5fa;
+    border: 2px solid var(--color-accent);
     border-radius: 50%;
-    background: var(--color-surface);
+    background: var(--color-surface-2);
     color: var(--color-accent);
     font-size: 1.5rem;
     line-height: 1;
     padding: 0;
     cursor: pointer;
-    box-shadow: 0 8px 14px rgba(37, 99, 235, 0.24);
+    box-shadow: 0 8px 14px rgb(var(--color-accent-rgb) / 0.24);
     transition: transform 0.15s ease, filter 0.2s ease, box-shadow 0.2s ease;
 }
 
 .todo-book-add-button:hover {
     transform: translateY(-1px);
     filter: brightness(1.03);
-    box-shadow: 0 12px 18px rgba(37, 99, 235, 0.28);
+    box-shadow: 0 12px 18px rgb(var(--color-accent-rgb) / 0.28);
 }
 
 .todo-book-add-button:active {
@@ -47,21 +47,21 @@
 }
 
 .todo-book-add-button:focus-visible {
-    outline: 3px solid rgba(37, 99, 235, 0.3);
+    outline: 3px solid rgb(var(--color-accent-rgb) / 0.3);
     outline-offset: 2px;
 }
 
 .todo-book-divider {
     height: 1px;
     width: 100%;
-    background: rgba(15, 23, 42, 0.4);
+    background: var(--color-divider);
     margin: 0.55rem 0 0.75rem;
 }
 
 .todo-book-empty {
     margin: 0;
     font-size: 0.95rem;
-    color: rgba(15, 23, 42, 0.72);
+    color: var(--color-ink-muted);
 }
 
 .todo-book-task-list {
@@ -75,8 +75,8 @@
 
 .todo-book-task-item {
     cursor: pointer;
-    background: #d9f7d1;
-    border: 1px solid rgba(22, 163, 74, 0.28);
+    background: color-mix(in srgb, var(--priority-color, var(--priority-keine-color)) 30%, var(--color-surface-alt));
+    border: 1px solid color-mix(in srgb, var(--priority-color, var(--priority-keine-color)) 55%, var(--color-surface-alt));
     border-radius: 0.75rem;
     padding: 0.7rem 0.75rem;
     display: flex;
@@ -88,7 +88,7 @@
 
 .todo-book-task-item.is-done {
     opacity: 0.72;
-    background: #e2e8f0;
+    background: var(--color-surface-sunken);
     border-color: rgba(71, 85, 105, 0.35);
 }
 
@@ -112,7 +112,7 @@
 }
 
 .todo-book-task-state {
-    color: #334155;
+    color: var(--color-ink);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -124,7 +124,7 @@
 
 .priority-label {
     --priority-color: var(--priority-keine-color);
-    color: var(--priority-color);
+    color: var(--color-ink);
 }
 
 .priority-keine {

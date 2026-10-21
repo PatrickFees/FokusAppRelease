@@ -1,7 +1,7 @@
 .task-page {
     --task-accent: var(--color-accent);
     --task-accent-dark: var(--color-accent-strong);
-    --task-ink: var(--color-ink);
+    --task-ink: var(--color-accent-deep);
     --task-surface: var(--color-surface);
     --task-control-transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
     display: flex;
@@ -23,7 +23,7 @@
         padding: 0.85rem 1.75rem;
         border: none;
         border-radius: var(--radius-pill);
-        box-shadow: 0 16px 28px rgba(37, 99, 235, 0.28);
+        box-shadow: 0 16px 28px rgb(var(--color-accent-rgb) / 0.28);
         font-size: 1rem;
         font-weight: 600;
         letter-spacing: 0.04em;
@@ -38,7 +38,7 @@
 
     .task-header .btn:not(:disabled):hover {
         transform: translateY(-2px);
-        box-shadow: 0 20px 32px rgba(37, 99, 235, 0.32);
+        box-shadow: 0 20px 32px rgb(var(--color-accent-rgb) / 0.32);
         filter: brightness(1.05);
     }
 
@@ -55,7 +55,7 @@
 
 .task-intro {
     margin: 0;
-    color: var(--bs-secondary-color, #5c5c5c);
+    color: var(--color-ink-muted);
 }
 
 .task-filter-section,
@@ -97,7 +97,7 @@
     z-index: 22;
     align-self: flex-start;
     padding: 0.5rem 0.95rem;
-    border: 2px solid rgba(37, 99, 235, 0.35);
+    border: 2px solid rgb(var(--color-accent-rgb) / 0.35);
     background: color-mix(in srgb, var(--task-accent) 10%, var(--color-surface-alt));
     color: var(--task-accent-dark);
     font-size: 0.82rem;
@@ -107,7 +107,7 @@
     .task-filter-toggle:hover,
     .task-filter-toggle:focus-visible {
         transform: translateY(-1px);
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+        box-shadow: 0 10px 20px rgb(var(--color-accent-rgb) / 0.22);
         outline: none;
     }
 
@@ -143,7 +143,7 @@
 .task-section {
     padding: 1rem;
     border-radius: 12px;
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(79, 70, 229, 0.9) 55%, rgba(14, 116, 144, 0.9) 100%);
+    background: linear-gradient(135deg, rgb(var(--color-accent-rgb) / 0.95) 0%, rgb(var(--color-accent-rgb) / 0.9) 55%, rgba(14, 116, 144, 0.9) 100%);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
     color: var(--task-surface);
 }

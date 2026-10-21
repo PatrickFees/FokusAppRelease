@@ -24,8 +24,8 @@
     </type>
   </jcw-types>
   <acw-types partial-assembly-name="FokusApp" module-name="FokusApp.dll">
-    <type assembly-qualified-name="FokusApp.MainActivity, FokusApp, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="fokusapp.MainActivity" java-key="crc64a5242fd7da013cd8.MainActivity" managed-key="FokusApp.MainActivity" partial-assembly-qualified-name="FokusApp.MainActivity, FokusApp" />
-    <type assembly-qualified-name="FokusApp.MainApplication, FokusApp, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="fokusapp.MainApplication" java-key="crc64a5242fd7da013cd8.MainApplication" managed-key="FokusApp.MainApplication" partial-assembly-qualified-name="FokusApp.MainApplication, FokusApp" />
-    <type assembly-qualified-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid, FokusApp, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="fokusapp.platforms.android.TimerAndAudioServiceAndroid" java-key="crc642cfb22bc037d1c68.TimerAndAudioServiceAndroid" managed-key="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid" partial-assembly-qualified-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid, FokusApp" />
+    <type assembly-qualified-name="FokusApp.MainActivity, FokusApp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="fokusapp.MainActivity" java-key="crc64a5242fd7da013cd8.MainActivity" managed-key="FokusApp.MainActivity" partial-assembly-qualified-name="FokusApp.MainActivity, FokusApp" />
+    <type assembly-qualified-name="FokusApp.MainApplication, FokusApp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="fokusapp.MainApplication" java-key="crc64a5242fd7da013cd8.MainApplication" managed-key="FokusApp.MainApplication" partial-assembly-qualified-name="FokusApp.MainApplication, FokusApp" />
+    <type assembly-qualified-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid, FokusApp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="fokusapp.platforms.android.TimerAndAudioServiceAndroid" java-key="crc642cfb22bc037d1c68.TimerAndAudioServiceAndroid" managed-key="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid" partial-assembly-qualified-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid, FokusApp" />
   </acw-types>
 </api>

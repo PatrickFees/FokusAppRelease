@@ -68,6 +68,11 @@ public abstract class ComponentTestContext : BunitContext
             return priority.ToString();
         }
 
+        public string GetSymbol(TaskPriority priority)
+        {
+            return string.Empty;
+        }
+
         public string GetCssClass(TaskPriority? priority)
         {
             return string.Empty;

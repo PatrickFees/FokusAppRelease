@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FokusApp"
              xmlns:components="clr-namespace:FokusApp.Components"
-             x:Class="FokusApp.MainPage"
-             BackgroundColor="#FFF">
+             x:Class="FokusApp.MainPage">
 
     <BlazorWebView x:Name="blazorWebView"
                        HostPage="wwwroot/index.html"

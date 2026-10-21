@@ -1,12 +1,12 @@
-<api type="debug" assembly-name="FokusApp" mvid="5df7b6ad864949c0a838b62003b287a1">
+<api type="debug" assembly-name="FokusApp" mvid="32648fb888f4412bb676ff3ed6363995">
   <java-to-managed>
     <entry java-name="crc64a5242fd7da013cd8/MainActivity" managed-name="FokusApp.MainActivity, FokusApp" managed-type-token-id="33554443" />
     <entry java-name="crc64a5242fd7da013cd8/MainApplication" managed-name="FokusApp.MainApplication, FokusApp" managed-type-token-id="33554444" />
-    <entry java-name="crc642cfb22bc037d1c68/TimerAndAudioServiceAndroid" managed-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid, FokusApp" managed-type-token-id="33554459" />
+    <entry java-name="crc642cfb22bc037d1c68/TimerAndAudioServiceAndroid" managed-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid, FokusApp" managed-type-token-id="33554460" />
   </java-to-managed>
   <managed-to-java>
     <entry java-name="crc64a5242fd7da013cd8/MainActivity" managed-name="FokusApp.MainActivity, FokusApp" managed-type-token-id="33554443" />
     <entry java-name="crc64a5242fd7da013cd8/MainApplication" managed-name="FokusApp.MainApplication, FokusApp" managed-type-token-id="33554444" />
-    <entry java-name="crc642cfb22bc037d1c68/TimerAndAudioServiceAndroid" managed-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid, FokusApp" managed-type-token-id="33554459" />
+    <entry java-name="crc642cfb22bc037d1c68/TimerAndAudioServiceAndroid" managed-name="FokusApp.Platforms.Android.TimerAndAudioServiceAndroid, FokusApp" managed-type-token-id="33554460" />
   </managed-to-java>
 </api>

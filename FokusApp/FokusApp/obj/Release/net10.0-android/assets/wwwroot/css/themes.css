@@ -1,0 +1,144 @@
+/*
+ * Farbthemes. :root (tokens.css) ist das White-Theme. Jedes Theme ueberschreibt nur Farbtokens.
+ * Das Attribut data-theme wird von wwwroot/js/theme.js gesetzt ("System" wird dort vorher zu white/dark aufgeloest).
+ * Kontrast: Text auf Flaeche >= 4.5:1, Akzent mit --color-on-accent >= 4.5:1 (geprueft per Skript, siehe CssKonzept.md).
+ */
+
+:root[data-theme="white"] {
+    color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --color-bg: #0b1020;
+    --color-surface: #1c2433;
+    --color-surface-2: #1c2433;
+    --color-surface-alt: #151c2b;
+    --color-surface-sunken: #263248;
+    --color-ink: #e8ecf4;
+    --color-ink-muted: #b4bed1;
+    --color-ink-subtle: #93a0b8;
+    --color-border: #34425e;
+    --color-divider: rgba(148, 163, 184, 0.25);
+    --color-overlay: rgba(2, 6, 14, 0.72);
+    --color-success: #5bd498;
+    --color-danger: #ff8f85;
+    --color-warning: #f5b457;
+
+    --color-accent: #3b6fe0;
+    --color-accent-strong: #2f5bc7;
+    --color-accent-deep: #1b3a8c;
+    --color-accent-soft: #1d2b4d;
+    --color-accent-rgb: 59 111 224;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #f1f5f9;
+    --shell-from: #050914;
+    --shell-mid: #0f1530;
+    --shell-to: #1a2250;
+    --nav-from: rgba(24, 40, 92, 0.97);
+    --nav-mid: rgba(32, 38, 104, 0.95);
+    --nav-to: rgba(14, 60, 78, 0.95);
+
+    --color-paper: rgba(38, 42, 62, 0.95);
+    --color-paper-border: rgba(240, 228, 66, 0.28);
+}
+
+:root[data-theme="pink"] {
+    color-scheme: light;
+    --color-bg: #f9d3e3;
+    --color-surface: #fde4ee;
+    --color-surface-2: #fde4ee;
+    --color-surface-alt: #fff0f6;
+    --color-surface-sunken: #f4bfd5;
+    --color-ink: #3d0b24;
+    --color-ink-muted: #6b2145;
+    --color-ink-subtle: #8a3d60;
+    --color-border: #e59cbb;
+    --color-divider: rgba(138, 61, 96, 0.3);
+    --color-overlay: rgba(61, 11, 36, 0.6);
+
+    --color-accent: #c2185b;
+    --color-accent-strong: #a01049;
+    --color-accent-deep: #6d0b31;
+    --color-accent-soft: #fbcfe0;
+    --color-accent-rgb: 194 24 91;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #fff5f9;
+    --shell-from: #55102f;
+    --shell-mid: #7d1a4a;
+    --shell-to: #a62a66;
+    --nav-from: rgba(194, 24, 91, 0.96);
+    --nav-mid: rgba(160, 16, 73, 0.94);
+    --nav-to: rgba(109, 11, 49, 0.94);
+
+    --color-paper: rgba(255, 233, 242, 0.95);
+    --color-paper-border: rgba(194, 24, 91, 0.3);
+}
+
+:root[data-theme="blue"] {
+    color-scheme: light;
+    --color-bg: #cfe2fa;
+    --color-surface: #e1edfd;
+    --color-surface-2: #e1edfd;
+    --color-surface-alt: #eef5ff;
+    --color-surface-sunken: #bcd3f2;
+    --color-ink: #0b1f3a;
+    --color-ink-muted: #2c4a73;
+    --color-ink-subtle: #4a6890;
+    --color-border: #96b8e4;
+    --color-divider: rgba(44, 74, 115, 0.3);
+    --color-overlay: rgba(11, 31, 58, 0.6);
+
+    --color-accent: #1565c0;
+    --color-accent-strong: #0d47a1;
+    --color-accent-deep: #0a2f6b;
+    --color-accent-soft: #cde0f8;
+    --color-accent-rgb: 21 101 192;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #f2f7ff;
+    --shell-from: #0a2038;
+    --shell-mid: #0d3868;
+    --shell-to: #1258a3;
+    --nav-from: rgba(21, 101, 192, 0.96);
+    --nav-mid: rgba(13, 71, 161, 0.94);
+    --nav-to: rgba(10, 47, 107, 0.94);
+
+    --color-paper: rgba(232, 242, 255, 0.95);
+    --color-paper-border: rgba(21, 101, 192, 0.3);
+}
+
+:root[data-theme="red"] {
+    color-scheme: light;
+    --color-bg: #f8d6d1;
+    --color-surface: #fde3df;
+    --color-surface-2: #fde3df;
+    --color-surface-alt: #fff1ef;
+    --color-surface-sunken: #f1bbb3;
+    --color-ink: #3a0d0a;
+    --color-ink-muted: #6b221c;
+    --color-ink-subtle: #8c3e37;
+    --color-border: #e39a91;
+    --color-divider: rgba(140, 62, 55, 0.3);
+    --color-overlay: rgba(58, 13, 10, 0.6);
+
+    --color-accent: #b71c1c;
+    --color-accent-strong: #8e1515;
+    --color-accent-deep: #5c0d0d;
+    --color-accent-soft: #fbcdc7;
+    --color-accent-rgb: 183 28 28;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #fff4f2;
+    --shell-from: #4a0e0e;
+    --shell-mid: #751717;
+    --shell-to: #a02323;
+    --nav-from: rgba(183, 28, 28, 0.96);
+    --nav-mid: rgba(142, 21, 21, 0.94);
+    --nav-to: rgba(92, 13, 13, 0.94);
+
+    --color-paper: rgba(255, 236, 232, 0.95);
+    --color-paper-border: rgba(183, 28, 28, 0.3);
+}

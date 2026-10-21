@@ -52,6 +52,9 @@
     <AppxPackagedFile Include="C:\MySpace\FokusApp\FokusApp\FokusApp\wwwroot\css\shared.css">
       <PackagePath>wwwroot\css\shared.css</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MySpace\FokusApp\FokusApp\FokusApp\wwwroot\css\themes.css">
+      <PackagePath>wwwroot\css\themes.css</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\MySpace\FokusApp\FokusApp\FokusApp\wwwroot\css\tokens.css">
       <PackagePath>wwwroot\css\tokens.css</PackagePath>
     </AppxPackagedFile>
@@ -60,6 +63,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\MySpace\FokusApp\FokusApp\FokusApp\wwwroot\js\navFan.js">
       <PackagePath>wwwroot\js\navFan.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MySpace\FokusApp\FokusApp\FokusApp\wwwroot\js\theme.js">
+      <PackagePath>wwwroot\js\theme.js</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\patri\.nuget\packages\microsoft.aspnetcore.components.webview\10.0.0\staticwebassets\blazor.modules.json">
       <PackagePath>wwwroot\_framework\blazor.modules.json</PackagePath>
@@ -644,7 +650,7 @@
       <PackagePath>wwwroot\FokusApp.styles.css</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Debug\net10.0-windows10.0.19041.0\win-x64\scopedcss\projectbundle\FokusApp.bundle.scp.css">
-      <PackagePath>wwwroot\FokusApp.i9vo8hcr17.bundle.scp.css</PackagePath>
+      <PackagePath>wwwroot\FokusApp.sxs56t0epz.bundle.scp.css</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\MySpace\FokusApp\FokusApp\FokusApp\Components\Calender\CalenderPage.razor.css">
       <PackagePath>Components\Calender\CalenderPage.razor.css</PackagePath>

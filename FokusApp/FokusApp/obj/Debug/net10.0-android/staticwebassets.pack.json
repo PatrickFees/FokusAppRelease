@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\css\\shared.css"
     },
     {
+      "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\css\\themes.css",
+      "PackagePath": "staticwebassets\\css\\themes.css"
+    },
+    {
       "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\css\\tokens.css",
       "PackagePath": "staticwebassets\\css\\tokens.css"
     },
@@ -23,6 +27,10 @@
     {
       "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\js\\navFan.js",
       "PackagePath": "staticwebassets\\js\\navFan.js"
+    },
+    {
+      "Id": "C:\\MySpace\\FokusApp\\FokusApp\\FokusApp\\wwwroot\\js\\theme.js",
+      "PackagePath": "staticwebassets\\js\\theme.js"
     },
     {
       "Id": "C:\\Users\\patri\\.nuget\\packages\\microsoft.aspnetcore.components.webview\\10.0.0\\staticwebassets\\blazor.modules.json",

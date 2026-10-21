@@ -2,7 +2,7 @@
 @using FokusApp.Core.Enums
 
 <li @key="Task.Id"
-    class="task-item @(_areActionsVisible ? "show-actions" : string.Empty)"
+    class="task-item @PriorityFormatter.GetCssClass(Task.Priority) @(_areActionsVisible ? "show-actions" : string.Empty)"
     @onpointerdown="HandlePointerDown"
     @onpointerup="HandlePointerUp"
     @onpointerleave="ResetSwipeTracking"
@@ -11,7 +11,7 @@
     <div class="task-item-content" @onclick="HideActions">
         <div class="task-item-header">
             <span class="task-title">@GetTaskLabel(Task)</span>
-            <span class="task-priority priority-label @PriorityFormatter.GetCssClass(Task.Priority)">@Localizer["Priority", PriorityFormatter.Format(Task.Priority)]</span>
+            <span class="task-priority priority-label @PriorityFormatter.GetCssClass(Task.Priority)"><span class="priority-symbol" aria-hidden="true">@PriorityFormatter.GetSymbol(Task.Priority)</span> @Localizer["Priority", PriorityFormatter.Format(Task.Priority)]</span>
         </div>
         <p class="task-description">@Task.Note</p>
         <div class="task-meta">

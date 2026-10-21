@@ -75,7 +75,7 @@ splashSplashScreen.scale-150.png
 splashSplashScreen.scale-200.png
 splashSplashScreen.scale-400.png
 wwwroot\FokusApp.styles.css
-wwwroot\FokusApp.i9vo8hcr17.bundle.scp.css
+wwwroot\FokusApp.sxs56t0epz.bundle.scp.css
 Raw\AboutAssets.txt
 Raw\Happy with Clap.mp3
 Raw\Hello Sunshine.mp3
@@ -85,11 +85,15 @@ wwwroot\css\app.css
 wwwroot\css\app.css
 wwwroot\css\shared.css
 wwwroot\css\shared.css
+wwwroot\css\themes.css
+wwwroot\css\themes.css
 wwwroot\css\tokens.css
 wwwroot\css\tokens.css
 wwwroot\index.html
 wwwroot\index.html
 wwwroot\js\navFan.js
 wwwroot\js\navFan.js
+wwwroot\js\theme.js
+wwwroot\js\theme.js
 wwwroot\_framework\blazor.modules.json
 wwwroot\_framework\blazor.webview.js

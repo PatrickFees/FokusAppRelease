@@ -1,5 +1,5 @@
 .timer-input-overlay[b-k7ggptvr2z] {
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--color-overlay);
     z-index: 1100;
     padding: 1.5rem;
 }
@@ -27,7 +27,7 @@
 .timer-input-description[b-k7ggptvr2z] {
     margin: 0;
     font-size: 0.95rem;
-    color: #475569;
+    color: var(--color-ink-muted);
     text-align: left;
 }
 
@@ -47,7 +47,7 @@
 .timer-input-field[b-k7ggptvr2z] {
     width: 100%;
     padding: 0.75rem 1rem;
-    border: 1px solid #cbd5f5;
+    border: 1px solid var(--color-border);
     border-radius: 0.75rem;
     font-size: 1rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -58,7 +58,7 @@
 .timer-input-field:focus[b-k7ggptvr2z] {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 0 0 3px rgb(var(--color-accent-rgb) / 0.15);
 }
 
 .timer-input-error[b-k7ggptvr2z] {
@@ -83,25 +83,25 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     border: none;
-    box-shadow: 0 16px 28px rgba(37, 99, 235, 0.28);
+    box-shadow: 0 16px 28px rgb(var(--color-accent-rgb) / 0.28);
     transition: transform 0.2s ease, box-shadow 0.3s ease, filter 0.35s ease, background 0.35s ease;
 }
 
 .timer-input-actions .btn-primary[b-k7ggptvr2z] {
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 50%, var(--color-ink) 100%);
-    color: var(--color-surface);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 50%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
 }
 
 .timer-input-actions .btn-secondary[b-k7ggptvr2z] {
     background: transparent;
     color: var(--color-accent-strong);
-    border: 2px solid rgba(37, 99, 235, 0.65);
+    border: 2px solid rgb(var(--color-accent-rgb) / 0.65);
     box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
 }
 
 .timer-input-actions .btn:not(:disabled):hover[b-k7ggptvr2z] {
     transform: translateY(-2px);
-    box-shadow: 0 20px 32px rgba(37, 99, 235, 0.32);
+    box-shadow: 0 20px 32px rgb(var(--color-accent-rgb) / 0.32);
     filter: brightness(1.05);
 }
 

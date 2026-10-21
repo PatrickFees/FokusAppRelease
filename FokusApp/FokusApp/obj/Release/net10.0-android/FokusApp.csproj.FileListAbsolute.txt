@@ -537,7 +537,6 @@ C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\index.html
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\js\navFan.js
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\FokusApp.styles.css
-C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\FokusApp.0n7032mokl.bundle.scp.css
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\_framework\blazor.modules.json
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\_framework\blazor.webview.js
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\OpenSans-Regular.ttf
@@ -569,3 +568,6 @@ C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\stamp\_Convert
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\stamp\_GenerateJavaStubs.stamp
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\stamp\_ResolveLibraryProjectImports.stamp
+C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\css\themes.css
+C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\js\theme.js
+C:\MySpace\FokusApp\FokusApp\FokusApp\obj\Release\net10.0-android\assets\wwwroot\FokusApp.34mmvkttt5.bundle.scp.css
