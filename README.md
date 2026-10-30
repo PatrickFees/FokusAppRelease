@@ -8,4 +8,5 @@ Ein Tages und Wochenplaner der folgendes anders macht. Aufgaben werden in "For Y
 
 - Selbstfürsorge durch Plan → erhöhung die Handlung tatsächlich umzusetzen
 
+
 - Belohnungssystem aus der Lerntheorie → abhaken und sehen dient als Verstärker
