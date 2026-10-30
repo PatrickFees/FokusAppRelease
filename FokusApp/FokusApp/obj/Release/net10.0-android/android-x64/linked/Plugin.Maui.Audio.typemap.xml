@@ -1,7 +1,0 @@
-<api type="release" assembly-name="Plugin.Maui.Audio" mvid="840bb09c267443e7bbf64edd51c33a77">
-  <module assembly-name="Plugin.Maui.Audio" mvid="840bb09c267443e7bbf64edd51c33a77" mvid-bytes="nLALhHQm50O79k7dUcM6dw==">
-    <types-scratch>
-      <entry key="crc64467b05f37239e7a6/StreamMediaDataSource" java-name="crc64467b05f37239e7a6/StreamMediaDataSource" managed-type-name="Plugin.Maui.Audio.StreamMediaDataSource" token="33554463" />
-    </types-scratch>
-  </module>
-</api>

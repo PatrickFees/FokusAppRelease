@@ -1,1 +1,0 @@
-C:\MySpace\FokusApp\FokusApp\FokusApp\FokusApp.csproj;x64
