@@ -1,0 +1,7 @@
+title: FokusApp
+description: Tages- und Wochenplanung mit Raum für Aufgaben und Dinge, die guttun.
+theme: jekyll-theme-cayman
+url: "https://patrickfees.github.io"
+baseurl: "/FokusAppRelease"
+lang: de
+show_downloads: false
