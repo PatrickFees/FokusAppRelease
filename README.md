@@ -1,22 +1,20 @@
 # FokusApp
 
-**Ein Tages- und Wochenplaner, der Platz für Aufgaben und für Dinge schafft, die guttun.**
-
 [Lizenz: PolyForm Noncommercial 1.0.0](LICENSE) · [Repository öffnen](https://github.com/PatrickFees/FokusAppRelease)
 
-### Im Repository
+### Was du hier findest
 
-- [`APKs_ForMyTestUser/`](APKs_ForMyTestUser/) – Android-Testdateien
-- [`IOS WebApp (coming)/`](IOS%20WebApp%20%28coming%29/) – geplante iOS-WebApp
-- [`Windows FokusApp (coming)/`](Windows%20FokusApp%20%28coming%29/) – geplante Windows-Version
-- [`Linux FokusApp (coming)/`](Linux%20FokusApp%20%28coming%29/) – geplante Linux-Version
-- [`Open Source Code (coming)/`](Open%20Source%20Code%20%28coming%29/) – Quellcode-Veröffentlichung in Vorbereitung
+- [`APKs_ForMyTestUser/`](APKs_ForMyTestUser/)  Android FokusApp
+- [`IOS WebApp (coming)/`](IOS%20WebApp%20%28coming%29/)  geplante iOS-WebApp
+- [`Windows FokusApp (coming)/`](Windows%20FokusApp%20%28coming%29/)  geplante Windows-FokusApp
+- [`Linux FokusApp (coming)/`](Linux%20FokusApp%20%28coming%29/)  geplante Linux-FokusApp
+- [`Open Source Code (coming)/`](Open%20Source%20Code%20%28coming%29/)  Quellcode-Veröffentlichung in Vorbereitung
 
 ## Willkommen
 
 FokusApp ist ein Tages- und Wochenplaner. Aufgaben werden in **„For You“** und **„To Do“** eingeteilt. So hältst du nicht nur fest, was erledigt werden muss, sondern planst auch bewusst positive Aktivitäten für dich ein.
 
-Die App verbindet diese Planung mit der Pomodoro-Technik. Überschaubare Arbeitseinheiten können dabei helfen, Aufgaben Schritt für Schritt anzugehen. Eigene Aktivitäten bekommen einen festen Platz neben den Pflichten des Alltags.
+Die App verbindet diese Planung mit der Pomodoro-Technik. Überschaubare Aufgaben  können dabei helfen, diese Schritt für Schritt anzugehen. Eigene Aktivitäten bekommen einen festen Platz neben den Pflichten des Alltags. Somit setzt du automatisch viele  Grundlagen der positiven Verhaltensspychologie
 
 ## Inhaltsübersicht
 
