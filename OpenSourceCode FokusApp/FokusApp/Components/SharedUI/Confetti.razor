@@ -1,0 +1,50 @@
+@inherits ObservableComponentBase
+@inject IConfettiViewModel ViewModel
+
+@using System.Globalization
+
+@if (ViewModel.IsVisible)
+{
+    <div class="confetti" aria-hidden="true" @key="ViewModel.BurstNumber">
+        @foreach (var piece in BuildPieces(ViewModel.BurstNumber))
+        {
+            <span class="confetti-piece confetti-color-@piece.Color" style="@piece.Style"></span>
+        }
+    </div>
+}
+
+@code {
+    private const int PieceCount = 28;
+    private const int ColorCount = 5;
+
+    private sealed record Piece(int Color, string Style);
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Observe(ViewModel);
+    }
+
+    private static IReadOnlyList<Piece> BuildPieces(int burstNumber)
+    {
+        var random = new Random(burstNumber);
+        var pieces = new List<Piece>(PieceCount);
+
+        for (var index = 0; index < PieceCount; index++)
+        {
+            var left = random.Next(2, 98);
+            var drift = random.Next(-18, 19);
+            var delay = random.Next(0, 450);
+            var duration = random.Next(1100, 1800);
+            var rotation = random.Next(240, 720);
+            var size = random.Next(7, 13);
+
+            var style = string.Create(
+                CultureInfo.InvariantCulture,
+                $"left:{left}%;width:{size}px;height:{size * 1.6:0}px;animation-delay:{delay}ms;animation-duration:{duration}ms;--confetti-drift:{drift}vw;--confetti-rotation:{rotation}deg;");
+            pieces.Add(new Piece(index % ColorCount, style));
+        }
+
+        return pieces;
+    }
+}

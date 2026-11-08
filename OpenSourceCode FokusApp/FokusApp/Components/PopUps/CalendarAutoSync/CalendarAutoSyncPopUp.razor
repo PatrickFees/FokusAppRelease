@@ -1,0 +1,142 @@
+@using FokusApp.Components.PopUps.CalendarAutoSync
+@inherits ObservableComponentBase
+@inject ICalendarAutoSyncPopUpViewModel ViewModel
+@inject FokusApp.Services.IUiBackPressService UiBackPressService
+
+@if (IsOpen)
+{
+    <div class="calendar-auto-sync-backdrop popup-overlay" @onclick="CancelAsync">
+        <div class="calendar-auto-sync-popup"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="@_titleId"
+             @onclick:stopPropagation>
+            <h2 id="@_titleId" class="calendar-auto-sync-title">@Localizer["CalendarAutoSyncPickerTitle"]</h2>
+
+            @if (ViewModel.IsLoading)
+            {
+                <p class="calendar-auto-sync-hint">@Localizer["ImportCalendarLoading"]</p>
+            }
+            else if (ViewModel.Calendars.Count == 0)
+            {
+                <p class="calendar-auto-sync-hint">@Localizer["CalendarImportNoCalendars"]</p>
+            }
+            else
+            {
+                <section class="calendar-auto-sync-section">
+                    <h3>@Localizer["ImportCalendarSelectCalendars"]</h3>
+                    <p class="calendar-auto-sync-hint">@Localizer["ImportCalendarDeviceHint"]</p>
+                    <ul class="calendar-auto-sync-list">
+                        @foreach (var calendar in ViewModel.Calendars)
+                        {
+                            <li @key="calendar.Id" class="calendar-auto-sync-item">
+                                <label>
+                                    <input type="checkbox"
+                                           checked="@calendar.IsSelected"
+                                           @onchange="() => ViewModel.ToggleCalendar(calendar.Id)" />
+                                    <span class="calendar-auto-sync-item-name">@calendar.DisplayName</span>
+                                    <span class="calendar-auto-sync-item-account">@calendar.AccountName</span>
+                                </label>
+                                @if (calendar.IsLocalDefault)
+                                {
+                                    <p class="calendar-auto-sync-item-explanation">@Localizer["CalendarAutoSyncMyCalendarExplanation"]</p>
+                                    <p class="calendar-auto-sync-item-account">@Localizer["CalendarAutoSyncMyCalendarHint"]</p>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
+
+            @if (ViewModel.ResultMessage is not null)
+            {
+                <p class="calendar-auto-sync-result @(ViewModel.ResultIsSuccess == true ? "success" : "error")">
+                    @ViewModel.ResultMessage
+                </p>
+            }
+
+            <div class="calendar-auto-sync-actions">
+                <button type="button" class="app-button app-button--secondary" @onclick="CancelAsync">@Localizer["Cancel"]</button>
+                <button type="button"
+                        class="app-button app-button--primary"
+                        disabled="@(!ViewModel.CanSave)"
+                        @onclick="SaveAsync">
+                    @Localizer["CalendarAutoSyncPickerSave"]
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private readonly string _titleId = "calendar-auto-sync-title";
+    private bool _initializedForOpenCycle;
+    private IDisposable? _backPressRegistration;
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Observe(ViewModel);
+        _backPressRegistration = UiBackPressService.RegisterHandler(HandleBackPressed);
+    }
+
+    private bool HandleBackPressed()
+    {
+        if (!IsOpen)
+        {
+            return false;
+        }
+
+        _ = InvokeAsync(async () =>
+        {
+            await CancelAsync();
+            StateHasChanged();
+        });
+
+        return true;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _backPressRegistration?.Dispose();
+        }
+
+        base.Dispose(disposing);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        if (!IsOpen)
+        {
+            _initializedForOpenCycle = false;
+            return;
+        }
+
+        if (!_initializedForOpenCycle)
+        {
+            _initializedForOpenCycle = true;
+            await ViewModel.OpenAsync();
+        }
+    }
+
+    private async Task SaveAsync()
+    {
+        await ViewModel.SaveAsync();
+        if (ViewModel.ResultIsSuccess == true)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+
+    private Task CancelAsync() => OnClose.InvokeAsync();
+}

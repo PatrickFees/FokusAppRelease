@@ -1,0 +1,16 @@
+<details class="collapsible-section">
+    <summary class="collapsible-section-summary">
+        <h2>@Title</h2>
+    </summary>
+    <div class="collapsible-section-body">
+        @ChildContent
+    </div>
+</details>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

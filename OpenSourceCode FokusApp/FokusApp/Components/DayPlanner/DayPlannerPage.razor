@@ -1,0 +1,295 @@
+@page "/tagesplaner"
+@inherits ObservableComponentBase
+@inject FokusApp.Components.DayPlanner.IDayPlannerViewModel ViewModel
+
+@using System.Globalization
+@using FokusApp.Components.DayPlanner
+@using FokusApp.Components.PopUps.Calendar
+@using FokusApp.Components.PopUps.TaskEdit
+@using FokusApp.Core.Enums
+@using FokusApp.Components.TaskOverViewComponent
+
+<PageTitle>@Localizer["PlannerTitle"]</PageTitle>
+
+<div class="planner-page">
+    <h1>@Localizer["PlannerTitle"]</h1>
+
+    @if (ViewModel.IsLoaded)
+    {
+        <section class="planner-card" aria-label="@StepTitle">
+            @switch (ViewModel.Step)
+            {
+                case DayPlannerStep.Overview:
+                    <h2>@Localizer["PlannerOverviewTitle"]</h2>
+                    <div class="planner-chart" role="img" aria-label="@ChartLabel">
+                        <div class="planner-chart-column">
+                            <strong class="planner-chart-count planner-count-for-you">@ViewModel.PlannedForYou</strong>
+                            <div class="planner-bar-track" aria-hidden="true">
+                                <div class="planner-bar planner-bar-existing planner-bar-for-you-existing" style="height: @Percent(ViewModel.ForYouExistingPercent)%"></div>
+                                <div class="planner-bar planner-bar-done planner-bar-for-you-done" data-testid="planner-bar-done" style="height: @Percent(ViewModel.ForYouDonePercent)%"></div>
+                                @if (ViewModel.ForYouPlannedPercent > 0)
+                                {
+                                    <div class="planner-bar planner-bar-planned planner-bar-for-you-planned" data-testid="planner-bar-planned"
+                                         style="bottom: @Percent(ViewModel.ForYouPlannedStartPercent)%; height: @Percent(ViewModel.ForYouPlannedPercent)%"></div>
+                                }
+                                <div class="planner-goal-tick planner-goal-tick-left planner-goal-for-you" data-testid="planner-goal-tick-left" style="bottom: @Percent(ViewModel.ForYouGoalPercent)%">
+                                    <span class="planner-goal-label">@Localizer["PlannerGoalMark"]</span>
+                                    <span class="planner-goal-mark"></span>
+                                </div>
+                            </div>
+                            <span class="planner-chart-name">@Localizer["TaskTypeForYou"]</span>
+                        </div>
+                        <div class="planner-chart-column">
+                            <strong class="planner-chart-count planner-count-todo">@ViewModel.PlannedToDo</strong>
+                            <div class="planner-bar-track" aria-hidden="true">
+                                <div class="planner-bar planner-bar-existing planner-bar-todo-existing" style="height: @Percent(ViewModel.ToDoExistingPercent)%"></div>
+                                <div class="planner-bar planner-bar-done planner-bar-todo-done" data-testid="planner-bar-done" style="height: @Percent(ViewModel.ToDoDonePercent)%"></div>
+                                @if (ViewModel.ToDoPlannedPercent > 0)
+                                {
+                                    <div class="planner-bar planner-bar-planned planner-bar-todo-planned" data-testid="planner-bar-planned"
+                                         style="bottom: @Percent(ViewModel.ToDoPlannedStartPercent)%; height: @Percent(ViewModel.ToDoPlannedPercent)%"></div>
+                                }
+                                @if (ViewModel.AllowedToDo > 0)
+                                {
+                                    <div class="planner-goal-tick planner-goal-tick-right planner-goal-todo" data-testid="planner-goal-tick-right" style="bottom: @Percent(ViewModel.ToDoGoalPercent)%">
+                                        <span class="planner-goal-mark"></span>
+                                        <span class="planner-goal-label">@Localizer["PlannerGoalMark"]</span>
+                                    </div>
+                                }
+                            </div>
+                            <span class="planner-chart-name">@Localizer["TaskTypeToDo"]</span>
+                        </div>
+                    </div>
+                    <p class="planner-goal-line">@Localizer["PlannerGoalLine", ViewModel.GoalForYou, ViewModel.GoalToDo]</p>
+                    <p class="planner-text planner-overview-text">@ViewModel.OverviewText</p>
+                    @if (ViewModel.TodayTasks.Count > 0)
+                    {
+                        <ul class="planner-tasks">
+                            @foreach (var task in ViewModel.TodayTasks)
+                            {
+                                <li class="planner-task">
+                                    <span class="planner-task-text">@TaskText(task)</span>
+                                    <span class="planner-task-kind">@Localizer[task.IsPositive ? "TaskTypeForYou" : "TaskTypeToDo"]</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    break;
+
+                case DayPlannerStep.Assign:
+                    <h2>@Localizer["PlannerAssignTitle"]</h2>
+                    <p class="planner-text">@Localizer["PlannerAssignText"]</p>
+                    @if (ViewModel.PastTasks.Count == 0)
+                    {
+                        <p class="planner-text planner-assign-done">@Localizer["PlannerAssignDone"]</p>
+                    }
+                    else
+                    {
+                        <ul class="planner-tasks">
+                            @foreach (var task in ViewModel.PastTasks)
+                            {
+                                var id = task.Id;
+                                <li class="planner-task planner-past-task" data-task-id="@id">
+                                    <span class="planner-task-text">@TaskText(task)</span>
+                                    <span class="planner-chips">
+                                        <button type="button" class="app-button app-button--secondary app-button--small planner-chip-today"
+                                                @onclick="() => ViewModel.AssignPastTaskAsync(id, PastTaskTarget.Today)">@Localizer["AssignToday"]</button>
+                                        <button type="button" class="app-button app-button--secondary app-button--small planner-chip-tomorrow"
+                                                @onclick="() => ViewModel.AssignPastTaskAsync(id, PastTaskTarget.Tomorrow)">@Localizer["AssignTomorrow"]</button>
+                                        <button type="button" class="app-button app-button--secondary app-button--small planner-chip-other-day"
+                                                @onclick="() => ViewModel.OpenReschedulePopup(id)">@Localizer["AssignOtherDay"]</button>
+                                        <button type="button" class="app-button app-button--secondary app-button--small planner-chip-discard"
+                                                @onclick="() => ViewModel.DiscardPastTaskAsync(id)">@Localizer["AssignDiscard"]</button>
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                        <button type="button" class="app-button app-button--secondary app-button--small planner-all-tomorrow"
+                                @onclick="ViewModel.AssignAllPastTasksToTomorrowAsync">
+                            @Localizer["AssignAllTomorrow"]
+                        </button>
+                    }
+                    break;
+
+                case DayPlannerStep.ForYou:
+                    <h2>@Localizer["PlannerForYouTitle"]</h2>
+                    <p class="planner-text planner-foryou-text">@ViewModel.ForYouText</p>
+                    <button type="button" class="app-button app-button--secondary app-button--small planner-foryou-create"
+                            @onclick="ViewModel.OpenTaskEditorForForYou">
+                        @Localizer["PlannerForYouCreate"]
+                    </button>
+                    @if (ViewModel.Insight is { } insight)
+                    {
+                        <div class="planner-insight">
+                            <p class="planner-insight-text">@insight.Text</p>
+                            <button type="button" class="app-button app-button--secondary app-button--small planner-insight-action"
+                                    @onclick="ViewModel.OpenTaskEditorForForYou">
+                                @Localizer["WeekdayInsightAction"]
+                            </button>
+                        </div>
+                    }
+                    @foreach (var group in ViewModel.Suggestions.GroupBy(TagFor))
+                    {
+                        <details class="planner-group" data-testid="planner-group">
+                            <summary>
+                                <span class="planner-group-title">@group.Key</span>
+                                <span class="planner-group-count">@group.Count()</span>
+                            </summary>
+                            <ul class="planner-suggestions planner-group-list">
+                                @foreach (var suggestion in group)
+                                {
+                                    <li>
+                                        <button type="button" class="planner-suggestion" @onclick="() => ViewModel.PickSuggestion(suggestion)">
+                                            <span class="planner-suggestion-text">@suggestion.Text</span>
+                                        </button>
+                                    </li>
+                                }
+                            </ul>
+                        </details>
+                    }
+                    @if (ViewModel.PastForYous.Count > 0)
+                    {
+                        <details class="planner-history">
+                            <summary>
+                                <span>@Localizer["PlannerPastForYousTitle"]</span>
+                                <span class="planner-history-count">@ViewModel.PastForYous.Count</span>
+                            </summary>
+                            <ul class="planner-suggestions planner-history-list">
+                                @foreach (var text in ViewModel.PastForYous)
+                                {
+                                    <li>
+                                        <button type="button" class="planner-suggestion" @onclick="() => PickPastForYou(text)">
+                                            <span class="planner-suggestion-text">@text</span>
+                                        </button>
+                                    </li>
+                                }
+                            </ul>
+                        </details>
+                    }
+                    break;
+
+                case DayPlannerStep.Duties:
+                    <h2>@Localizer["PlannerDutiesTitle"]</h2>
+                    <p class="planner-text">@Localizer["PlannerDutiesText"]</p>
+                    <button type="button" class="app-button app-button--secondary app-button--small planner-duty-create"
+                            @onclick="ViewModel.OpenTaskEditorForToDo">
+                        @Localizer["PlannerDutyCreate"]
+                    </button>
+                    @if (ViewModel.DutyTemplates.Count > 0)
+                    {
+                        <details class="planner-group planner-duty-templates">
+                            <summary>
+                                <span class="planner-group-title">@Localizer["PlannerDutyTemplatesTitle"]</span>
+                                <span class="planner-group-count">@ViewModel.DutyTemplates.Count</span>
+                            </summary>
+                            <ul class="planner-suggestions planner-group-list">
+                                @foreach (var template in ViewModel.DutyTemplates)
+                                {
+                                    var id = template.Id;
+                                    <li>
+                                        <button type="button" class="planner-suggestion planner-duty-template" @onclick="() => ViewModel.PickDutyTemplate(id)">
+                                            <span class="planner-suggestion-text">@TaskText(template)</span>
+                                        </button>
+                                    </li>
+                                }
+                            </ul>
+                        </details>
+                    }
+                    break;
+
+                case DayPlannerStep.Done:
+                    <h2>@Localizer["PlannerDoneTitle"]</h2>
+                    <p class="planner-text planner-done-text">@ViewModel.DoneText</p>
+                    break;
+            }
+
+            <div class="planner-actions">
+                @if (ViewModel.CanGoBack)
+                {
+                    <button type="button" class="app-button app-button--secondary planner-back" @onclick="ViewModel.Back">
+                        @Localizer["PlannerBack"]
+                    </button>
+                }
+                @if (ViewModel.Step == DayPlannerStep.Done)
+                {
+                    <button type="button" class="app-button app-button--primary planner-finish" @onclick="ViewModel.Finish">
+                        @Localizer["PlannerFinish"]
+                    </button>
+                }
+                else
+                {
+                    <button type="button" class="app-button app-button--primary planner-next" @onclick="ViewModel.Next">
+                        @Localizer["PlannerNext"]
+                    </button>
+                }
+            </div>
+        </section>
+    }
+</div>
+
+<CalendarPopup IsOpen="ViewModel.IsReschedulePopupOpen"
+               InitialDate="ViewModel.RescheduleInitialDate"
+               OnConfirm="ViewModel.ConfirmRescheduleAsync"
+               OnCancel="ViewModel.CloseReschedulePopup" />
+
+<TaskEditPopUp @key="ViewModel.TaskEditorInput"
+               IsOpen="ViewModel.IsTaskEditorOpen"
+               Model="ViewModel.TaskEditorInput"
+               OnClose="ViewModel.HandleTaskEditPopupCloseAsync" />
+
+@if (ViewModel.CurrentUndo is { } undo)
+{
+    <div class="planner-undo-notice" role="status">
+        <span>@GetUndoText(undo)</span>
+        <button type="button" class="planner-undo-button" @onclick="ViewModel.UndoAsync">@Localizer["Undo"]</button>
+    </div>
+}
+
+@code {
+    private string GetUndoText(UndoNotice undo) => undo.Kind switch
+    {
+        UndoNoticeKind.TaskDiscarded => Localizer["UndoTaskDiscarded"],
+        UndoNoticeKind.TasksMovedToTomorrow => Localizer["UndoTasksMovedToTomorrow", undo.Count],
+        _ => string.Empty
+    };
+
+    private string StepTitle => Localizer[ViewModel.Step switch
+    {
+        DayPlannerStep.Overview => "PlannerOverviewTitle",
+        DayPlannerStep.Assign => "PlannerAssignTitle",
+        DayPlannerStep.ForYou => "PlannerForYouTitle",
+        DayPlannerStep.Duties => "PlannerDutiesTitle",
+        _ => "PlannerDoneTitle"
+    }];
+
+    private string ChartLabel => Localizer[
+        "PlannerChartLabel",
+        ViewModel.PlannedForYou,
+        ViewModel.PlannedToDo,
+        ViewModel.DoneForYou,
+        ViewModel.DoneToDo,
+        ViewModel.GoalForYou,
+        ViewModel.GoalToDo];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+
+    private string TaskText(DayPlannerTask task) =>
+        string.IsNullOrWhiteSpace(task.Note) ? Localizer["Untitled"] : task.Note;
+
+    private void PickPastForYou(string text) =>
+        ViewModel.PickSuggestion(new FokusApp.Components.ForYouSuggestions.ForYouSuggestionItem(text, false, null));
+
+    private string TagFor(FokusApp.Components.ForYouSuggestions.ForYouSuggestionItem suggestion) =>
+        suggestion.TemplateId is not null
+            ? Localizer["ForYouCategoryTemplate"]
+            : suggestion.Category is { } category
+                ? Localizer[$"ForYouCategory{category}"]
+                : Localizer["ForYouCategoryOwn"];
+
+    private static string Percent(double value) => value.ToString("0.#", CultureInfo.InvariantCulture);
+}

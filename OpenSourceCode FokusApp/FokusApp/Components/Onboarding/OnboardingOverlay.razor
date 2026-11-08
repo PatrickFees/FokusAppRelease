@@ -1,0 +1,323 @@
+@inherits ObservableComponentBase
+@inject FokusApp.Components.Onboarding.IOnboardingViewModel ViewModel
+
+@using FokusApp.Components.Onboarding
+@using FokusApp.Core.Enums
+
+
+@if (ViewModel.IsOpen && !ViewModel.IsSceneActive)
+{
+    <div class="onboarding-backdrop"></div>
+    <div class="onboarding-dialog" role="dialog" aria-modal="true" aria-label="@Localizer["OnboardingTitle"]">
+        @switch (ViewModel.Step)
+        {
+            case OnboardingStep.Invite:
+                <h2>@Localizer["OnboardingInviteTitle"]</h2>
+                <p class="onboarding-text">@Localizer["OnboardingInviteText"]</p>
+                <div class="onboarding-actions">
+                    <button type="button" class="app-button app-button--secondary onboarding-decline" @onclick="ViewModel.DeclineInviteAsync">
+                        @Localizer["OnboardingInviteLater"]
+                    </button>
+                    <button type="button" class="app-button app-button--primary onboarding-accept" @onclick="ViewModel.AcceptInvite">
+                        @Localizer["OnboardingInviteLook"]
+                    </button>
+                </div>
+                break;
+
+            case OnboardingStep.Language:
+                <p class="onboarding-progress">@Localizer["OnboardingProgress", ViewModel.PageNumber, ViewModel.PageCount]</p>
+                <h2>@Localizer["Language"]</h2>
+                <div class="onboarding-languages" role="radiogroup" aria-label="@Localizer["Language"]">
+                    @foreach (var language in ViewModel.LanguageOptions)
+                    {
+                        var isSelected = ViewModel.Language == language;
+                        <button type="button"
+                                class="onboarding-goal onboarding-language @(isSelected ? "selected" : string.Empty)"
+                                role="radio"
+                                aria-checked="@(isSelected ? "true" : "false")"
+                                data-language="@language"
+                                @onclick="() => ViewModel.SelectLanguageAsync(language)">
+                            @(language == AppLanguage.German ? "Deutsch" : "English")
+                        </button>
+                    }
+                </div>
+                break;
+
+            case OnboardingStep.Welcome:
+                <p class="onboarding-progress">@Localizer["OnboardingProgress", ViewModel.PageNumber, ViewModel.PageCount]</p>
+                <h2>@Localizer["OnboardingTitle"]</h2>
+                <p class="onboarding-text">@Localizer["OnboardingWelcomeText"]</p>
+                <p class="onboarding-text">@Localizer["OnboardingWelcomeHint"]</p>
+                break;
+
+            case OnboardingStep.Why:
+                <p class="onboarding-progress">@Localizer["OnboardingProgress", ViewModel.PageNumber, ViewModel.PageCount]</p>
+                <h2>@Localizer["OnboardingWhyTitle"]</h2>
+                <ul class="onboarding-list">
+                    <li>@Localizer["OnboardingWhyTraining"]</li>
+                    <li>
+                        @Localizer["OnboardingWhyPlan"]
+                        <ul class="onboarding-list">
+                            <li>@Localizer["OnboardingWhyActivation"]</li>
+                            <li>@Localizer["OnboardingWhySelfDetermination"]</li>
+                            <li>@Localizer["OnboardingWhySelfCare"]</li>
+                            <li>@Localizer["OnboardingWhyReward"]</li>
+                        </ul>
+                    </li>
+                </ul>
+                break;
+
+            case OnboardingStep.Theme:
+                <p class="onboarding-progress">@Localizer["OnboardingProgress", ViewModel.PageNumber, ViewModel.PageCount]</p>
+                <h2>@Localizer["ThemeTitle"]</h2>
+                <p class="onboarding-text">@Localizer["ThemeDescription"]</p>
+                <div class="onboarding-themes" role="radiogroup" aria-label="@Localizer["ColorModeTitle"]">
+                    @foreach (var mode in ViewModel.ColorModeOptions)
+                    {
+                        var isModeSelected = ViewModel.ColorMode == mode;
+                        <button type="button"
+                                class="onboarding-theme"
+                                role="radio"
+                                aria-checked="@(isModeSelected ? "true" : "false")"
+                                data-color-mode-option="@mode"
+                                @onclick="() => ViewModel.SetColorModeAsync(mode)">
+                            <span class="theme-swatch theme-swatch-@ViewModel.Theme.ToString().ToLowerInvariant() theme-swatch-@mode.ToString().ToLowerInvariant()" aria-hidden="true">
+                                <span class="theme-swatch-card"></span>
+                                <span class="theme-swatch-accent"></span>
+                                <span class="theme-swatch-bar"></span>
+                            </span>
+                            <span>@Localizer[$"ColorMode{mode}"]</span>
+                        </button>
+                    }
+                </div>
+                <div class="onboarding-themes" role="radiogroup" aria-label="@Localizer["ThemeColorTitle"]">
+                    @foreach (var theme in ViewModel.ThemeOptions)
+                    {
+                        var isSelected = ViewModel.Theme == theme;
+                        <button type="button"
+                                class="onboarding-theme"
+                                role="radio"
+                                aria-checked="@(isSelected ? "true" : "false")"
+                                data-theme-option="@theme"
+                                @onclick="() => ViewModel.SetThemeAsync(theme)">
+                            <span class="theme-swatch theme-swatch-@theme.ToString().ToLowerInvariant() theme-swatch-@ViewModel.ColorMode.ToString().ToLowerInvariant()" aria-hidden="true">
+                                <span class="theme-swatch-card"></span>
+                                <span class="theme-swatch-accent"></span>
+                                <span class="theme-swatch-bar"></span>
+                            </span>
+                            <span>@Localizer[$"Theme{theme}"]</span>
+                        </button>
+                    }
+                </div>
+                break;
+
+            case OnboardingStep.Features:
+                <p class="onboarding-progress">@Localizer["OnboardingProgress", ViewModel.PageNumber, ViewModel.PageCount]</p>
+                <h2>@Localizer["OnboardingFeaturesTitle"]</h2>
+                <p class="onboarding-text">@Localizer["OnboardingFeaturesText"]</p>
+
+                <label class="onboarding-toggle">
+                    <input type="checkbox"
+                           id="onboardingMicroFeedback"
+                           checked="@ViewModel.MicroFeedbackEnabled"
+                           @onchange="args => ViewModel.SetMicroFeedbackEnabledAsync((bool)args.Value!)" />
+                    <span>
+                        <span class="onboarding-toggle-title">@Localizer["MicroFeedbackSetting"]</span>
+                        <span class="onboarding-toggle-hint">@Localizer["MicroFeedbackSettingHint"]</span>
+                    </span>
+                </label>
+                <label class="onboarding-toggle">
+                    <input type="checkbox"
+                           id="onboardingReviews"
+                           checked="@ViewModel.ReviewsEnabled"
+                           @onchange="args => ViewModel.SetReviewsEnabledAsync((bool)args.Value!)" />
+                    <span>
+                        <span class="onboarding-toggle-title">@Localizer["ReviewsSetting"]</span>
+                        <span class="onboarding-toggle-hint">@Localizer["ReviewsSettingHint"]</span>
+                    </span>
+                </label>
+                <label class="onboarding-toggle">
+                    <input type="checkbox"
+                           id="onboardingCompanion"
+                           checked="@ViewModel.CompanionEnabled"
+                           @onchange="args => ViewModel.SetCompanionEnabledAsync((bool)args.Value!)" />
+                    <span>
+                        <span class="onboarding-toggle-title">@Localizer["CompanionSetting"]</span>
+                        <span class="onboarding-toggle-hint">@Localizer["CompanionSettingHint"]</span>
+                    </span>
+                </label>
+                break;
+
+            case OnboardingStep.Balance:
+                <p class="onboarding-progress">@Localizer["OnboardingProgress", ViewModel.PageNumber, ViewModel.PageCount]</p>
+                <h2>@Localizer["OnboardingBalanceTitle"]</h2>
+                <p class="onboarding-text">@Localizer["OnboardingBalanceText"]</p>
+                <div class="onboarding-goals" role="radiogroup" aria-label="@Localizer["BalanceGoalTitle"]">
+                    @foreach (var goal in ViewModel.BalanceGoalOptions)
+                    {
+                        var isSelected = ViewModel.BalanceGoal == goal;
+                        <button type="button"
+                                class="onboarding-goal @(isSelected ? "selected" : string.Empty)"
+                                role="radio"
+                                aria-checked="@(isSelected ? "true" : "false")"
+                                data-goal="@goal"
+                                @onclick="() => ViewModel.SetBalanceGoalAsync(goal)">
+                            @Localizer[$"BalanceGoal{goal}"]
+                        </button>
+                    }
+                </div>
+                <p class="onboarding-note">@Localizer["OnboardingBalanceMore"]</p>
+                break;
+
+            case OnboardingStep.CalendarImport:
+                <p class="onboarding-progress">@Localizer["OnboardingProgress", ViewModel.PageNumber, ViewModel.PageCount]</p>
+                <h2>@Localizer["OnboardingCalendarImportTitle"]</h2>
+                <p class="onboarding-text">@Localizer["OnboardingCalendarImportText"]</p>
+                <p class="onboarding-text">@Localizer["OnboardingCalendarImportRangeHint"]</p>
+
+                @if (!ViewModel.IsCalendarImportAvailable)
+                {
+                    <p class="onboarding-text">@Localizer["CalendarImportNoCalendars"]</p>
+                }
+                else
+                {
+                    @if (ViewModel.IsCalendarImportLoading)
+                    {
+                        <p class="onboarding-text">@Localizer["ImportCalendarLoading"]</p>
+                    }
+                    else if (ViewModel.CalendarImportCalendars.Count == 0)
+                    {
+                        <p class="onboarding-text">@Localizer["CalendarImportNoCalendars"]</p>
+                    }
+                    else
+                    {
+                        <p class="onboarding-text">@Localizer["ImportCalendarSelectCalendars"]</p>
+                        <ul class="onboarding-calendar-list">
+                            @foreach (var calendar in ViewModel.CalendarImportCalendars)
+                            {
+                                <li @key="calendar.Id" class="onboarding-calendar-item">
+                                    <label>
+                                        <input type="checkbox"
+                                               checked="@calendar.IsSelected"
+                                               @onchange="() => ViewModel.ToggleCalendarImportCalendar(calendar.Id)" />
+                                        <span class="onboarding-calendar-item-name">@calendar.DisplayName</span>
+                                        <span class="onboarding-calendar-item-account">@calendar.AccountName</span>
+                                    </label>
+                                </li>
+                            }
+                        </ul>
+                    }
+
+                    @if (ViewModel.CanChangeCalendarImportScope)
+                    {
+                        <div class="onboarding-calendar-scope">
+                            <span class="onboarding-calendar-scope-label">@Localizer["ImportCalendarScopeLabel"]</span>
+                            <button type="button"
+                                    class="app-button @(ViewModel.IsCalendarImportWorkTask ? "app-button--primary" : "app-button--secondary")"
+                                    @onclick="() => ViewModel.SetCalendarImportIsWorkTask(true)">
+                                @Localizer["Work"]
+                            </button>
+                            <button type="button"
+                                    class="app-button @(!ViewModel.IsCalendarImportWorkTask ? "app-button--primary" : "app-button--secondary")"
+                                    @onclick="() => ViewModel.SetCalendarImportIsWorkTask(false)">
+                                @Localizer["Private"]
+                            </button>
+                        </div>
+                    }
+
+                    <label class="onboarding-toggle">
+                        <input type="checkbox"
+                               id="onboardingCalendarSync"
+                               checked="@ViewModel.CalendarSyncEnabled"
+                               @onchange="args => ViewModel.SetCalendarSyncEnabledAsync((bool)args.Value!)" />
+                        <span>
+                            <span class="onboarding-toggle-title">@Localizer["CalendarAutoSyncSetting"]</span>
+                        </span>
+                    </label>
+                }
+                break;
+
+            case OnboardingStep.TimerNotification:
+                <p class="onboarding-progress">@Localizer["OnboardingProgress", ViewModel.PageNumber, ViewModel.PageCount]</p>
+                <h2>@Localizer["TimerAlertTitle"]</h2>
+                <p class="onboarding-text">@Localizer["TimerAlertDescription"]</p>
+
+                <label class="onboarding-toggle">
+                    <input type="checkbox"
+                           id="onboardingTimerAlertSound"
+                           checked="@ViewModel.TimerAlertSoundEnabled"
+                           @onchange="args => ViewModel.SetTimerAlertSoundEnabledAsync((bool)args.Value!)" />
+                    <span>
+                        <span class="onboarding-toggle-title">@Localizer["TimerAlertSound"]</span>
+                    </span>
+                </label>
+
+                @if (ViewModel.TimerAlertSoundEnabled && ViewModel.IsTimerAlertAdaptToRingerModeAvailable)
+                {
+                    <label class="onboarding-toggle">
+                        <input type="checkbox"
+                               id="onboardingTimerAlertAdaptToRingerMode"
+                               checked="@ViewModel.TimerAlertAdaptToRingerModeEnabled"
+                               @onchange="args => ViewModel.SetTimerAlertAdaptToRingerModeEnabledAsync((bool)args.Value!)" />
+                        <span>
+                            <span class="onboarding-toggle-title">@Localizer["TimerAlertAdaptToRingerMode"]</span>
+                        </span>
+                    </label>
+                    <p class="onboarding-text">@Localizer["TimerAlertAdaptToRingerModeHint"]</p>
+                }
+
+                @if (ViewModel.IsTimerAlertVibrationAvailable)
+                {
+                    <label class="onboarding-toggle">
+                        <input type="checkbox"
+                               id="onboardingTimerAlertVibration"
+                               checked="@ViewModel.TimerAlertVibrationEnabled"
+                               @onchange="args => ViewModel.SetTimerAlertVibrationEnabledAsync((bool)args.Value!)" />
+                        <span>
+                            <span class="onboarding-toggle-title">@Localizer["TimerAlertVibration"]</span>
+                        </span>
+                    </label>
+                }
+                break;
+        }
+
+        @if (ViewModel.Step != OnboardingStep.Invite)
+        {
+            <div class="onboarding-actions">
+                @if (ViewModel.CanGoBack)
+                {
+                    <button type="button" class="app-button app-button--secondary onboarding-back" @onclick="ViewModel.Back">
+                        @Localizer["OnboardingBack"]
+                    </button>
+                }
+                @if (ViewModel.IsLastStep)
+                {
+                    <button type="button" class="app-button app-button--primary onboarding-finish" @onclick="ViewModel.FinishAsync">
+                        @Localizer["OnboardingFinish"]
+                    </button>
+                }
+                else if (ViewModel.Step == OnboardingStep.CalendarImport)
+                {
+                    <button type="button" class="app-button app-button--primary onboarding-next" @onclick="ViewModel.ContinueFromCalendarImportAsync">
+                        @Localizer["OnboardingNext"]
+                    </button>
+                }
+                else if (ViewModel.Step != OnboardingStep.Language)
+                {
+                    <button type="button" class="app-button app-button--primary onboarding-next" @onclick="ViewModel.Next">
+                        @Localizer["OnboardingNext"]
+                    </button>
+                }
+            </div>
+        }
+    </div>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+}

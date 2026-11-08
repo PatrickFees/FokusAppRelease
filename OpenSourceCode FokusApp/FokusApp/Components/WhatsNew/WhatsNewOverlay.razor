@@ -1,0 +1,25 @@
+@inherits ObservableComponentBase
+@inject FokusApp.Components.WhatsNew.IWhatsNewViewModel ViewModel
+
+@if (ViewModel.IsOpen)
+{
+    <div class="whats-new-backdrop" data-testid="whats-new-backdrop"></div>
+    <div class="whats-new-dialog" data-testid="whats-new-dialog" role="dialog" aria-modal="true" aria-label="@Localizer["WhatsNewTitle"]">
+        <h2>@Localizer["WhatsNewTitle"]</h2>
+        <div class="whats-new-text" data-testid="whats-new-text">@((MarkupString)(string)Localizer["WhatsNewText"])</div>
+        <div class="whats-new-actions">
+            <button type="button" class="app-button app-button--primary whats-new-continue" data-testid="whats-new-continue" @onclick="ViewModel.Dismiss">
+                @Localizer["WhatsNewContinue"]
+            </button>
+        </div>
+    </div>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+}

@@ -1,0 +1,339 @@
+@inherits ObservableComponentBase
+@implements IAsyncDisposable
+@implements IOnboardingStageEffects
+@inject FokusApp.Components.Onboarding.IOnboardingViewModel ViewModel
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@inject FokusApp.Services.IUiBackPressService UiBackPressService
+@inject FokusApp.Core.Services.Interfaces.IAppErrorCaptureService ErrorCapture
+
+@using FokusApp.Components.Layout
+@using FokusApp.Components.Onboarding
+@using FokusApp.Core.Services
+@using FokusApp.Core.Services.Interfaces
+@using Microsoft.JSInterop
+
+
+@if (ViewModel.IsPlantOnStage && !_coordinator.IsBroken)
+{
+    <div class="stage">
+        @if (ViewModel.IsSceneActive)
+        {
+            <div class="stage-blocker"></div>
+        }
+
+        <div class="stage-floor" @ref="_floor"></div>
+
+        @if (_coordinator.IsRingVisible)
+        {
+            <OnboardingTimerRing @ref="_ring" />
+        }
+
+        <OnboardingDemo @ref="_demo" Plant="_plant" OnHeadphonesChanged="SetHeadphonesAsync" />
+
+        <div class="stage-plant" @ref="_plant">
+            <div class="stage-plant-inner" @ref="_plantInner">
+                <CompanionFigure Mood="_coordinator.IsAwake ? CompanionMood.Awake : CompanionMood.Resting" />
+                @if (_coordinator.HasHeadphones)
+                {
+                    <svg class="stage-phones" viewBox="0 0 80 72" aria-hidden="true">
+                        <path class="stage-phones-band" d="M13 52 C10 20 70 20 67 52" />
+                        <rect class="stage-phones-cup" x="7" y="45" width="9" height="16" rx="4" />
+                        <rect class="stage-phones-cup" x="64" y="45" width="9" height="16" rx="4" />
+                        <path class="stage-phones-sound" d="M3 47 q-4 6 0 12" />
+                        <path class="stage-phones-sound stage-phones-sound-2" d="M-1 44 q-7 9 0 18" />
+                        <path class="stage-phones-sound" d="M77 47 q4 6 0 12" />
+                        <path class="stage-phones-sound stage-phones-sound-2" d="M81 44 q7 9 0 18" />
+                    </svg>
+                }
+            </div>
+        </div>
+
+        @if (_coordinator.Bubble != SceneBubble.None && ViewModel.IsSceneActive)
+        {
+            <div class="stage-tail"></div>
+            <div class="stage-bubble" role="status" aria-label="@Localizer["OnboardingSceneLabel"]">
+                @switch (_coordinator.Bubble)
+                {
+                    case SceneBubble.Question:
+                        <p>@Localizer["OnboardingSceneQuestion"]</p>
+                        <div class="stage-answers">
+                            <button type="button" class="stage-answer stage-no" @onclick="() => ViewModel.AnswerPomodoroQuestion(false)">
+                                @Localizer["OnboardingSceneNo"]
+                            </button>
+                            <button type="button" class="stage-answer stage-yes" @ref="_yesButton" @onclick="() => ViewModel.AnswerPomodoroQuestion(true)">
+                                @Localizer["OnboardingSceneYes"]
+                            </button>
+                        </div>
+                        break;
+
+                    case SceneBubble.Explain:
+                        <p>@Localizer["OnboardingSceneExplain"]</p>
+                        break;
+
+                    case SceneBubble.Tip:
+                        <p>@Localizer["OnboardingSceneTip"]</p>
+                        <p>@Localizer["OnboardingSceneTipExample"]</p>
+                        break;
+
+                    case SceneBubble.DayIntro:
+                        <p>@Localizer["OnboardingSceneDayIntro"]</p>
+                        break;
+
+                    case SceneBubble.Scope:
+                        <p>@Localizer["OnboardingSceneScope"]</p>
+                        break;
+                }
+            </div>
+        }
+
+        @if (_coordinator.IsNextVisible && ViewModel.IsSceneActive)
+        {
+            <button type="button"
+                    class="app-button app-button--primary stage-next @(_coordinator.IsNextDelayed ? "stage-next-delayed" : string.Empty)"
+                    @ref="_nextButton"
+                    @onclick="ViewModel.Next">
+                @Localizer["OnboardingNext"]
+            </button>
+        }
+    </div>
+}
+
+@code {
+    private readonly CancellationTokenSource _disposed = new();
+
+    private OnboardingSceneCoordinator _coordinator = null!;
+
+    private ElementReference _floor;
+    private ElementReference _plant;
+    private ElementReference _plantInner;
+    private ElementReference _yesButton;
+    private ElementReference _nextButton;
+    private OnboardingTimerRing? _ring;
+    private OnboardingDemo? _demo;
+
+    private IJSObjectReference? _module;
+    private IDisposable? _backPressRegistration;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Observe(ViewModel);
+        _coordinator = new OnboardingSceneCoordinator(ViewModel, this, ErrorCapture);
+
+        _backPressRegistration = UiBackPressService.RegisterHandler(() => ViewModel.IsSceneActive);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _coordinator.ReconcileAsync(_disposed.Token);
+        }
+    }
+
+    protected override Task OnObservedPropertyChangedAsync(System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        return _coordinator.ReconcileAsync(_disposed.Token);
+    }
+
+    private async Task SetHeadphonesAsync(bool hasHeadphones)
+    {
+        _coordinator.HasHeadphones = hasHeadphones;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task<bool> IsReducedMotionAsync()
+    {
+        var module = await GetModuleAsync();
+        return await module.InvokeAsync<bool>("isReducedMotion");
+    }
+
+    public string GetRelativePath() => Navigation.ToBaseRelativePath(Navigation.Uri).Split('?', '#')[0].Trim('/');
+
+    public void NavigateTo(string route) => Navigation.NavigateTo(route);
+
+    public async Task<bool> WaitForSelectorAsync(string selector, int timeoutMilliseconds)
+    {
+        var module = await GetModuleAsync();
+        return await module.InvokeAsync<bool>("waitFor", selector, timeoutMilliseconds);
+    }
+
+    public async Task AnchorPlantAtHeaderAsync()
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("anchorAtHeader", _plant);
+    }
+
+    public async Task MovePlantAsync(string kind, int rotateDegrees, double scale, int durationMilliseconds, string easing)
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("moveTo", _plant, _floor, kind, rotateDegrees, scale, durationMilliseconds, easing);
+    }
+
+    public async Task DockPlantAtFloorAsync()
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("dockAtFloor", _plant, _floor);
+    }
+
+    public async Task RestartPlantAnimationAsync(string className)
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("restartClass", _plantInner, className);
+    }
+
+    public async Task PressMenuAsync(bool pressed)
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("pressMenu", pressed);
+    }
+
+    public async Task LockAppAsync(bool locked)
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("lockApp", locked);
+    }
+
+    public async Task SetBlurAsync(bool blurred)
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("setBlur", blurred);
+    }
+
+    public async Task ShowTimerRingDemoAsync()
+    {
+        if (_ring is null)
+        {
+            return;
+        }
+
+        var module = await GetModuleAsync();
+        await module.InvokeAsync<bool>("placeRing", _ring.Root);
+        await module.InvokeVoidAsync("startRingDemo", _ring.Root, _ring.Leaf, _plant);
+    }
+
+    public async Task ReleaseRingAsync()
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("releaseRing");
+    }
+
+    public async Task TeardownAsync()
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("teardown");
+    }
+
+    public async Task TryTeardownAsync()
+    {
+        try
+        {
+            await TeardownAsync();
+        }
+        catch (Exception ex) when (ex is JSException or JSDisconnectedException or InvalidOperationException)
+        {
+        }
+    }
+
+    public Task FocusYesButtonAsync() => FocusAsync(_yesButton);
+
+    public Task FocusNextButtonAsync() => FocusAsync(_nextButton);
+
+    public async Task PlayDemoAsync()
+    {
+        if (_demo is not null)
+        {
+            await _demo.PlayDayDemoAsync();
+        }
+    }
+
+    public async Task ShowDemoResultAsync()
+    {
+        if (_demo is not null)
+        {
+            await _demo.ShowDayResultAsync();
+        }
+    }
+
+    public async Task ShowDemoScopeAsync()
+    {
+        if (_demo is not null)
+        {
+            await _demo.ShowScopeAsync();
+        }
+    }
+
+    public async Task SetDemoPrivateAsync(bool isPrivate)
+    {
+        if (_demo is not null)
+        {
+            await _demo.SetPrivateAsync(isPrivate);
+        }
+    }
+
+    public async Task HideDemoAsync()
+    {
+        if (_demo is not null)
+        {
+            await _demo.HideAllAsync();
+        }
+    }
+
+    public Task DelayAsync(int milliseconds) => Task.Delay(milliseconds, _disposed.Token);
+
+    public async Task RenderAsync()
+    {
+        await InvokeAsync(StateHasChanged);
+        await Task.Yield();
+    }
+
+    public Task StateHasChangedAsync() => InvokeAsync(StateHasChanged);
+
+    private async Task FocusAsync(ElementReference element)
+    {
+        try
+        {
+            await element.FocusAsync();
+        }
+        catch (Exception ex) when (ex is JSException or InvalidOperationException)
+        {
+
+        }
+    }
+
+    private async Task<IJSObjectReference> GetModuleAsync()
+    {
+        _module ??= await JS.InvokeAsync<IJSObjectReference>("import", "./js/onboardingStage.js");
+        return _module;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _disposed.Cancel();
+            _backPressRegistration?.Dispose();
+        }
+
+        base.Dispose(disposing);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+
+        Dispose();
+
+        try
+        {
+            if (_module is not null)
+            {
+                await _module.InvokeVoidAsync("teardown");
+                await _module.DisposeAsync();
+            }
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+    }
+}

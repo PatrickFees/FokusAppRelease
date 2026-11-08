@@ -1,0 +1,14 @@
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<div class="page" data-onboarding="app-page">
+    <NavMenu />
+    <Confetti />
+    <DesktopInputBridge />
+
+    <main>
+        <article class="content px-4 page-transition" @key="NavigationManager.Uri">
+            @Body
+        </article>
+    </main>
+</div>

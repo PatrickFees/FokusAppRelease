@@ -1,0 +1,154 @@
+@inherits ObservableComponentBase
+@inject FokusApp.Components.ForYouSuggestions.IPlantHelperViewModel ViewModel
+@inject NavigationManager NavigationManager
+@inject FokusApp.Services.IUiBackPressService UiBackPressService
+
+@using FokusApp.Components.DayPlanner
+@using FokusApp.Components.ForYouSuggestions
+@using FokusApp.Components.PopUps.TaskEdit
+
+@if (ViewModel.IsPlantVisible)
+{
+    <div class="plant-anchor">
+        <div class="plant-helper">
+            <button type="button"
+                    class="plant-button"
+                    data-onboarding="plant-button"
+                    aria-label="@Localizer["PlantTap"]"
+                    @onclick="OnPlantClick">
+                <CompanionFigure Mood="ViewModel.Mood" />
+            </button>
+
+            @if (ViewModel.IsBubbleVisible)
+            {
+                <div class="plant-bubble" role="status">
+                    <button type="button" class="plant-bubble-text" @onclick="OnBubbleClick">
+                        @Localizer[BubbleTextKey]
+                    </button>
+                    <button type="button"
+                            class="plant-bubble-close"
+                            aria-label="@Localizer["PlantDismiss"]"
+                            @onclick="ViewModel.DismissBubble">
+                        &times;
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (ViewModel.IsSuggestionListOpen)
+{
+    <div class="plant-backdrop" @onclick="ViewModel.CloseSuggestions"></div>
+    <div class="plant-dialog" role="dialog" aria-modal="true" aria-label="@Localizer["PlantSuggestionsTitle"]">
+        <div class="plant-dialog-header">
+            <h2>@Localizer["PlantSuggestionsTitle"]</h2>
+            <button type="button"
+                    class="plant-dialog-close"
+                    aria-label="@Localizer["PlantClose"]"
+                    @onclick="ViewModel.CloseSuggestions">
+                &times;
+            </button>
+        </div>
+        <div class="plant-groups">
+            @foreach (var group in ViewModel.Suggestions.GroupBy(TagFor))
+            {
+                <details class="plant-group">
+                    <summary class="plant-group-title">
+                        <span>@group.Key</span>
+                        <span class="plant-group-count">@group.Count()</span>
+                    </summary>
+                    <ul class="plant-suggestions">
+                        @foreach (var suggestion in group)
+                        {
+                            <li>
+                                <button type="button"
+                                        class="plant-suggestion @(suggestion.IsOwn ? "plant-suggestion-own" : string.Empty)"
+                                        @onclick="() => ViewModel.PickSuggestion(suggestion)">
+                                    <span class="plant-suggestion-text">@suggestion.Text</span>
+                                </button>
+                            </li>
+                        }
+                    </ul>
+                </details>
+            }
+        </div>
+    </div>
+}
+
+<TaskEditPopUp @key="ViewModel.TaskEditorInput"
+               IsOpen="ViewModel.IsTaskEditorOpen"
+               Model="ViewModel.TaskEditorInput"
+               OnClose="ViewModel.HandleTaskEditPopupCloseAsync" />
+
+@code {
+    private IDisposable? _backPressRegistration;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _backPressRegistration = UiBackPressService.RegisterHandler(HandleBackPressed);
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+
+    private bool HandleBackPressed()
+    {
+        if (!ViewModel.IsSuggestionListOpen)
+        {
+            return false;
+        }
+
+        ViewModel.CloseSuggestions();
+        _ = InvokeAsync(StateHasChanged);
+        return true;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _backPressRegistration?.Dispose();
+        }
+
+        base.Dispose(disposing);
+    }
+
+    private string BubbleTextKey => ViewModel.BubbleKind switch
+    {
+        PlantBubbleKind.PlanDay => "PlantBubblePlanDay",
+        PlantBubbleKind.GoalReached => "PlantBubbleGoalReached",
+        PlantBubbleKind.GoalExceeded => "PlantBubbleGoalExceeded",
+        PlantBubbleKind.AskForYou => "PlantBubbleAskForYou",
+        _ => "PlantBubble"
+    };
+
+    private void OnPlantClick()
+    {
+        ViewModel.TapPlant();
+    }
+
+    private void OnBubbleClick()
+    {
+        switch (ViewModel.BubbleKind)
+        {
+            case PlantBubbleKind.PlanDay:
+                NavigationManager.NavigateTo(DayPlannerRoutes.Planner);
+                break;
+            case PlantBubbleKind.GoalReached:
+            case PlantBubbleKind.GoalExceeded:
+                ViewModel.DismissBubble();
+                break;
+            default:
+                ViewModel.OpenSuggestions();
+                break;
+        }
+    }
+
+    private string TagFor(FokusApp.Components.ForYouSuggestions.ForYouSuggestionItem suggestion) =>
+        suggestion.TemplateId is not null
+            ? Localizer["ForYouCategoryTemplate"]
+            : suggestion.Category is { } category
+                ? Localizer[$"ForYouCategory{category}"]
+                : Localizer["ForYouCategoryOwn"];
+}

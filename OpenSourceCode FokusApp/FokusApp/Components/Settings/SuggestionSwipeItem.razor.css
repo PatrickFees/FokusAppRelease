@@ -1,0 +1,142 @@
+.suggestion-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-surface-2);
+    touch-action: pan-y;
+    /* Langes Drücken öffnet die Aktionen, nicht die Textmarkierung oder das Kontextmenü. */
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.suggestion-swipe-hint {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(148, 163, 184, 0.1) 0%, rgba(148, 163, 184, 0.22) 100%);
+    color: var(--color-ink-subtle);
+    font-size: 1.5rem;
+    font-weight: 700;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.suggestion-content {
+    position: relative;
+    z-index: 1;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    transition: transform 0.25s ease;
+}
+
+.suggestion-content p {
+    margin: 0;
+    color: var(--color-ink);
+    word-break: break-word;
+}
+
+.suggestion-actions {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    bottom: 0.4rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.4rem;
+    box-sizing: border-box;
+    border-radius: 0.9rem;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.88) 60%, rgba(30, 64, 175, 0.8) 100%);
+    box-shadow: -8px 0 18px rgba(15, 23, 42, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.suggestion-card.show-actions .suggestion-content {
+    transform: translateX(-9rem);
+}
+
+.suggestion-card.show-actions .suggestion-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.suggestion-card.show-actions .suggestion-swipe-hint {
+    opacity: 0;
+}
+
+.suggestion-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    min-width: 3.4rem;
+    padding: 0.4rem;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 12px rgba(15, 23, 42, 0.3);
+    color: var(--color-surface-alt);
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+    .suggestion-action svg {
+        width: 1.7rem;
+        height: 1.7rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .suggestion-action:active {
+        transform: scale(0.95);
+    }
+
+    .suggestion-action.edit {
+        background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    }
+
+    .suggestion-action.delete {
+        background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+    }
+
+    .suggestion-action:focus-visible {
+        outline: 3px solid rgba(59, 130, 246, 0.5);
+        outline-offset: 2px;
+    }
+
+/* Maus: Aktionen erscheinen beim Überfahren oder per Tastaturfokus, ohne den Inhalt zu verschieben. */
+@media (hover: hover) and (pointer: fine) {
+    .suggestion-card:hover .suggestion-actions,
+    .suggestion-card:focus-within .suggestion-actions {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .suggestion-card:hover .suggestion-swipe-hint,
+    .suggestion-card:focus-within .suggestion-swipe-hint {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .suggestion-content,
+    .suggestion-actions {
+        transition: none;
+    }
+}

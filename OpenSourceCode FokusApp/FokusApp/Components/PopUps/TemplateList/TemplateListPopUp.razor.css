@@ -1,0 +1,153 @@
+.template-list-backdrop {
+    z-index: 1060;
+    padding: 1rem;
+    background: var(--color-overlay);
+}
+
+.template-list-popup {
+    width: min(420px, 100%);
+    max-height: min(34rem, calc(100vh - 2rem));
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--color-surface-alt);
+    box-shadow: 0 18px 46px rgba(15, 23, 42, 0.26);
+}
+
+.template-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.template-list-header h2 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.template-list-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.template-list-close {
+    width: 2rem;
+    height: 2rem;
+    background: var(--color-surface-sunken);
+    color: var(--color-ink);
+    font-size: 1.25rem;
+}
+
+.template-empty {
+    margin: 0;
+    color: var(--color-ink-muted);
+}
+
+.template-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.template-list-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 0.5rem;
+    background: var(--color-surface-2);
+}
+
+.template-list-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-weight: 600;
+    color: var(--color-ink);
+}
+
+.template-list-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.template-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.9rem;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    color: var(--color-on-accent);
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.template-icon-button.copy {
+    background: linear-gradient(135deg, #38bdf8 0%, var(--color-accent) 100%);
+}
+
+.template-icon-button.edit {
+    background: linear-gradient(135deg, #4ade80 0%, #16a34a 100%);
+}
+
+.template-action-icon {
+    width: 1.05rem;
+    height: 1.05rem;
+    display: inline-block;
+    flex-shrink: 0;
+    background-color: currentColor;
+}
+
+.template-action-icon.copy-icon {
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect x='8' y='8' width='11' height='11' rx='2' ry='2'/%3E%3Cpath d='M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect x='8' y='8' width='11' height='11' rx='2' ry='2'/%3E%3Cpath d='M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.template-action-icon.edit-icon {
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.template-icon-button:hover,
+.template-icon-button:focus-visible,
+.template-list-close:hover,
+.template-list-close:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.18);
+    filter: brightness(1.04);
+    outline: none;
+}
+
+.template-list-kind {
+    flex-shrink: 0;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink-muted);
+    font-size: 0.75rem;
+}

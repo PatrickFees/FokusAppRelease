@@ -1,0 +1,55 @@
+.companion-leaves ellipse {
+    fill: var(--companion-leaf-fill);
+}
+
+.plant-pot {
+    fill: #c9784a;
+}
+
+.plant-pot-rim {
+    fill: #b3653a;
+}
+
+.plant-eye-white {
+    fill: #ffffff;
+}
+
+.plant-eye {
+    fill: #3d2414;
+}
+
+.plant-smile {
+    fill: none;
+    stroke: #3d2414;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+/* Die Sprechblase steht unter der Pflanze, ueber dem Monatsschriftzug, im Stil der Hinweiskarten. */
+
+.companion-bud ellipse {
+    fill: #e58fb4;
+}
+
+.companion-flower circle {
+    fill: #f3a6c8;
+}
+
+.companion-flower .companion-flower-center {
+    fill: #f6d365;
+}
+
+.companion-eye-closed {
+    fill: none;
+    stroke: #3d2414;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.companion-zzz {
+    fill: none;
+    stroke: var(--color-ink-muted, #64748b);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}

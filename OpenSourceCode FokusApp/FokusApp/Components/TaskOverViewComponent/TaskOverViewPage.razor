@@ -1,0 +1,200 @@
+@page "/aufgaben"
+@inherits ObservableComponentBase
+@inject FokusApp.Components.TaskOverViewComponent.ITaskOverViewViewModel ViewModel
+@inject FokusApp.Services.IUiBackPressService UiBackPressService
+
+@using FokusApp.Components.PopUps.Calendar
+@using FokusApp.Components.PopUps.TaskEdit
+@using FokusApp.Components.SharedUI
+@using FokusApp.Components.SharedUI.FilterComponent
+@using FokusApp.Core.Enums
+@using FokusApp.Components.TaskOverViewComponent
+
+<PageTitle>@Localizer["Tasks"]</PageTitle>
+
+<div class="task-page">
+    <header class="task-header">
+        <h1>@Localizer["Tasks"]</h1>
+        <button class="btn btn-primary" @onclick="ViewModel.OpenAddNoteModal">@Localizer["AddTask"]</button>
+    </header>
+
+    <p class="task-intro">
+        @Localizer["TaskOverviewIntro"]
+    </p>
+
+    <section class="task-filter-section">
+        <button type="button" class="task-filter-toggle" @onclick="ViewModel.ToggleFilterPanel">
+            @(ViewModel.IsFilterPanelOpen ? Localizer["HideFilters"] : Localizer["ShowFilters"])
+        </button>
+
+        @if (ViewModel.IsFilterPanelOpen)
+        {
+            <button type="button"
+                    class="task-filter-backdrop"
+                    aria-label="@Localizer["CloseFilters"]"
+                    @onclick="ViewModel.CloseFilterPanel">
+            </button>
+
+            <div class="task-filter-content" @onclick:stopPropagation="true">
+                <FilterComponent IsOpen="true"
+                                 ResetFiltersOnOpen="false"
+                                 ShowDateSortToggle="true"
+                                 InitialSearchText="@ViewModel.Filter.SearchText"
+                                 InitialSelectedPriorities="ViewModel.Filter.SelectedPriorities"
+                                 InitialIsSortDescending="ViewModel.Filter.IsSortDescending"
+                                 InitialSelectedDate="ViewModel.Filter.SelectedDate"
+                                 OnFiltersChanged="ViewModel.ApplyOverviewFilters" />
+            </div>
+        }
+    </section>
+
+    <section class="task-section">
+        <details open="@OpenAll">
+            <summary>@Localizer["ActiveTasks"]</summary>
+            <ul class="task-list">
+                @foreach (var task in ViewModel.ActiveTasks)
+                {
+                    <TaskListItem @key="task.Id"
+                                  Task="task"
+                                  ListType="TaskListItem.TaskListItemType.Active"
+                                  IsRunning="@ViewModel.IsTaskActive(task.Id)"
+                                  OnEdit="ViewModel.StartEditTask"
+                                  OnDelete="ViewModel.DeleteTaskAsync" />
+                }
+            </ul>
+        </details>
+    </section>
+
+    <section class="task-section">
+        <details open="@OpenAll">
+            <summary>@Localizer["Templates"]</summary>
+            <ul class="task-list">
+                @foreach (var task in ViewModel.Templates)
+                {
+                    <TaskListItem @key="task.Id"
+                                  Task="task"
+                                  ListType="TaskListItem.TaskListItemType.Template"
+                                  IsRunning="@ViewModel.IsTaskActive(task.Id)"
+                                  OnEdit="ViewModel.StartEditTask"
+                                  OnDelete="ViewModel.DeleteTaskAsync" />
+                }
+            </ul>
+        </details>
+    </section>
+
+    <section class="task-section">
+        <details open>
+            <summary>@Localizer["OverdueTasksCount", ViewModel.OverdueTasks.Count]</summary>
+            @if (ViewModel.OverdueTasks.Count > 0)
+            {
+                <button type="button" class="task-assign-all" @onclick="ViewModel.AssignAllPastTasksToTomorrowAsync">
+                    @Localizer["AssignAllTomorrow"]
+                </button>
+            }
+            <ul class="task-list">
+                @foreach (var task in ViewModel.OverdueTasks)
+                {
+                    <TaskListItem @key="task.Id"
+                                  Task="task"
+                                  ListType="TaskListItem.TaskListItemType.Overdue"
+                                  IsRunning="@ViewModel.IsTaskActive(task.Id)"
+                                  OnEdit="ViewModel.StartEditTask"
+                                  OnDelete="ViewModel.DeleteTaskAsync"
+                                  OnReschedule="ViewModel.OpenReschedulePopup"
+                                  OnAssign="args => ViewModel.AssignPastTaskAsync(args.TaskId, args.Target)"
+                                  OnDiscard="ViewModel.DiscardPastTaskAsync" />
+                }
+            </ul>
+        </details>
+    </section>
+
+    <section class="task-section">
+        <details open="@OpenAll">
+            <summary>@Localizer["CompletedTasksCount", ViewModel.CompletedTasks.Count]</summary>
+            <ul class="task-list completed">
+                @foreach (var task in ViewModel.CompletedTasks)
+                {
+                    <TaskListItem @key="task.Id"
+                                  Task="task"
+                                  ListType="TaskListItem.TaskListItemType.Completed"
+                                  IsRunning="@ViewModel.IsTaskActive(task.Id)"
+                                  OnEdit="ViewModel.StartEditTask"
+                                  OnDelete="ViewModel.DeleteTaskAsync" />
+                }
+            </ul>
+        </details>
+    </section>
+
+    <CalendarPopup IsOpen="ViewModel.IsReschedulePopupOpen"
+                   InitialDate="ViewModel.RescheduleInitialDate"
+                   OnConfirm="ViewModel.ConfirmRescheduleAsync"
+                   OnCancel="ViewModel.CloseReschedulePopup" />
+
+    <TaskEditPopUp @key="ViewModel.TaskEditorInput"
+                   IsOpen="ViewModel.IsAddNoteModalOpen"
+                   Model="ViewModel.TaskEditorInput"
+                   OnClose="ViewModel.HandleTaskEditPopupCloseAsync" />
+
+    @if (ViewModel.CurrentUndo is { } undo)
+    {
+        <div class="task-undo-notice" role="status">
+            <span>@GetUndoText(undo)</span>
+            <button type="button" class="task-undo-button" @onclick="ViewModel.UndoAsync">@Localizer["Undo"]</button>
+        </div>
+    }
+</div>
+
+@code {
+    [SupplyParameterFromQuery(Name = "bereich")]
+    public string? Section { get; set; }
+
+    private bool OpenAll => !string.Equals(Section, PastSection, StringComparison.OrdinalIgnoreCase);
+
+    private const string PastSection = "vergangenheit";
+
+    private IDisposable? _backPressRegistration;
+
+    private string GetUndoText(UndoNotice undo) => undo.Kind switch
+    {
+        UndoNoticeKind.TaskDiscarded => Localizer["UndoTaskDiscarded"],
+        UndoNoticeKind.TasksMovedToTomorrow => Localizer["UndoTasksMovedToTomorrow", undo.Count],
+        _ => string.Empty
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _backPressRegistration = UiBackPressService.RegisterHandler(HandleBackPressed);
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+
+    private bool HandleBackPressed()
+    {
+        if (ViewModel.IsReschedulePopupOpen)
+        {
+            ViewModel.CloseReschedulePopup();
+            _ = InvokeAsync(StateHasChanged);
+            return true;
+        }
+
+        if (ViewModel.IsFilterPanelOpen)
+        {
+            ViewModel.CloseFilterPanel();
+            _ = InvokeAsync(StateHasChanged);
+            return true;
+        }
+
+        return false;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _backPressRegistration?.Dispose();
+        }
+
+        base.Dispose(disposing);
+    }
+}

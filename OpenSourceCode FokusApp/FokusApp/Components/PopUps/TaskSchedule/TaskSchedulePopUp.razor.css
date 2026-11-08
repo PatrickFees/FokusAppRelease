@@ -1,0 +1,184 @@
+.schedule-backdrop {
+    z-index: 1070;
+    padding: 1rem;
+    background: var(--color-overlay);
+}
+
+.schedule-popup {
+    width: min(380px, 100%);
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 8px;
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+    box-shadow: 0 18px 46px rgba(15, 23, 42, 0.26);
+}
+
+.schedule-title {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.schedule-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.schedule-label {
+    font-weight: 600;
+}
+
+.schedule-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.schedule-time-separator {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-ink-muted);
+}
+
+.schedule-clear-time {
+    align-self: center;
+    border: none;
+    background: transparent;
+    color: var(--color-accent-ink);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.schedule-clear-time:disabled {
+    color: var(--color-ink-subtle);
+    cursor: default;
+    text-decoration: none;
+}
+
+.schedule-select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+    font: inherit;
+}
+
+.schedule-select:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(var(--color-accent-rgb) / 0.22);
+}
+
+.schedule-select:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.schedule-hint {
+    margin: 0;
+    color: var(--color-ink-muted);
+    font-size: 0.85rem;
+}
+
+.schedule-interval {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.schedule-interval-value {
+    min-width: 2ch;
+    text-align: center;
+    font-weight: 700;
+}
+
+.schedule-step-button {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-surface-sunken);
+    color: var(--color-ink);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.schedule-step-button:focus-visible {
+    outline: 3px solid rgb(var(--color-accent-rgb) / 0.4);
+    outline-offset: 2px;
+}
+
+.schedule-weekdays {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.25rem;
+}
+
+.schedule-week-start {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+}
+
+.schedule-weekday {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.5rem 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.schedule-weekday.selected {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.schedule-weekday:focus-visible {
+    outline: 3px solid rgb(var(--color-accent-rgb) / 0.4);
+    outline-offset: 2px;
+}
+
+.schedule-end-date {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+}
+
+.schedule-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.schedule-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}

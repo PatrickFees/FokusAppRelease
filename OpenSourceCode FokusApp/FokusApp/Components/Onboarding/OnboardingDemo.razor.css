@@ -1,0 +1,431 @@
+/*
+ * Nachbauten der Dein-Tag-Vorfuehrung. Sie liegen ueber der echten Seite (das JS-Modul legt sie ueber die gemessenen
+ * Rechtecke der echten Elemente und blendet diese aus, siehe app.css). Alles hier ist nur zum Ansehen:
+ * keine Eingabe kommt an, die Sperrschicht der Buehne liegt darunter.
+ * Die Regeln der Kopien stammen aus TaskEditPopUp.razor.css, FocusTimerPage.razor.css und NavMenu.razor.css.
+ */
+.stage-demo {
+    pointer-events: none;
+}
+
+/* ---------- Notizblaetter ---------- */
+
+.demo-lists {
+    position: fixed;
+    z-index: 1550;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    color: var(--color-on-shell);
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+    .demo-lists.demo-lists-fading {
+        opacity: 0;
+    }
+
+/* Das Aktions-Popup hat ein eigenes z-index (1100) unter den Nachbau-Listen: diese Schicht hebt es als Ganzes darueber.
+   Die Transformation macht die Schicht zum Bezugsrahmen des festen Popups, das so ueber der Pflanze endet. */
+.demo-popup-layer {
+    position: fixed;
+    inset: 0 0 calc(var(--stage-floor) + 5.8rem) 0;
+    z-index: 1580;
+    transform: translateZ(0);
+}
+
+/* ---------- Aufgaben-Editor ---------- */
+
+.demo-backdrop {
+    position: fixed;
+    inset: 0 0 calc(var(--stage-floor) + 5.8rem) 0;
+    z-index: 1560;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    background: var(--color-overlay);
+    animation: demo-fade 0.25s ease-out;
+}
+
+.demo-backdrop-top {
+    z-index: 1570;
+    background: transparent;
+}
+
+.demo-editor,
+.demo-manual {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: min(420px, 100%);
+    max-height: 100%;
+    padding: 1.1rem 1.25rem;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+}
+
+.demo-manual {
+    width: min(17rem, 100%);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+}
+
+    .demo-editor h2,
+    .demo-manual h3 {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+
+.demo-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+    .demo-group label {
+        font-weight: 600;
+    }
+
+.demo-note,
+.demo-manual-field {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 4.2rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+    line-height: 1.45;
+    text-align: left;
+    box-shadow: inset 0 1px 3px rgb(var(--color-accent-rgb) / 0.08);
+}
+
+.demo-manual-field {
+    min-height: 2.6rem;
+    border-color: var(--color-accent);
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.demo-placeholder {
+    color: var(--color-ink-subtle);
+}
+
+.demo-typing::after {
+    content: "|";
+    margin-left: 1px;
+    animation: demo-blink 0.7s steps(1) infinite;
+}
+
+.demo-priority {
+    --priority-color: var(--priority-keine-color);
+    --priority-text-color: var(--priority-keine-text);
+}
+
+.demo-priority-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    min-width: 9rem;
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-pill);
+    background: var(--priority-color);
+    color: var(--priority-text-color);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.demo-priority-slider {
+    width: 100%;
+    height: 1.8rem;
+    margin: 0;
+    background: transparent;
+    accent-color: var(--priority-color);
+}
+
+    .demo-priority-slider::-webkit-slider-runnable-track {
+        height: 0.8rem;
+        border-radius: var(--radius-pill);
+        background: color-mix(in srgb, var(--priority-color) 45%, var(--color-surface-sunken));
+    }
+
+    .demo-priority-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 1.6rem;
+        height: 1.6rem;
+        margin-top: -0.4rem;
+        border: none;
+        border-radius: 50%;
+        background: var(--color-accent);
+        box-shadow: 0 8px 18px rgb(var(--color-accent-rgb) / 0.35);
+    }
+
+.demo-positivity {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.demo-positivity-button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.6rem 1.2rem;
+    background: var(--color-ink-subtle);
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    text-align: center;
+    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.18);
+}
+
+    .demo-positivity-button.selected {
+        background: #16a34a;
+        color: var(--color-on-accent);
+        box-shadow: 0 16px 28px rgba(22, 163, 74, 0.32);
+    }
+
+.demo-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+    .demo-actions .popup-action-button {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 0.75rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+.popup-action-button--pill {
+    border-radius: var(--radius-pill);
+}
+
+.popup-action-button--primary {
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 50%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
+    box-shadow: 0 16px 28px rgb(var(--color-accent-rgb) / 0.28);
+}
+
+.popup-action-button--secondary {
+    background: var(--color-surface-sunken);
+    color: var(--color-ink);
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
+}
+
+/* ---------- Timer-Seite ---------- */
+
+.demo-timer-panel {
+    position: fixed;
+    z-index: 1550;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+}
+
+.demo-task-chip {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 25rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+}
+
+.demo-break-title {
+    margin: 0;
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+}
+
+.demo-timer-actions {
+    position: fixed;
+    z-index: 1550;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    visibility: hidden;
+}
+
+    .demo-timer-actions .btn {
+        min-width: 6rem;
+        padding: 0.7rem 1.4rem;
+        border: none;
+        border-radius: var(--radius-pill);
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .demo-timer-actions .btn-primary {
+        background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 50%, var(--color-accent-deep) 100%);
+        color: var(--color-on-accent);
+        box-shadow: 0 16px 28px rgb(var(--color-accent-rgb) / 0.28);
+    }
+
+    .demo-timer-actions .btn-primary.is-running {
+        background: linear-gradient(135deg, #fb7185 0%, #f43f5e 45%, #be123c 100%);
+        box-shadow: 0 16px 28px rgba(244, 63, 94, 0.35);
+    }
+
+    .demo-timer-actions .btn-secondary {
+        background: transparent;
+        color: var(--color-accent-ink);
+        border: 2px solid rgb(var(--color-accent-rgb) / 0.65);
+        box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
+    }
+
+/* ---------- Arbeit/Privat-Schalter der Kopfzeile ---------- */
+
+.demo-scope {
+    position: fixed;
+    z-index: 1560;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    visibility: hidden;
+}
+
+.scope-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+    .scope-label.active {
+        color: var(--color-on-accent);
+        text-shadow: 0 8px 16px rgba(15, 23, 42, 0.35);
+    }
+
+    .scope-label.inactive {
+        color: rgba(226, 232, 240, 0.72);
+    }
+
+.scope-toggle {
+    position: relative;
+    display: block;
+    width: 3.35rem;
+    height: 2rem;
+    padding: 0.15rem;
+    border: 1px solid rgba(226, 232, 240, 0.42);
+    border-radius: var(--radius-pill);
+    box-shadow: inset 0 1px 4px rgba(15, 23, 42, 0.45), 0 10px 18px rgba(15, 23, 42, 0.28);
+    transition: background-color 0.2s ease;
+}
+
+    .scope-toggle.demo-scope-work {
+        background: rgba(59, 130, 246, 0.52);
+    }
+
+    .scope-toggle.demo-scope-private {
+        background: rgba(30, 64, 175, 0.38);
+    }
+
+.scope-toggle-thumb {
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: var(--color-accent-soft);
+    box-shadow: 0 6px 12px rgba(15, 23, 42, 0.35);
+    transition: transform 0.2s ease;
+}
+
+    .scope-toggle-thumb.is-work {
+        transform: translateX(0);
+    }
+
+    .scope-toggle-thumb.is-private {
+        transform: translateX(1.35rem);
+        background: #ede9fe;
+    }
+
+@media (max-width: 460px) {
+    .demo-scope {
+        gap: 0.4rem;
+    }
+
+    .scope-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.02em;
+    }
+}
+
+@media (min-width: 641px) {
+    .demo-timer-panel {
+        align-items: flex-start;
+    }
+}
+
+/* ---------- Zeiger: das Blatt der Pflanze ---------- */
+
+.demo-pointer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1990;
+    width: 20px;
+    height: 44px;
+    margin-left: -10px;
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: 50% 0;
+}
+
+    .demo-pointer ellipse {
+        fill: var(--companion-leaf-fill);
+    }
+
+    .demo-pointer path {
+        fill: none;
+        stroke: var(--companion-leaf-stroke);
+        stroke-width: 1.2;
+    }
+
+@keyframes demo-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes demo-blink {
+    50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .demo-backdrop,
+    .demo-typing::after {
+        animation: none;
+    }
+
+    .demo-lists,
+    .scope-label,
+    .scope-toggle,
+    .scope-toggle-thumb {
+        transition: none;
+    }
+}

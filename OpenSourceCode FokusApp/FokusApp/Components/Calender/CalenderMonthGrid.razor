@@ -1,0 +1,116 @@
+@using System.Globalization
+
+<div class="calender-month-grid">
+    <div class="calender-weekday-row">
+        <span class="calender-week-number-spacer"></span>
+        @foreach (var weekday in WeekdayHeaders)
+        {
+            <span class="calender-weekday-cell">@weekday</span>
+        }
+    </div>
+
+    <div class="calender-grid">
+        @foreach (var week in Weeks)
+        {
+            var isCollapsedAway = IsWeekCollapsed?.Invoke(week) ?? false;
+            <div class="calender-week-row @(isCollapsedAway ? "is-collapsed" : string.Empty)"
+                 @key="week.Days[0].Date"
+                 inert="@isCollapsedAway"
+                 aria-hidden="@(isCollapsedAway ? "true" : null)">
+                <span class="calender-week-number"
+                      aria-label="@Localizer["CalendarWeekLabel", week.WeekNumber]">@week.WeekNumber</span>
+                @foreach (var day in week.Days)
+                {
+                    <button type="button"
+                            @key="day.Date"
+                            class="@BuildDayCss(day)"
+                            @onpointerdown="args => OnDayPointerDown.InvokeAsync(new DayPointerEventArgs(day.Date, args))"
+                            @onpointerup="args => OnDayPointerUp.InvokeAsync(new DayPointerEventArgs(day.Date, args))"
+                            @onpointerleave="() => OnPointerLeave.InvokeAsync()"
+                            @onpointercancel="() => OnPointerCancel.InvokeAsync()"
+                            @onclick="() => OnDayClick.InvokeAsync(day.Date)"
+                            @ondblclick="() => OnDayDoubleClick.InvokeAsync(day.Date)">
+                        <span class="calender-day-number">@day.Date.Day</span>
+                        <span class="calender-dots" aria-hidden="true">
+                            @foreach (var dot in day.Dots)
+                            {
+                                <span class="calender-dot @(dot.IsDone ? "is-done" : PriorityFormatter.GetCssClass(dot.Priority))"></span>
+                            }
+                            @if (day.HasMoreTasks)
+                            {
+                                <span class="calender-dot-more">+</span>
+                            }
+                        </span>
+                    </button>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    public readonly record struct DayPointerEventArgs(DateTime Date, PointerEventArgs Pointer);
+
+    private static IReadOnlyList<string> WeekdayHeaders
+    {
+        get
+        {
+            var headers = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
+            return [headers[1], headers[2], headers[3], headers[4], headers[5], headers[6], headers[0]];
+        }
+    }
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<CalenderWeekModel> Weeks { get; set; } = [];
+
+    [Parameter]
+    public Func<CalenderWeekModel, bool>? IsWeekCollapsed { get; set; }
+
+    [Parameter]
+    public Func<CalenderDayCellModel, string>? DayCssBuilder { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime> OnDayClick { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime> OnDayDoubleClick { get; set; }
+
+    [Parameter]
+    public EventCallback<DayPointerEventArgs> OnDayPointerDown { get; set; }
+
+    [Parameter]
+    public EventCallback<DayPointerEventArgs> OnDayPointerUp { get; set; }
+
+    [Parameter]
+    public EventCallback OnPointerLeave { get; set; }
+
+    [Parameter]
+    public EventCallback OnPointerCancel { get; set; }
+
+    private string BuildDayCss(CalenderDayCellModel day)
+    {
+        if (DayCssBuilder is not null)
+        {
+            return DayCssBuilder(day);
+        }
+
+        var classes = "calender-day";
+
+        if (!day.IsInCurrentMonth)
+        {
+            classes += " outside-month";
+        }
+
+        if (day.IsToday)
+        {
+            classes += " is-today";
+        }
+
+        if (day.IsSelected)
+        {
+            classes += " is-selected";
+        }
+
+        return classes;
+    }
+}

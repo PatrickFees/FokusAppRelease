@@ -1,0 +1,28 @@
+@page "/app-webseite"
+@page "/app-website"
+@using FokusApp.Core
+@using FokusApp.Core.Interfaces
+@inject IDataTransferFileService DataTransferFileService
+@inject IExternalLinkOpener ExternalLinkOpener
+
+<PageTitle>@Localizer["AppWebsite"]</PageTitle>
+
+<div class="app-website-page">
+    <header class="app-website-header">
+        <h1>@Localizer["AppWebsite"]</h1>
+    </header>
+
+    <div class="app-website-actions">
+        <button type="button" class="app-website-button" @onclick="ShareLatestVersionAsync">@Localizer["AppWebsiteShareLatestVersion"]</button>
+        <button type="button" class="app-website-button" @onclick="OpenRepositoryAsync">@Localizer["AppWebsiteOpenRepository"]</button>
+    </div>
+</div>
+
+@code {
+    private const string LatestAppReleaseDownloadUrl = AppConstants.LatestAppReleaseDownloadUrl;
+    private const string AppRepositoryUrl = AppConstants.AppRepositoryUrl;
+
+    private Task ShareLatestVersionAsync() => DataTransferFileService.ShareTextAsync(Localizer["AppWebsiteShareLatestVersion"].Value, LatestAppReleaseDownloadUrl);
+
+    private Task OpenRepositoryAsync() => ExternalLinkOpener.OpenAsync(AppRepositoryUrl);
+}

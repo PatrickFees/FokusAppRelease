@@ -1,0 +1,144 @@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div class="time-wheel @(HasValue ? string.Empty : "is-unset")"
+     role="spinbutton"
+     tabindex="0"
+     aria-label="@AriaLabel"
+     aria-valuemin="@Minimum"
+     aria-valuemax="@Maximum"
+     aria-valuenow="@Value"
+     @onkeydown="HandleKeyDownAsync">
+    <div class="time-wheel-scroller" @ref="_scroller">
+        <div class="time-wheel-pad" aria-hidden="true"></div>
+        @for (var number = Minimum; number <= Maximum; number++)
+        {
+            var current = number;
+            <div class="time-wheel-item @(HasValue && current == Value ? "selected" : string.Empty)"
+                 @key="current"
+                 @onclick="() => SelectAsync(current)">
+                @current.ToString("00")
+            </div>
+        }
+        <div class="time-wheel-pad" aria-hidden="true"></div>
+    </div>
+    <div class="time-wheel-highlight" aria-hidden="true">
+        @if (!HasValue && !string.IsNullOrEmpty(PlaceholderText))
+        {
+            <span class="time-wheel-placeholder">@PlaceholderText</span>
+        }
+    </div>
+</div>
+
+@code {
+    private ElementReference _scroller;
+    private IJSObjectReference? _module;
+    private IJSObjectReference? _attachment;
+    private DotNetObjectReference<TimeWheel>? _selfReference;
+    private int _positionedValue = int.MinValue;
+
+    [Parameter]
+    public int Minimum { get; set; }
+
+    [Parameter]
+    public int Maximum { get; set; } = 59;
+
+    [Parameter]
+    public int Value { get; set; }
+
+    [Parameter]
+    public bool HasValue { get; set; } = true;
+
+    [Parameter]
+    public string PlaceholderText { get; set; } = string.Empty;
+
+    [Parameter]
+    public string AriaLabel { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<int> ValueChanged { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _selfReference = DotNetObjectReference.Create(this);
+            _module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/timeWheel.js");
+            _attachment = await _module.InvokeAsync<IJSObjectReference>(
+                "attach", _scroller, _selfReference, Value - Minimum);
+            _positionedValue = Value;
+            return;
+        }
+
+        if (_attachment is not null && _positionedValue != Value)
+        {
+            _positionedValue = Value;
+            await _attachment.InvokeVoidAsync("setIndex", Value - Minimum, true);
+        }
+    }
+
+    [JSInvokable]
+    public async Task OnWheelMoved()
+    {
+        if (!HasValue)
+        {
+            await ValueChanged.InvokeAsync(Value);
+        }
+    }
+
+    [JSInvokable]
+    public async Task OnWheelSettled(int index)
+    {
+        var settledValue = Math.Clamp(Minimum + index, Minimum, Maximum);
+        _positionedValue = settledValue;
+
+        if (settledValue != Value || !HasValue)
+        {
+            await ValueChanged.InvokeAsync(settledValue);
+        }
+    }
+
+    private async Task SelectAsync(int number)
+    {
+        await ValueChanged.InvokeAsync(Math.Clamp(number, Minimum, Maximum));
+    }
+
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        var step = args.Key switch
+        {
+            "ArrowUp" => -1,
+            "ArrowDown" => 1,
+            "PageUp" => -5,
+            "PageDown" => 5,
+            _ => 0
+        };
+
+        if (step != 0)
+        {
+            await SelectAsync(Value + step);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _selfReference?.Dispose();
+
+        try
+        {
+            if (_attachment is not null)
+            {
+                await _attachment.InvokeVoidAsync("dispose");
+                await _attachment.DisposeAsync();
+            }
+
+            if (_module is not null)
+            {
+                await _module.DisposeAsync();
+            }
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+    }
+}

@@ -1,0 +1,49 @@
+.confetti {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -4%;
+    border-radius: 2px;
+    opacity: 0;
+    animation-name: confetti-fall;
+    animation-timing-function: cubic-bezier(0.25, 0.6, 0.45, 1);
+    animation-fill-mode: forwards;
+}
+
+.confetti-color-0 { background: var(--color-accent); }
+.confetti-color-1 { background: var(--priority-mittel-color); }
+.confetti-color-2 { background: var(--priority-wenig-color); }
+.confetti-color-3 { background: var(--priority-hoch-color); }
+.confetti-color-4 { background: var(--priority-keine-color); }
+
+@keyframes confetti-fall {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--confetti-drift, 0), 105vh, 0) rotate(var(--confetti-rotation, 360deg));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .confetti {
+        display: none;
+    }
+}

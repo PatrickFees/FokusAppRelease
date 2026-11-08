@@ -1,0 +1,40 @@
+@page "/contact-developer"
+@page "/kontaktiere-entwickler"
+@using FokusApp.Core
+@using FokusApp.Core.Interfaces
+@inject IClipboardService ClipboardService
+
+<PageTitle>@Localizer["ContactDeveloper"]</PageTitle>
+
+<div class="contact-developer-page">
+    <header class="contact-developer-header">
+        <h1>@Localizer["ContactDeveloper"]</h1>
+    </header>
+
+    <div class="contact-developer-email-row">
+        <span class="contact-developer-email">@EmailAddress</span>
+        <button type="button" class="contact-developer-copy-button" @onclick="CopyEmailAsync">@Localizer["Copy"]</button>
+        @if (_showCopiedFeedback)
+        {
+            <span class="contact-developer-copied">@Localizer["Copied"]</span>
+        }
+    </div>
+
+    <p class="contact-developer-intro">@Localizer["ContactDeveloperIntro"]</p>
+</div>
+
+@code {
+    private const string EmailAddress = AppConstants.DeveloperEmailAddress;
+
+    private bool _showCopiedFeedback;
+
+    private async Task CopyEmailAsync()
+    {
+        await ClipboardService.SetTextAsync(EmailAddress);
+        _showCopiedFeedback = true;
+        StateHasChanged();
+        await Task.Delay(2000);
+        _showCopiedFeedback = false;
+        StateHasChanged();
+    }
+}

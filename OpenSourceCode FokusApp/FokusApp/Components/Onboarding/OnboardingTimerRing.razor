@@ -1,0 +1,55 @@
+@using System.Globalization
+
+
+<div class="stage-ring" @ref="Root" aria-hidden="true">
+    <div class="stage-ring-state" style="@StateStyle">
+        <svg class="stage-ring-svg" viewBox="0 0 260 260">
+            <circle class="stage-ring-base" cx="130" cy="130" r="118" />
+            <circle class="stage-ring-selection" cx="130" cy="130" r="118" transform="rotate(-90 130 130)" />
+            <circle class="stage-ring-progress" cx="130" cy="130" r="95" transform="rotate(-90 130 130)" />
+        </svg>
+        <div class="stage-ring-display">
+            @if (ClockText is null)
+            {
+                <span class="stage-ring-time stage-ring-time-counted"></span>
+            }
+            else
+            {
+                <span class="stage-ring-time">@ClockText</span>
+            }
+            <span class="stage-ring-minutes">@Localizer["OnboardingSceneMinutes"]</span>
+        </div>
+        <div class="stage-leaf-fly">
+            <div class="stage-leaf-follow" @ref="Leaf">
+                <svg viewBox="0 0 18 36"><ellipse cx="9" cy="18" rx="8" ry="17" /><path d="M9 4 V32" /></svg>
+            </div>
+        </div>
+        <svg class="stage-sound @(ShowSound ? "stage-sound-visible" : string.Empty)" viewBox="0 0 24 24">
+            <path class="stage-sound-body" d="M4 9v6h4l5 4V5L8 9z" />
+            <path class="stage-sound-wave" d="M16 9a4 4 0 0 1 0 6" />
+            <path class="stage-sound-wave stage-sound-wave-2" d="M18.5 6.5a8 8 0 0 1 0 11" />
+        </svg>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int? Minutes { get; set; }
+
+    [Parameter]
+    public string? ClockText { get; set; }
+
+    [Parameter]
+    public double Progress { get; set; }
+
+    [Parameter]
+    public bool ShowSound { get; set; }
+
+    public ElementReference Root { get; private set; }
+
+    public ElementReference Leaf { get; private set; }
+
+    private string? StateStyle => Minutes is null
+        ? null
+        : string.Create(CultureInfo.InvariantCulture, $"--n: {Minutes}; --prog: {Progress:0.####};");
+}

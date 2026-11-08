@@ -1,0 +1,332 @@
+/*
+ * Farbthemes = Farbpalette (data-theme: blue, pink, red, green, yellow) x Modus (data-mode: light, dark).
+ * :root (tokens.css) ist Blau im hellen Modus (ohne eigenen Block). Jede Kombination ueberschreibt nur Farbtokens.
+ * Die Attribute setzt wwwroot/js/theme.js.
+ *
+ * Helle Palette:  :root[data-theme="x"]:not([data-mode="dark"])
+ * Dunkle Palette: :root[data-theme="x"][data-mode="dark"]   (muss alle Palettentokens neu setzen)
+ * Gemeinsam dunkel: :root[data-mode="dark"] (Statusfarben, color-scheme)
+ *
+ * --color-accent-ink ist die Akzentfarbe als TEXT/Linie auf Flaechen. Akzentflaechen (accent, -strong, -deep)
+ * tragen immer --color-on-accent; als Text auf Flaechen gehoert --color-accent-ink dorthin, nie -strong/-deep.
+ *
+ * Kontrast (geprueft per Skript, siehe CssKonzept.md), je Palette und Modus:
+ * - Text (ink, ink-muted, ink-subtle, accent-ink, Statusfarben) auf Seite, Karte und Akzent-Soft >= 4.5:1
+ * - --color-on-accent auf accent, accent-strong, accent-deep >= 4.5:1
+ * - Akzentflaechen gegen Seite/Karte >= 3:1 (accent), >= 2.5:1 (strong), >= 2:1 (deep, nur Verlaufsende)
+ * - --color-on-shell auf Kalender-Huelle und Navigation >= 4.5:1
+ */
+
+:root:not([data-mode="dark"]) {
+    color-scheme: light;
+}
+
+:root[data-mode="dark"] {
+    color-scheme: dark;
+    --color-success: #5bd498;
+    --color-danger: #ff8f85;
+    --color-warning: #f5b457;
+    --color-overlay: rgba(2, 6, 14, 0.74);
+}
+
+/* ---------- Blau ---------- */
+
+:root[data-theme="blue"][data-mode="dark"] {
+    --color-bg: #0b1020;
+    --color-surface: #1c2433;
+    --color-surface-2: #1c2433;
+    --color-surface-alt: #151c2b;
+    --color-surface-sunken: #263248;
+    --color-ink: #e8ecf4;
+    --color-ink-muted: #b4bed1;
+    --color-ink-subtle: #98a5bd;
+    --color-border: #34425e;
+    --color-divider: rgba(148, 163, 184, 0.25);
+
+    --color-accent: #3a6de0;
+    --color-accent-strong: #3563d0;
+    --color-accent-deep: #2e56b8;
+    --color-accent-soft: #1d2b4d;
+    --color-accent-rgb: 61 113 230;
+    --color-accent-ink: #9db9ff;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #f1f5f9;
+    --shell-from: #050914;
+    --shell-mid: #0f1530;
+    --shell-to: #1a2250;
+    --nav-from: rgba(24, 40, 92, 0.97);
+    --nav-mid: rgba(32, 38, 104, 0.95);
+    --nav-to: rgba(14, 60, 78, 0.95);
+
+    --color-paper: rgba(38, 42, 62, 0.95);
+    --color-paper-border: rgba(240, 228, 66, 0.28);
+}
+
+/* ---------- Rosa ---------- */
+
+:root[data-theme="pink"]:not([data-mode="dark"]) {
+    --color-bg: #f9d3e3;
+    --color-surface: #fde4ee;
+    --color-surface-2: #fde4ee;
+    --color-surface-alt: #fff0f6;
+    --color-surface-sunken: #f4bfd5;
+    --color-ink: #3d0b24;
+    --color-ink-muted: #6b2145;
+    --color-ink-subtle: #8a3d60;
+    --color-border: #e59cbb;
+    --color-divider: rgba(138, 61, 96, 0.3);
+    --color-overlay: rgba(61, 11, 36, 0.6);
+
+    --color-accent: #c2185b;
+    --color-accent-strong: #a01049;
+    --color-accent-deep: #6d0b31;
+    --color-accent-soft: #fbcfe0;
+    --color-accent-rgb: 194 24 91;
+    --color-accent-ink: #a01049;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #fff5f9;
+    --shell-from: #55102f;
+    --shell-mid: #7d1a4a;
+    --shell-to: #a62a66;
+    --nav-from: rgba(194, 24, 91, 0.96);
+    --nav-mid: rgba(160, 16, 73, 0.94);
+    --nav-to: rgba(109, 11, 49, 0.94);
+
+    --color-paper: rgba(255, 233, 242, 0.95);
+    --color-paper-border: rgba(194, 24, 91, 0.3);
+}
+
+:root[data-theme="pink"][data-mode="dark"] {
+    --color-bg: #1f0b16;
+    --color-surface: #301525;
+    --color-surface-2: #301525;
+    --color-surface-alt: #29101e;
+    --color-surface-sunken: #432036;
+    --color-ink: #fbe9f1;
+    --color-ink-muted: #e2bccd;
+    --color-ink-subtle: #c99bb2;
+    --color-border: #5e2c47;
+    --color-divider: rgba(226, 188, 205, 0.22);
+
+    --color-accent: #d3226f;
+    --color-accent-strong: #bf1e63;
+    --color-accent-deep: #a81a56;
+    --color-accent-soft: #4a1b33;
+    --color-accent-rgb: 211 34 111;
+    --color-accent-ink: #ffa6cb;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #fff5f9;
+    --shell-from: #12050c;
+    --shell-mid: #2a0f1d;
+    --shell-to: #4a1a34;
+    --nav-from: rgba(92, 20, 56, 0.97);
+    --nav-mid: rgba(76, 16, 46, 0.95);
+    --nav-to: rgba(52, 12, 34, 0.95);
+
+    --color-paper: rgba(52, 26, 40, 0.95);
+    --color-paper-border: rgba(255, 166, 203, 0.28);
+}
+
+/* ---------- Gruen ---------- */
+
+:root[data-theme="green"]:not([data-mode="dark"]) {
+    --color-bg: #d3ebd5;
+    --color-surface: #e3f3e5;
+    --color-surface-2: #e3f3e5;
+    --color-surface-alt: #f0f9f1;
+    --color-surface-sunken: #b9dcbc;
+    --color-ink: #0c2a14;
+    --color-ink-muted: #1f4a2c;
+    --color-ink-subtle: #335f40;
+    --color-border: #8fc397;
+    --color-divider: rgba(31, 74, 44, 0.3);
+    --color-overlay: rgba(12, 42, 20, 0.6);
+
+    --color-accent: #2e7d32;
+    --color-accent-strong: #1b5e20;
+    --color-accent-deep: #0f3d13;
+    --color-accent-soft: #cde9cf;
+    --color-accent-rgb: 46 125 50;
+    --color-accent-ink: #1b5e20;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #f1faf2;
+    --shell-from: #0c2e12;
+    --shell-mid: #14501d;
+    --shell-to: #20782c;
+    --nav-from: rgba(41, 114, 45, 0.96);
+    --nav-mid: rgba(27, 94, 32, 0.94);
+    --nav-to: rgba(15, 61, 19, 0.94);
+
+    --color-paper: rgba(232, 247, 233, 0.95);
+    --color-paper-border: rgba(46, 125, 50, 0.3);
+}
+
+:root[data-theme="green"][data-mode="dark"] {
+    --color-bg: #0a1a0d;
+    --color-surface: #14291a;
+    --color-surface-2: #14291a;
+    --color-surface-alt: #102215;
+    --color-surface-sunken: #1f3a27;
+    --color-ink: #e9f6ea;
+    --color-ink-muted: #bcd9c0;
+    --color-ink-subtle: #9bbfa1;
+    --color-border: #2b4d33;
+    --color-divider: rgba(188, 217, 192, 0.22);
+
+    --color-accent: #2d8433;
+    --color-accent-strong: #297a2e;
+    --color-accent-deep: #236b28;
+    --color-accent-soft: #1a3d20;
+    --color-accent-rgb: 47 138 53;
+    --color-accent-ink: #8fdc96;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #f1faf2;
+    --shell-from: #040e06;
+    --shell-mid: #0b2210;
+    --shell-to: #143a1b;
+    --nav-from: rgba(20, 74, 28, 0.97);
+    --nav-mid: rgba(16, 60, 23, 0.95);
+    --nav-to: rgba(10, 42, 16, 0.95);
+
+    --color-paper: rgba(28, 46, 32, 0.95);
+    --color-paper-border: rgba(143, 220, 150, 0.28);
+}
+
+/* ---------- Rot ---------- */
+
+:root[data-theme="red"]:not([data-mode="dark"]) {
+    --color-bg: #f8d6d1;
+    --color-surface: #fde3df;
+    --color-surface-2: #fde3df;
+    --color-surface-alt: #fff1ef;
+    --color-surface-sunken: #f1bbb3;
+    --color-ink: #3a0d0a;
+    --color-ink-muted: #6b221c;
+    --color-ink-subtle: #82342d;
+    --color-border: #e39a91;
+    --color-divider: rgba(140, 62, 55, 0.3);
+    --color-overlay: rgba(58, 13, 10, 0.6);
+
+    --color-accent: #b71c1c;
+    --color-accent-strong: #8e1515;
+    --color-accent-deep: #5c0d0d;
+    --color-accent-soft: #fbcdc7;
+    --color-accent-rgb: 183 28 28;
+    --color-accent-ink: #8e1515;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #fff4f2;
+    --shell-from: #4a0e0e;
+    --shell-mid: #751717;
+    --shell-to: #a02323;
+    --nav-from: rgba(183, 28, 28, 0.96);
+    --nav-mid: rgba(142, 21, 21, 0.94);
+    --nav-to: rgba(92, 13, 13, 0.94);
+
+    --color-paper: rgba(255, 236, 232, 0.95);
+    --color-paper-border: rgba(183, 28, 28, 0.3);
+}
+
+:root[data-theme="red"][data-mode="dark"] {
+    --color-bg: #1f0c0b;
+    --color-surface: #311615;
+    --color-surface-2: #311615;
+    --color-surface-alt: #2a110f;
+    --color-surface-sunken: #452220;
+    --color-ink: #fdeceb;
+    --color-ink-muted: #e6c1be;
+    --color-ink-subtle: #cc9e9a;
+    --color-border: #5f2d2a;
+    --color-divider: rgba(230, 193, 190, 0.22);
+
+    --color-accent: #cf3131;
+    --color-accent-strong: #bb2a2a;
+    --color-accent-deep: #a82424;
+    --color-accent-soft: #4d1c1a;
+    --color-accent-rgb: 207 49 49;
+    --color-accent-ink: #ffaaa5;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #fff4f2;
+    --shell-from: #120504;
+    --shell-mid: #2a0d0c;
+    --shell-to: #4a1816;
+    --nav-from: rgba(98, 22, 22, 0.97);
+    --nav-mid: rgba(78, 18, 18, 0.95);
+    --nav-to: rgba(54, 12, 12, 0.95);
+
+    --color-paper: rgba(54, 28, 26, 0.95);
+    --color-paper-border: rgba(255, 170, 165, 0.28);
+}
+
+/* ---------- Gelb ---------- */
+
+:root[data-theme="yellow"]:not([data-mode="dark"]) {
+    --color-bg: #f8e9a1;
+    --color-surface: #fcf1c0;
+    --color-surface-2: #fcf1c0;
+    --color-surface-alt: #fff8dc;
+    --color-surface-sunken: #efd877;
+    --color-ink: #3a2c00;
+    --color-ink-muted: #5e4700;
+    --color-ink-subtle: #6f5708;
+    --color-border: #e0c457;
+    --color-divider: rgba(111, 87, 8, 0.3);
+    --color-overlay: rgba(58, 44, 0, 0.6);
+
+    --color-accent: #9a6a00;
+    --color-accent-strong: #7a5200;
+    --color-accent-deep: #4d3300;
+    --color-accent-soft: #f7e3a6;
+    --color-accent-rgb: 154 106 0;
+    --color-accent-ink: #7a5200;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #fffbea;
+    --shell-from: #4a3800;
+    --shell-mid: #755800;
+    --shell-to: #8a6700;
+    --nav-from: rgba(140, 96, 0, 0.96);
+    --nav-mid: rgba(122, 82, 0, 0.94);
+    --nav-to: rgba(77, 51, 0, 0.94);
+
+    --color-paper: rgba(255, 246, 208, 0.95);
+    --color-paper-border: rgba(154, 106, 0, 0.3);
+}
+
+:root[data-theme="yellow"][data-mode="dark"] {
+    --color-bg: #1c1505;
+    --color-surface: #2c200a;
+    --color-surface-2: #2c200a;
+    --color-surface-alt: #251b08;
+    --color-surface-sunken: #3b2d10;
+    --color-ink: #fdf3d6;
+    --color-ink-muted: #e3d1a0;
+    --color-ink-subtle: #c6b27e;
+    --color-border: #54421a;
+    --color-divider: rgba(227, 209, 160, 0.22);
+
+    --color-accent: #9c6a00;
+    --color-accent-strong: #946400;
+    --color-accent-deep: #835800;
+    --color-accent-soft: #4a3808;
+    --color-accent-rgb: 164 111 0;
+    --color-accent-ink: #ffd666;
+    --color-on-accent: #ffffff;
+
+    --color-on-shell: #fffbea;
+    --shell-from: #100b02;
+    --shell-mid: #2a1f06;
+    --shell-to: #483506;
+    --nav-from: rgba(98, 66, 0, 0.97);
+    --nav-mid: rgba(78, 52, 0, 0.95);
+    --nav-to: rgba(54, 36, 0, 0.95);
+
+    --color-paper: rgba(54, 42, 20, 0.95);
+    --color-paper-border: rgba(255, 214, 102, 0.28);
+}

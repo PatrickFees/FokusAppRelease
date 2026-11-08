@@ -1,0 +1,448 @@
+@page "/einstellungen"
+@page "/settings"
+@inherits ObservableComponentBase
+@inject FokusApp.Components.Settings.ISettingsViewModel ViewModel
+@inject FokusApp.Components.Onboarding.IOnboardingViewModel Onboarding
+@inject FokusApp.Core.Services.Interfaces.IAppLocalizationService LocalizationService
+@inject FokusApp.Core.Services.Interfaces.IAppThemeService ThemeService
+@inject FokusApp.Services.IUiBackPressService UiBackPressService
+@using System.Globalization
+@using FokusApp.Core.Enums
+@using FokusApp.Core.Models
+@using FokusApp.Components.PopUps.ConfirmDialog
+@using FokusApp.Components.PopUps.CalendarImport
+@using FokusApp.Components.PopUps.CalendarAutoSync
+
+<PageTitle>@Localizer["Settings"]</PageTitle>
+
+<div class="settings-page">
+    <h1>@Localizer["Settings"]</h1>
+
+    <CollapsibleSection Title="@Localizer["ThemeTitle"]">
+    <p class="settings-description">@Localizer["ThemeSettingsDescription"]</p>
+    <p class="settings-label">@Localizer["ColorModeTitle"]</p>
+    <div class="theme-options theme-modes" role="radiogroup" aria-label="@Localizer["ColorModeTitle"]">
+        @foreach (var mode in ColorModeOptions)
+        {
+            var isModeSelected = ThemeService.SelectedMode == mode;
+            <button type="button"
+                    class="theme-option"
+                    role="radio"
+                    aria-checked="@(isModeSelected ? "true" : "false")"
+                    data-color-mode-option="@mode"
+                    @onclick="() => OnColorModeSelected(mode)">
+                <span class="theme-swatch theme-swatch-@ThemeService.SelectedTheme.ToString().ToLowerInvariant() theme-swatch-@mode.ToString().ToLowerInvariant()" aria-hidden="true">
+                    <span class="theme-swatch-card"></span>
+                    <span class="theme-swatch-accent"></span>
+                    <span class="theme-swatch-bar"></span>
+                </span>
+                <span>@Localizer[$"ColorMode{mode}"]</span>
+            </button>
+        }
+    </div>
+
+    <p class="settings-label">@Localizer["ThemeColorTitle"]</p>
+    <div class="theme-options" role="radiogroup" aria-label="@Localizer["ThemeColorTitle"]">
+        @foreach (var theme in ThemeOptions)
+        {
+            var isSelected = ThemeService.SelectedTheme == theme;
+            <button type="button"
+                    class="theme-option"
+                    role="radio"
+                    aria-checked="@(isSelected ? "true" : "false")"
+                    data-theme-option="@theme"
+                    @onclick="() => OnThemeSelected(theme)">
+                <span class="theme-swatch theme-swatch-@theme.ToString().ToLowerInvariant() theme-swatch-@ThemeService.SelectedMode.ToString().ToLowerInvariant()" aria-hidden="true">
+                    <span class="theme-swatch-card"></span>
+                    <span class="theme-swatch-accent"></span>
+                    <span class="theme-swatch-bar"></span>
+                </span>
+                <span>@Localizer[$"Theme{theme}"]</span>
+            </button>
+        }
+    </div>
+    </CollapsibleSection>
+
+    <CollapsibleSection Title="@Localizer["Language"]">
+    <label class="settings-label" for="languageSelect">@Localizer["Language"]</label>
+    <select id="languageSelect"
+            class="settings-select"
+            value="@LocalizationService.CurrentLanguage"
+            @onchange="OnLanguageSelectionChanged">
+        <option value="@AppLanguage.German">@Localizer["German"]</option>
+        <option value="@AppLanguage.English">@Localizer["English"]</option>
+    </select>
+    </CollapsibleSection>
+
+    <CollapsibleSection Title="@Localizer["DefaultScopeTitle"]">
+    <p class="settings-description">@Localizer["DefaultScopeDescription"]</p>
+    <label class="settings-label" for="defaultScopeSelect">@Localizer["DefaultScopeTitle"]</label>
+    <select id="defaultScopeSelect"
+            class="settings-select"
+            value="@ViewModel.DefaultScope"
+            @onchange="OnDefaultScopeChanged">
+        @foreach (var scope in DefaultScopeOptions)
+        {
+            <option value="@scope">@Localizer[$"DefaultScope{scope}"]</option>
+        }
+    </select>
+    </CollapsibleSection>
+
+    <CollapsibleSection Title="@Localizer["RingtoneTitle"]">
+    <p class="settings-description">
+        @Localizer["RingtoneDescription"]
+    </p>
+
+    @if (ViewModel.AvailableRingtones.Count > 0)
+    {
+        <label class="settings-label" for="ringtoneSelect">@Localizer["Ringtone"]</label>
+        <select id="ringtoneSelect"
+                class="settings-select"
+                value="@ViewModel.SelectedRingtonePath"
+                @onchange="OnRingtoneSelectionChanged">
+            @foreach (var ringtone in ViewModel.AvailableRingtones)
+            {
+                <option value="@ringtone.FilePath">@FormatRingtoneLabel(ringtone.FilePath)</option>
+            }
+        </select>
+
+        <div class="settings-actions">
+            <button type="button"
+                    class="btn btn-primary settings-preview-button"
+                    @onclick="ViewModel.PlaySelectedRingtoneAsync"
+                    disabled="@string.IsNullOrWhiteSpace(ViewModel.SelectedRingtonePath)">
+                @Localizer["Play"]
+            </button>
+        </div> 
+    }
+    else
+    {
+        <p class="settings-empty">@Localizer["NoRingtones"]</p>
+    }
+    </CollapsibleSection>
+
+    <CollapsibleSection Title="@Localizer["TimerAlertTitle"]">
+    <p class="settings-description">@Localizer["TimerAlertDescription"]</p>
+
+    <label class="settings-toggle">
+        <input type="checkbox"
+               id="timerAlertSoundToggle"
+               checked="@ViewModel.TimerAlertSoundEnabled"
+               @onchange="args => ViewModel.SetTimerAlertSoundEnabledAsync((bool)args.Value!)" />
+        <span class="settings-toggle-text">
+            <span class="settings-toggle-title">@Localizer["TimerAlertSound"]</span>
+        </span>
+    </label>
+
+    @if (ViewModel.TimerAlertSoundEnabled && ViewModel.IsTimerAlertAdaptToRingerModeAvailable)
+    {
+        <label class="settings-toggle">
+            <input type="checkbox"
+                   id="timerAlertAdaptToRingerModeToggle"
+                   checked="@ViewModel.TimerAlertAdaptToRingerModeEnabled"
+                   @onchange="args => ViewModel.SetTimerAlertAdaptToRingerModeEnabledAsync((bool)args.Value!)" />
+            <span class="settings-toggle-text">
+                <span class="settings-toggle-title">@Localizer["TimerAlertAdaptToRingerMode"]</span>
+            </span>
+        </label>
+        <p class="settings-description">@Localizer["TimerAlertAdaptToRingerModeHint"]</p>
+    }
+
+    @if (ViewModel.IsTimerAlertVibrationAvailable)
+    {
+        <label class="settings-toggle">
+            <input type="checkbox"
+                   id="timerAlertVibrationToggle"
+                   checked="@ViewModel.TimerAlertVibrationEnabled"
+                   @onchange="args => ViewModel.SetTimerAlertVibrationEnabledAsync((bool)args.Value!)" />
+            <span class="settings-toggle-text">
+                <span class="settings-toggle-title">@Localizer["TimerAlertVibration"]</span>
+            </span>
+        </label>
+    }
+
+    </CollapsibleSection>
+
+    <CollapsibleSection Title="@Localizer["RewardingTitle"]">
+    <label class="settings-toggle">
+        <input type="checkbox"
+               id="microFeedbackToggle"
+               checked="@ViewModel.MicroFeedbackEnabled"
+               @onchange="args => ViewModel.SetMicroFeedbackEnabledAsync((bool)args.Value!)" />
+        <span class="settings-toggle-text">
+            <span class="settings-toggle-title">@Localizer["MicroFeedbackSetting"]</span>
+        </span>
+    </label>
+
+    <label class="settings-toggle">
+        <input type="checkbox"
+               id="reviewsToggle"
+               checked="@ViewModel.ReviewsEnabled"
+               @onchange="args => ViewModel.SetReviewsEnabledAsync((bool)args.Value!)" />
+        <span class="settings-toggle-text">
+            <span class="settings-toggle-title">@Localizer["ReviewsSetting"]</span>
+        </span>
+    </label>
+
+    <label class="settings-toggle">
+        <input type="checkbox"
+               id="companionToggle"
+               checked="@ViewModel.CompanionEnabled"
+               @onchange="args => ViewModel.SetCompanionEnabledAsync((bool)args.Value!)" />
+        <span class="settings-toggle-text">
+            <span class="settings-toggle-title">@Localizer["CompanionSetting"]</span>
+        </span>
+    </label>
+
+    <label class="settings-label" for="balanceGoalSelect">@Localizer["BalanceGoalTitle"]</label>
+    <select id="balanceGoalSelect"
+            class="settings-select"
+            value="@ViewModel.BalanceGoal"
+            @onchange="OnBalanceGoalChanged">
+        @foreach (var goal in BalanceGoalOptions)
+        {
+            <option value="@goal">@Localizer[$"BalanceGoal{goal}"]</option>
+        }
+    </select>
+    @if (ViewModel.BalanceGoal == BalanceGoal.Custom)
+    {
+        <div class="settings-custom-balance">
+            <label for="customForYouInput">@Localizer["BalanceCustomForYou"]</label>
+            <input id="customForYouInput"
+                   type="number"
+                   class="settings-input"
+                   min="1"
+                   max="@AppRewardingSettings.MaximumCustomPart"
+                   value="@ViewModel.CustomForYou"
+                   @onchange="OnCustomForYouChanged" />
+            <span aria-hidden="true">:</span>
+            <label for="customToDoInput">@Localizer["BalanceCustomToDo"]</label>
+            <input id="customToDoInput"
+                   type="number"
+                   class="settings-input"
+                   min="1"
+                   max="@AppRewardingSettings.MaximumCustomPart"
+                   value="@ViewModel.CustomToDo"
+                   @onchange="OnCustomToDoChanged" />
+        </div>
+    }
+    <p class="settings-description">@Localizer["BalanceGoalHint"]</p>
+    </CollapsibleSection>
+
+    <ForYouSuggestionsSettings />
+
+    <CollapsibleSection Title="@Localizer["OnboardingSettingsTitle"]">
+        <p class="settings-description">@Localizer["OnboardingSettingsDescription"]</p>
+    <div class="settings-actions">
+        <button type="button" id="onboardingRestart" class="app-button app-button--secondary" @onclick="Onboarding.Restart">
+            @Localizer["OnboardingRestart"]
+        </button>
+    </div>
+    </CollapsibleSection>
+
+    <CollapsibleSection Title="@Localizer["DataImportExport"]">
+    <p class="settings-description">
+        @Localizer["DataImportExportDescription"]
+    </p>
+
+    @if (!string.IsNullOrWhiteSpace(ViewModel.DataTransferMessage))
+    {
+        <p class="settings-transfer-message @(ViewModel.IsDataTransferMessageSuccess ? "success" : "error")">
+            @ViewModel.DataTransferMessage
+        </p>
+    }
+
+    <div class="settings-actions settings-transfer-actions">
+        <button type="button"
+                class="app-button app-button--primary settings-transfer-button"
+                @onclick="ViewModel.ExportDataAsync">
+            @Localizer["ExportFile"]
+        </button>
+        <button type="button"
+                class="app-button app-button--secondary settings-transfer-button"
+                @onclick="ViewModel.ImportDataAsync">
+            @Localizer["Import"]
+        </button>
+        <button type="button"
+                class="app-button app-button--secondary settings-transfer-button settings-reset-button"
+                @onclick="ViewModel.RequestResetData">
+            @Localizer["ResetData"]
+        </button>
+    </div>
+
+    <div class="settings-actions settings-transfer-actions">
+        <button type="button"
+                class="app-button app-button--secondary settings-transfer-button"
+                @onclick="ViewModel.ExportCalendarAsync">
+            @Localizer["ExportCalendarButton"]
+        </button>
+    </div>
+
+    @if (ViewModel.IsCalendarImportAvailable)
+    {
+        <div class="settings-actions settings-transfer-actions">
+            <button type="button"
+                    class="app-button app-button--secondary settings-transfer-button"
+                    @onclick="ViewModel.OpenCalendarImport">
+                @Localizer["ImportCalendarButton"]
+            </button>
+        </div>
+
+        <label class="settings-toggle">
+            <input type="checkbox"
+                   id="calendarAutoSyncToggle"
+                   checked="@ViewModel.CalendarAutoSyncEnabled"
+                   @onchange="args => ViewModel.SetCalendarAutoSyncEnabledAsync((bool)args.Value!)" />
+            <span class="settings-toggle-text">
+                <span class="settings-toggle-title">@Localizer["CalendarAutoSyncSetting"]</span>
+            </span>
+        </label>
+
+        @if (ViewModel.CalendarAutoSyncEnabled)
+        {
+            <div class="settings-actions settings-transfer-actions">
+                <button type="button"
+                        class="app-button app-button--secondary settings-transfer-button"
+                        @onclick="ViewModel.OpenCalendarAutoSyncPicker">
+                    @Localizer["CalendarAutoSyncPickerButton"]
+                </button>
+            </div>
+
+            <p class="settings-description">
+                @(ViewModel.CalendarAutoSyncLastRunAt is { } lastRunAt
+                    ? Localizer["CalendarAutoSyncLastRun", lastRunAt.ToString("g", CultureInfo.CurrentCulture)]
+                    : Localizer["CalendarAutoSyncNeverRun"])
+            </p>
+        }
+    }
+    </CollapsibleSection>
+
+    <CalendarImportPopUp IsOpen="ViewModel.IsCalendarImportOpen" OnClose="ViewModel.CloseCalendarImport" />
+    <CalendarAutoSyncPopUp IsOpen="ViewModel.IsCalendarAutoSyncPickerOpen" OnClose="ViewModel.CloseCalendarAutoSyncPicker" />
+
+    <ConfirmDialogPopUp IsOpen="ViewModel.IsImportCanceledPopupOpen"
+                        Title="@Localizer["ImportCanceledTitle"]"
+                        Message="@Localizer["ImportCanceledMessage"]"
+                        ConfirmText="@Localizer["Ok"]"
+                        OnConfirm="ViewModel.CloseImportCanceledPopup" />
+
+    <ConfirmDialogPopUp IsOpen="ViewModel.IsResetConfirmationOpen"
+                        Title="@Localizer["ResetConfirmTitle"]"
+                        Message="@Localizer["ResetConfirmMessage"]"
+                        ConfirmText="@Localizer["ResetConfirmAction"]"
+                        CancelText="@Localizer["Cancel"]"
+                        IsDestructive="true"
+                        OnConfirm="ViewModel.ConfirmResetDataAsync"
+                        OnCancel="ViewModel.CancelResetData" />
+</div>
+
+@code {
+    private static readonly AppColorTheme[] ThemeOptions = Enum.GetValues<AppColorTheme>();
+    private static readonly AppColorMode[] ColorModeOptions = Enum.GetValues<AppColorMode>();
+    private static readonly BalanceGoal[] BalanceGoalOptions = Enum.GetValues<BalanceGoal>();
+    private static readonly DefaultScope[] DefaultScopeOptions = Enum.GetValues<DefaultScope>();
+
+    private IDisposable? _backPressRegistration;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _backPressRegistration = UiBackPressService.RegisterHandler(HandleBackPressed);
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+
+    private bool HandleBackPressed()
+    {
+        if (ViewModel.IsResetConfirmationOpen)
+        {
+            ViewModel.CancelResetData();
+            _ = InvokeAsync(StateHasChanged);
+            return true;
+        }
+
+        if (ViewModel.IsImportCanceledPopupOpen)
+        {
+            ViewModel.CloseImportCanceledPopup();
+            _ = InvokeAsync(StateHasChanged);
+            return true;
+        }
+
+        return false;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _backPressRegistration?.Dispose();
+        }
+
+        base.Dispose(disposing);
+    }
+
+    private async Task OnRingtoneSelectionChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        await ViewModel.SelectRingtoneAsync(args.Value?.ToString());
+    }
+
+    private async Task OnDefaultScopeChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        if (Enum.TryParse<DefaultScope>(args.Value?.ToString(), out var scope) && Enum.IsDefined(scope))
+        {
+            await ViewModel.SetDefaultScopeAsync(scope);
+        }
+    }
+
+    private async Task OnBalanceGoalChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        if (Enum.TryParse<BalanceGoal>(args.Value?.ToString(), out var goal) && Enum.IsDefined(goal))
+        {
+            await ViewModel.SetBalanceGoalAsync(goal);
+        }
+    }
+
+    private async Task OnCustomForYouChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        if (int.TryParse(args.Value?.ToString(), out var forYou))
+        {
+            await ViewModel.SetCustomBalanceAsync(forYou, ViewModel.CustomToDo);
+        }
+    }
+
+    private async Task OnCustomToDoChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        if (int.TryParse(args.Value?.ToString(), out var toDo))
+        {
+            await ViewModel.SetCustomBalanceAsync(ViewModel.CustomForYou, toDo);
+        }
+    }
+
+    private async Task OnThemeSelected(AppColorTheme theme)
+    {
+        await ThemeService.SetThemeAsync(theme);
+    }
+
+    private async Task OnColorModeSelected(AppColorMode mode)
+    {
+        await ThemeService.SetColorModeAsync(mode);
+    }
+
+    private async Task OnLanguageSelectionChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        if (Enum.TryParse<AppLanguage>(args.Value?.ToString(), out var language))
+        {
+            await LocalizationService.SetLanguageAsync(language);
+            ViewModel.ClearDataTransferMessage();
+        }
+    }
+
+    private static string FormatRingtoneLabel(string filePath)
+    {
+        var fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+
+        return string.IsNullOrWhiteSpace(fileName)
+            ? filePath
+            : fileName.Replace('_', ' ');
+    }
+}

@@ -1,0 +1,90 @@
+@using FokusApp.Components.PopUps.TaskEdit
+@inherits ObservableComponentBase
+
+@if (IsOpen)
+{
+    <div class="template-list-backdrop popup-overlay" @onclick="CancelAsync">
+        <div class="template-list-popup"
+             role="dialog"
+             aria-modal="true"
+             aria-label="@Localizer["Templates"]"
+             @onclick:stopPropagation>
+            <div class="template-list-header">
+                <h2>@Localizer["Templates"]</h2>
+                <button type="button"
+                        class="template-list-close"
+                        aria-label="@Localizer["CloseTemplates"]"
+                        @onclick="CancelAsync">
+                    &times;
+                </button>
+            </div>
+
+            @if (!HasOptions)
+            {
+                <p class="template-empty">@Localizer["NoTemplates"]</p>
+            }
+            else
+            {
+                <ul class="template-list">
+                    @foreach (var option in Options)
+                    {
+                        <li class="template-list-item" @key="option.TaskId">
+                            <span class="template-list-text">@option.Text</span>
+                            <span class="template-list-kind">@Localizer[option.IsPositive ? "TaskTypeForYou" : "TaskTypeToDo"]</span>
+                            <div class="template-list-actions">
+                                <button type="button"
+                                        class="template-icon-button copy"
+                                        title="@Localizer["CopyTemplate"]"
+                                        @onclick="() => CopyAsync(option.TaskId)">
+                                    <span class="template-action-icon copy-icon" aria-hidden="true"></span>
+                                    <span class="template-action-label">@Localizer["Apply"]</span>
+                                </button>
+                                <button type="button"
+                                        class="template-icon-button edit"
+                                        title="@Localizer["EditTemplate"]"
+                                        @onclick="() => EditAsync(option.TaskId)">
+                                    <span class="template-action-icon edit-icon" aria-hidden="true"></span>
+                                    <span class="template-action-label">@Localizer["Edit"]</span>
+                                </button>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<TaskEditTemplateOptionModel> Options { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<Guid> OnCopy { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    private bool HasOptions => Options.Count > 0;
+
+    private Task CopyAsync(Guid taskId)
+    {
+        return OnCopy.InvokeAsync(taskId);
+    }
+
+    private Task EditAsync(Guid taskId)
+    {
+        return OnEdit.InvokeAsync(taskId);
+    }
+
+    private Task CancelAsync()
+    {
+        return OnCancel.InvokeAsync();
+    }
+}

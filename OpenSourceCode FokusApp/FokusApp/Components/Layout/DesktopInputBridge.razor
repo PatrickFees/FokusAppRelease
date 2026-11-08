@@ -1,0 +1,50 @@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+@inject IUiBackPressService UiBackPressService
+
+@code
+{
+    private IJSObjectReference? _module;
+    private IJSObjectReference? _attachment;
+    private DotNetObjectReference<DesktopInputBridge>? _selfReference;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        _selfReference = DotNetObjectReference.Create(this);
+        _module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/desktopInput.js");
+        _attachment = await _module.InvokeAsync<IJSObjectReference>("attach", _selfReference);
+    }
+
+    [JSInvokable]
+    public bool TryHandleBackRequest()
+    {
+        return UiBackPressService.TryHandleBackPress();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _selfReference?.Dispose();
+
+        try
+        {
+            if (_attachment is not null)
+            {
+                await _attachment.InvokeVoidAsync("dispose");
+                await _attachment.DisposeAsync();
+            }
+
+            if (_module is not null)
+            {
+                await _module.DisposeAsync();
+            }
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+    }
+}

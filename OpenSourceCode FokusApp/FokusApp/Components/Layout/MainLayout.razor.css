@@ -1,0 +1,51 @@
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+main {
+    flex: 1;
+    /* Ohne min-height: 0 bleibt ein Flex-Item bei column-Layout per Default auf
+       min-height: auto (= Inhaltshöhe) und wächst mit seinem Inhalt mit, statt auf
+       den verfügbaren Platz begrenzt zu werden - overflow-y: auto würde dann nie
+       greifen. */
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+}
+
+/* Masks the instant DOM swap of the Router's RouteView with a fade+slide+scale,
+   instead of an abrupt cut between the old and new page. */
+/* cubic-bezier(0.16, 1, 0.3, 1): a slower-decelerating "ease-out-expo" curve than
+   the plain ease-out keyword, so the motion settles instead of just slowing down. */
+.page-transition {
+    animation: page-transition-fade-in 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes page-transition-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-transition {
+        animation: none;
+    }
+}
+
+@media (min-width: 641px) {
+    article {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}

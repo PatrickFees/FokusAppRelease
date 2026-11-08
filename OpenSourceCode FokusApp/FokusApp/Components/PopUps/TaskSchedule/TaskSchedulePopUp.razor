@@ -1,0 +1,395 @@
+@using FokusApp.Components.PopUps.Calendar
+@using FokusApp.Components.PopUps.TaskSchedule
+@using FokusApp.Components.SharedUI.TimeWheel
+@using FokusApp.Core.Enums
+@using System.Globalization
+@inherits ObservableComponentBase
+@inject ITaskSchedulePopUpViewModel ViewModel
+
+@if (IsOpen)
+{
+    <div class="schedule-backdrop popup-overlay" @onclick="CancelAsync">
+        <div class="schedule-popup"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="@_titleId"
+             @onclick:stopPropagation>
+            <h2 id="@_titleId" class="schedule-title">@Localizer["ScheduleTitle"]</h2>
+
+            <section class="schedule-section">
+                <div class="schedule-time">
+                    <TimeWheel Minimum="0"
+                               Maximum="23"
+                               Value="ViewModel.Hour"
+                               HasValue="ViewModel.HasTime"
+                               PlaceholderText="@Localizer["NoTimeHoursPlaceholder"]"
+                               AriaLabel="@Localizer["ScheduleHours"]"
+                               ValueChanged="SetHour" />
+                    <span class="schedule-time-separator" aria-hidden="true">:</span>
+                    <TimeWheel Minimum="0"
+                               Maximum="59"
+                               Value="ViewModel.Minute"
+                               HasValue="ViewModel.HasTime"
+                               PlaceholderText="@Localizer["NoTimeMinutesPlaceholder"]"
+                               AriaLabel="@Localizer["ScheduleMinutes"]"
+                               ValueChanged="SetMinute" />
+                </div>
+                <button type="button"
+                        class="schedule-clear-time"
+                        disabled="@(!ViewModel.HasTime)"
+                        @onclick="ViewModel.ClearTime">
+                    @Localizer["NoTime"]
+                </button>
+            </section>
+
+            <section class="schedule-section">
+                <label class="schedule-label" for="@_reminderId">@Localizer["Reminder"]</label>
+                <select id="@_reminderId"
+                        class="schedule-select"
+                        disabled="@(!ViewModel.CanSetReminder)"
+                        @onchange="OnReminderChanged">
+                    <option value="" selected="@(ViewModel.ReminderMinutesBefore is null)">@Localizer["ReminderNone"]</option>
+                    @foreach (var minutes in ViewModel.ReminderOptions)
+                    {
+                        <option value="@minutes" selected="@(ViewModel.ReminderMinutesBefore == minutes)">@GetReminderLabel(minutes)</option>
+                    }
+                </select>
+                @if (!ViewModel.CanSetReminder)
+                {
+                    <p class="schedule-hint">@Localizer["ReminderNeedsTime"]</p>
+                }
+            </section>
+
+            <section class="schedule-section">
+                <label class="schedule-label" for="@_repeatId">@Localizer["Repeat"]</label>
+                @if (ViewModel.CanRepeat)
+                {
+                    <select id="@_repeatId"
+                            class="schedule-select"
+                            @onchange="OnRepeatUnitChanged">
+                        @foreach (var unit in RepeatUnits)
+                        {
+                            <option value="@((int)unit)" selected="@(ViewModel.RepeatUnit == unit)">@GetRepeatLabel(unit)</option>
+                        }
+                    </select>
+
+                    @if (ViewModel.IsRepeating)
+                    {
+                        <div class="schedule-interval">
+                            <span>@Localizer["RepeatEvery"]</span>
+                            <button type="button"
+                                    class="schedule-step-button"
+                                    aria-label="@Localizer["RepeatIntervalDecrease"]"
+                                    @onclick="() => ViewModel.StepRepeatInterval(-1)">-</button>
+                            <span class="schedule-interval-value" aria-live="polite">@ViewModel.RepeatInterval</span>
+                            <button type="button"
+                                    class="schedule-step-button"
+                                    aria-label="@Localizer["RepeatIntervalIncrease"]"
+                                    @onclick="() => ViewModel.StepRepeatInterval(1)">+</button>
+                            <span>@GetIntervalUnitLabel()</span>
+                        </div>
+                    }
+
+                    @if (ViewModel.IsWeeklyRepeat)
+                    {
+                        <div class="schedule-weekdays" role="group" aria-label="@Localizer["RepeatOnWeekdays"]">
+                            @foreach (var weekday in WeekdayOptions)
+                            {
+                                var selected = ViewModel.IsWeekdaySelected(weekday.Flag);
+                                <button type="button"
+                                        class="schedule-weekday @(selected ? "selected" : string.Empty)"
+                                        aria-pressed="@selected"
+                                        aria-label="@Localizer[weekday.LongKey]"
+                                        @onclick="() => ViewModel.ToggleWeekday(weekday.Flag)">
+                                    @Localizer[weekday.ShortKey]
+                                </button>
+                            }
+                        </div>
+
+                        @if (ViewModel.IsMultiWeekRepeat)
+                        {
+                            <div class="schedule-week-start">
+                                <span class="schedule-label">@Localizer["RepeatWeekStartLabel"]</span>
+                                <div class="schedule-weekdays" role="group" aria-label="@Localizer["RepeatWeekStartLabel"]">
+                                    @foreach (var weekday in WeekdayOptions)
+                                    {
+                                        var selected = ViewModel.RepeatWeekStart == weekday.Flag;
+                                        <button type="button"
+                                                class="schedule-weekday @(selected ? "selected" : string.Empty)"
+                                                aria-pressed="@selected"
+                                                aria-label="@Localizer[weekday.LongKey]"
+                                                @onclick="() => ViewModel.SetRepeatWeekStart(weekday.Flag)">
+                                            @Localizer[weekday.ShortKey]
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    @if (ViewModel.IsOrdinalWeekdayRepeat)
+                    {
+                        <div class="schedule-ordinal-weekday">
+                            <div class="schedule-ordinals" role="group" aria-label="@Localizer["RepeatOrdinal"]">
+                                @foreach (var ordinal in OrdinalOptions)
+                                {
+                                    var selected = ViewModel.RepeatWeekdayOrdinal == ordinal;
+                                    <button type="button"
+                                            class="schedule-weekday @(selected ? "selected" : string.Empty)"
+                                            aria-pressed="@selected"
+                                            @onclick="() => ViewModel.SetRepeatWeekdayOrdinal(ordinal)">
+                                        @GetOrdinalLabel(ordinal)
+                                    </button>
+                                }
+                            </div>
+
+                            <div class="schedule-weekdays" role="group" aria-label="@Localizer["RepeatOnWeekdays"]">
+                                @foreach (var weekday in WeekdayOptions)
+                                {
+                                    var selected = ViewModel.IsWeekdaySelected(weekday.Flag);
+                                    <button type="button"
+                                            class="schedule-weekday @(selected ? "selected" : string.Empty)"
+                                            aria-pressed="@selected"
+                                            aria-label="@Localizer[weekday.LongKey]"
+                                            @onclick="() => ViewModel.SetOrdinalWeekday(weekday.Flag)">
+                                        @Localizer[weekday.ShortKey]
+                                    </button>
+                                }
+                            </div>
+
+                            @if (ViewModel.IsYearlyOrdinalWeekdayRepeat)
+                            {
+                                <select class="schedule-select"
+                                        aria-label="@Localizer["RepeatOnMonth"]"
+                                        @onchange="OnRepeatMonthChanged">
+                                    @foreach (var month in MonthOptions)
+                                    {
+                                        <option value="@month" selected="@(ViewModel.RepeatMonth == month)">@GetMonthName(month)</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                    }
+
+                    @if (ViewModel.IsRepeating)
+                    {
+                        <div class="schedule-end-date">
+                            <label class="schedule-checkbox">
+                                <input type="checkbox"
+                                       checked="@ViewModel.HasRepeatEndDate"
+                                       @onchange="OnHasRepeatEndDateChanged" />
+                                @Localizer["RepeatEndsOn"]
+                            </label>
+                            @if (ViewModel.HasRepeatEndDate)
+                            {
+                                <button type="button"
+                                        class="app-button app-button--secondary"
+                                        @onclick="() => _isEndDatePickerOpen = true">
+                                    @ViewModel.RepeatEndDate.ToString("d", CultureInfo.CurrentCulture)
+                                </button>
+                            }
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="schedule-hint">@Localizer["TemplatesDoNotRepeat"]</p>
+                }
+            </section>
+
+            <div class="schedule-actions">
+                <button type="button" class="app-button app-button--secondary" @onclick="CancelAsync">@Localizer["Cancel"]</button>
+                <button type="button" class="app-button app-button--primary" @onclick="ConfirmAsync">@Localizer["Apply"]</button>
+            </div>
+        </div>
+    </div>
+
+    <CalendarPopup IsOpen="_isEndDatePickerOpen"
+                   InitialDate="ViewModel.RepeatEndDate"
+                   OnConfirm="OnRepeatEndDateConfirmed"
+                   OnCancel="() => _isEndDatePickerOpen = false" />
+}
+
+@code {
+    private static readonly TaskRepeatUnit[] RepeatUnits =
+    [
+        TaskRepeatUnit.None,
+        TaskRepeatUnit.Day,
+        TaskRepeatUnit.Week,
+        TaskRepeatUnit.Month,
+        TaskRepeatUnit.Year,
+        TaskRepeatUnit.MonthWeekday,
+        TaskRepeatUnit.YearWeekday
+    ];
+
+    private static readonly int[] OrdinalOptions = [1, 2, 3, 4, -1];
+
+    private static readonly int[] MonthOptions = Enumerable.Range(1, 12).ToArray();
+
+    private static readonly (TaskWeekdays Flag, string ShortKey, string LongKey)[] WeekdayOptions =
+    [
+        (TaskWeekdays.Monday, "WeekdayShortMonday", "WeekdayMonday"),
+        (TaskWeekdays.Tuesday, "WeekdayShortTuesday", "WeekdayTuesday"),
+        (TaskWeekdays.Wednesday, "WeekdayShortWednesday", "WeekdayWednesday"),
+        (TaskWeekdays.Thursday, "WeekdayShortThursday", "WeekdayThursday"),
+        (TaskWeekdays.Friday, "WeekdayShortFriday", "WeekdayFriday"),
+        (TaskWeekdays.Saturday, "WeekdayShortSaturday", "WeekdaySaturday"),
+        (TaskWeekdays.Sunday, "WeekdayShortSunday", "WeekdaySunday")
+    ];
+
+    private readonly string _titleId = "task-schedule-title";
+    private readonly string _reminderId = "task-schedule-reminder";
+    private readonly string _repeatId = "task-schedule-repeat";
+    private bool _initializedForOpenCycle;
+    private bool _isEndDatePickerOpen;
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public TaskScheduleModel? Model { get; set; }
+
+    [Parameter]
+    public DateTime TaskDate { get; set; }
+
+    [Parameter]
+    public bool CanRepeat { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<TaskScheduleModel> OnConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Observe(ViewModel);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (!IsOpen)
+        {
+            _initializedForOpenCycle = false;
+            return;
+        }
+
+        if (!_initializedForOpenCycle)
+        {
+            ViewModel.Open(Model ?? new TaskScheduleModel(), TaskDate, CanRepeat);
+            _initializedForOpenCycle = true;
+        }
+    }
+
+    private void SetHour(int hour) => ViewModel.SetHour(hour);
+
+    private void SetMinute(int minute) => ViewModel.SetMinute(minute);
+
+    private void OnReminderChanged(ChangeEventArgs args)
+    {
+        var minutes = int.TryParse(args.Value?.ToString(), out var parsed) ? parsed : (int?)null;
+        ViewModel.SetReminder(minutes);
+    }
+
+    private void OnRepeatUnitChanged(ChangeEventArgs args)
+    {
+        if (int.TryParse(args.Value?.ToString(), out var parsed))
+        {
+            ViewModel.SetRepeatUnit((TaskRepeatUnit)parsed);
+        }
+    }
+
+    private void OnRepeatMonthChanged(ChangeEventArgs args)
+    {
+        if (int.TryParse(args.Value?.ToString(), out var parsed))
+        {
+            ViewModel.SetRepeatMonth(parsed);
+        }
+    }
+
+    private void OnHasRepeatEndDateChanged(ChangeEventArgs args)
+    {
+        if (args.Value is true)
+        {
+            ViewModel.SetRepeatEndDate(ViewModel.RepeatEndDate);
+        }
+        else
+        {
+            ViewModel.ClearRepeatEndDate();
+        }
+    }
+
+    private void OnRepeatEndDateConfirmed(DateTime date)
+    {
+        ViewModel.SetRepeatEndDate(date);
+        _isEndDatePickerOpen = false;
+    }
+
+    private Task ConfirmAsync() => OnConfirm.InvokeAsync(ViewModel.CreateResult());
+
+    private Task CancelAsync() => OnCancel.InvokeAsync();
+
+    private string GetReminderLabel(int minutes)
+    {
+        if (minutes == 0)
+        {
+            return Localizer["ReminderAtTime"];
+        }
+
+        if (minutes % 1440 == 0)
+        {
+            var days = minutes / 1440;
+            return days == 1 ? Localizer["ReminderDayBefore"] : Localizer["ReminderDaysBefore", days];
+        }
+
+        if (minutes % 60 == 0)
+        {
+            var hours = minutes / 60;
+            return hours == 1 ? Localizer["ReminderHourBefore"] : Localizer["ReminderHoursBefore", hours];
+        }
+
+        return Localizer["ReminderMinutesBefore", minutes];
+    }
+
+    private string GetRepeatLabel(TaskRepeatUnit unit) => unit switch
+    {
+        TaskRepeatUnit.Day => Localizer["RepeatDaily"],
+        TaskRepeatUnit.Week => Localizer["RepeatWeekly"],
+        TaskRepeatUnit.Month => Localizer["RepeatMonthly"],
+        TaskRepeatUnit.Year => Localizer["RepeatYearly"],
+        TaskRepeatUnit.MonthWeekday => Localizer["RepeatMonthlyWeekday"],
+        TaskRepeatUnit.YearWeekday => Localizer["RepeatYearlyWeekday"],
+        _ => Localizer["RepeatNone"]
+    };
+
+    private string GetOrdinalLabel(int ordinal) => ordinal switch
+    {
+        1 => Localizer["OrdinalFirst"],
+        2 => Localizer["OrdinalSecond"],
+        3 => Localizer["OrdinalThird"],
+        4 => Localizer["OrdinalFourth"],
+        _ => Localizer["OrdinalLast"]
+    };
+
+    private static string GetMonthName(int month) =>
+        CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+
+    private string GetIntervalUnitLabel()
+    {
+        var isSingular = ViewModel.RepeatInterval == 1;
+
+        return ViewModel.RepeatUnit switch
+        {
+            TaskRepeatUnit.Day => Localizer[isSingular ? "RepeatUnitDay" : "RepeatUnitDays"],
+            TaskRepeatUnit.Week => Localizer[isSingular ? "RepeatUnitWeek" : "RepeatUnitWeeks"],
+            TaskRepeatUnit.Month or TaskRepeatUnit.MonthWeekday =>
+                Localizer[isSingular ? "RepeatUnitMonth" : "RepeatUnitMonths"],
+            TaskRepeatUnit.Year or TaskRepeatUnit.YearWeekday =>
+                Localizer[isSingular ? "RepeatUnitYear" : "RepeatUnitYears"],
+            _ => string.Empty
+        };
+    }
+}

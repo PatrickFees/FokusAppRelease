@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="Language" xml:space="preserve"><value>Language</value></data>
+  <data name="DefaultScopeTitle" xml:space="preserve"><value>Work / Private scope</value></data>
+  <data name="DefaultScopeDescription" xml:space="preserve"><value>For You and To Do tasks are assigned to the work or personal area. You can also use just one of them as the default.</value></data>
+  <data name="DefaultScopeBoth" xml:space="preserve"><value>Both (switchable)</value></data>
+  <data name="DefaultScopeWork" xml:space="preserve"><value>Work only</value></data>
+  <data name="DefaultScopePrivate" xml:space="preserve"><value>Personal only</value></data>
+  <data name="ThemeTitle" xml:space="preserve"><value>Theme</value></data>
+  <data name="ThemeDescription" xml:space="preserve"><value>Choose whether the app is light or dark, and a color.</value></data>
+  <data name="ThemeSettingsDescription" xml:space="preserve"><value>Light and dark can be combined with any color.</value></data>
+  <data name="ColorModeTitle" xml:space="preserve"><value>Appearance</value></data>
+  <data name="ColorModeLight" xml:space="preserve"><value>Light</value></data>
+  <data name="ColorModeDark" xml:space="preserve"><value>Dark</value></data>
+  <data name="ThemeColorTitle" xml:space="preserve"><value>Color</value></data>
+  <data name="ThemeBlue" xml:space="preserve"><value>Blue</value></data>
+  <data name="ThemePink" xml:space="preserve"><value>Pink</value></data>
+  <data name="ThemeGreen" xml:space="preserve"><value>Green</value></data>
+  <data name="ThemeRed" xml:space="preserve"><value>Red</value></data>
+  <data name="ThemeYellow" xml:space="preserve"><value>Yellow</value></data>
+  <data name="German" xml:space="preserve"><value>German</value></data>
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="RingtoneTitle" xml:space="preserve"><value>Select ringtone</value></data>
+  <data name="RingtoneDescription" xml:space="preserve"><value>Choose the ringtone that plays when the focus timer finishes.</value></data>
+  <data name="Ringtone" xml:space="preserve"><value>Ringtone</value></data>
+  <data name="Play" xml:space="preserve"><value>Play</value></data>
+  <data name="NoRingtones" xml:space="preserve"><value>No ringtones were found.</value></data>
+  <data name="TimerAlertTitle" xml:space="preserve"><value>Timer alert</value></data>
+  <data name="TimerAlertDescription" xml:space="preserve"><value>Choose how you want to be notified when the timer ends. Everything you check is active.</value></data>
+  <data name="TimerAlertSound" xml:space="preserve"><value>Sound</value></data>
+  <data name="TimerAlertVibration" xml:space="preserve"><value>Vibration</value></data>
+  <data name="TimerAlertAdaptToRingerMode" xml:space="preserve"><value>Match ringer mode</value></data>
+  <data name="TimerAlertAdaptToRingerModeHint" xml:space="preserve"><value>Ringtone type follows your current loud, silent, vibrate setting. Loud plays a sound, silent vibrates.</value></data>
+  <data name="DataImportExport" xml:space="preserve"><value>Data import / export</value></data>
+  <data name="DataImportExportDescription" xml:space="preserve"><value>All data is stored locally on your device. You can find the exported file in your downloads in JSON format. Don't know what that is? No problem: transfer it to your new device and import your ForYou’s and ToDo’s.</value></data>
+  <data name="ExportFile" xml:space="preserve"><value>Export (FokusAppData.json)</value></data>
+  <data name="Import" xml:space="preserve"><value>Import JSON</value></data>
+  <data name="Work" xml:space="preserve"><value>Work</value></data>
+  <data name="Private" xml:space="preserve"><value>Personal</value></data>
+  <data name="TaskFocus" xml:space="preserve"><value>Task scope</value></data>
+  <data name="ToggleScope" xml:space="preserve"><value>Switch between work and personal tasks</value></data>
+  <data name="NavigationMenu" xml:space="preserve"><value>Navigation menu</value></data>
+  <data name="FocusTimer" xml:space="preserve"><value>Focus Timer</value></data>
+  <data name="Tasks" xml:space="preserve"><value>Tasks</value></data>
+  <data name="YourDay" xml:space="preserve"><value>Your day</value></data>
+  <data name="Errors" xml:space="preserve"><value>Errors</value></data>
+  <data name="NavTimer" xml:space="preserve"><value>Timer</value></data>
+  <data name="NavYourDay" xml:space="preserve"><value>Your day</value></data>
+  <data name="CollapseCalendar" xml:space="preserve"><value>Collapse calendar</value></data>
+  <data name="ExpandCalendar" xml:space="preserve"><value>Expand calendar</value></data>
+  <data name="NavManagement" xml:space="preserve"><value>Management</value></data>
+  <data name="SelectTask" xml:space="preserve"><value>Select task</value></data>
+  <data name="HideFilters" xml:space="preserve"><value>Hide filters</value></data>
+  <data name="ShowFilters" xml:space="preserve"><value>Show filters</value></data>
+  <data name="NoOpenTasks" xml:space="preserve"><value>No open tasks available.</value></data>
+  <data name="Priority" xml:space="preserve"><value>Priority: {0}</value></data>
+  <data name="PriorityNone" xml:space="preserve"><value>None</value></data>
+  <data name="PriorityLow" xml:space="preserve"><value>Low</value></data>
+  <data name="PriorityMedium" xml:space="preserve"><value>Medium</value></data>
+  <data name="PriorityHigh" xml:space="preserve"><value>High</value></data>
+  <data name="PriorityUrgent" xml:space="preserve"><value>Urgent</value></data>
+  <data name="Unknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="Break" xml:space="preserve"><value>Break</value></data>
+  <data name="MinutesShort" xml:space="preserve"><value>min</value></data>
+  <data name="TimerHint" xml:space="preserve"><value>Drag the outer ring or tap the time to set the minutes.</value></data>
+  <data name="NotificationPermissionHint" xml:space="preserve"><value>Notifications are disabled. Lock-screen updates may not be visible.</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="EndBreak" xml:space="preserve"><value>End break</value></data>
+  <data name="Reset" xml:space="preserve"><value>Reset</value></data>
+  <data name="SetTimer" xml:space="preserve"><value>Set timer</value></data>
+  <data name="AddTask" xml:space="preserve"><value>Add task</value></data>
+  <data name="TaskOverviewIntro" xml:space="preserve"><value>Keep track of upcoming tasks and completed to-dos.</value></data>
+  <data name="CloseFilters" xml:space="preserve"><value>Close filters</value></data>
+  <data name="ActiveTasks" xml:space="preserve"><value>Tasks</value></data>
+  <data name="OverdueTasksCount" xml:space="preserve"><value>Open tasks in the past ({0})</value></data>
+  <data name="CompletedTasksCount" xml:space="preserve"><value>Completed tasks ({0})</value></data>
+  <data name="TemplateTask" xml:space="preserve"><value>Template</value></data>
+  <data name="OneTimeTask" xml:space="preserve"><value>One-time task</value></data>
+  <data name="OneTimeTasks" xml:space="preserve"><value>One-time tasks</value></data>
+  <data name="Status" xml:space="preserve"><value>Status: {0}</value></data>
+  <data name="TaskCurrentlyRunning" xml:space="preserve"><value>Task is currently running</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="SeriesChoiceTitle" xml:space="preserve"><value>Repeating task</value></data>
+  <data name="SeriesChoiceEditText" xml:space="preserve"><value>This task is part of a series. Should the change apply to this task only or to the whole series?</value></data>
+  <data name="SeriesChoiceDeleteText" xml:space="preserve"><value>This task is part of a series. Delete only this task or the whole series?</value></data>
+  <data name="SeriesChoiceThisTask" xml:space="preserve"><value>This task only</value></data>
+  <data name="SeriesChoiceWholeSeries" xml:space="preserve"><value>Whole series</value></data>
+  <data name="CreatedOn" xml:space="preserve"><value>Created on {0:d}</value></data>
+  <data name="TemplateWithoutDate" xml:space="preserve"><value>Template without date</value></data>
+  <data name="CompletedOn" xml:space="preserve"><value>Completed: {0:d}</value></data>
+  <data name="Active" xml:space="preserve"><value>Active</value></data>
+  <data name="Open" xml:space="preserve"><value>Open</value></data>
+  <data name="Template" xml:space="preserve"><value>Template</value></data>
+  <data name="AddForYouTask" xml:space="preserve"><value>Add For You task</value></data>
+  <data name="AddToDoTask" xml:space="preserve"><value>Add To Do task</value></data>
+  <data name="TaskTypeForYou" xml:space="preserve"><value>For You</value></data>
+  <data name="TaskTypeToDo" xml:space="preserve"><value>To Do</value></data>
+  <data name="StartTask" xml:space="preserve"><value>Start task</value></data>
+  <data name="TimerRunning" xml:space="preserve"><value>Timer running</value></data>
+  <data name="NoTasksForDay" xml:space="preserve"><value>No tasks for this day.</value></data>
+  <data name="Done" xml:space="preserve"><value>Done</value></data>
+  <data name="Task" xml:space="preserve"><value>Task</value></data>
+  <data name="CompleteDirectly" xml:space="preserve"><value>Complete now</value></data>
+  <data name="CloseTaskPopup" xml:space="preserve"><value>Close task popup</value></data>
+  <data name="NoTask" xml:space="preserve"><value>No task</value></data>
+  <data name="TimerTaskOtherScopeHint" xml:space="preserve"><value>The current task is active in the "{0}" scope. Switch to the "{1}" scope or end the timer to see the remaining tasks of the selected scope.</value></data>
+  <data name="NoTasksForFilters" xml:space="preserve"><value>No tasks match these filters.</value></data>
+  <data name="SearchTask" xml:space="preserve"><value>Search tasks</value></data>
+  <data name="DateNewestFirst" xml:space="preserve"><value>Date: newest first</value></data>
+  <data name="DateOldestFirst" xml:space="preserve"><value>Date: oldest first</value></data>
+  <data name="ResetFilters" xml:space="preserve"><value>Reset filters</value></data>
+  <data name="AllDays" xml:space="preserve"><value>All days</value></data>
+  <data name="TemplateSuffix" xml:space="preserve"><value>{0} (template)</value></data>
+  <data name="Untitled" xml:space="preserve"><value>Untitled</value></data>
+  <data name="TemplateOption" xml:space="preserve"><value>{0} ({1})</value></data>
+  <data name="EditTask" xml:space="preserve"><value>Edit task</value></data>
+  <data name="NewTask" xml:space="preserve"><value>New task</value></data>
+  <data name="Templates" xml:space="preserve"><value>Templates</value></data>
+  <data name="IsTemplate" xml:space="preserve"><value>Template</value></data>
+  <data name="DescribeTask" xml:space="preserve"><value>Describe your task</value></data>
+  <data name="FocusTime" xml:space="preserve"><value>Focus time</value></data>
+  <data name="DecreaseFocusTime" xml:space="preserve"><value>Decrease focus time</value></data>
+  <data name="IncreaseFocusTime" xml:space="preserve"><value>Increase focus time</value></data>
+  <data name="SetFocusTimeManually" xml:space="preserve"><value>Set focus time manually</value></data>
+  <data name="DecreaseBreakTime" xml:space="preserve"><value>Decrease break time</value></data>
+  <data name="IncreaseBreakTime" xml:space="preserve"><value>Increase break time</value></data>
+  <data name="SetBreakTimeManually" xml:space="preserve"><value>Set break time manually</value></data>
+  <data name="TaskType" xml:space="preserve"><value>Task type</value></data>
+  <data name="Update" xml:space="preserve"><value>Update</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="SetFocusTime" xml:space="preserve"><value>Set focus time</value></data>
+  <data name="SetBreakTime" xml:space="preserve"><value>Set break time</value></data>
+  <data name="CloseTemplates" xml:space="preserve"><value>Close templates</value></data>
+  <data name="NoTemplates" xml:space="preserve"><value>No templates available.</value></data>
+  <data name="Copy" xml:space="preserve"><value>Copy</value></data>
+  <data name="CopyTemplate" xml:space="preserve"><value>Copy template</value></data>
+  <data name="EditTemplate" xml:space="preserve"><value>Edit template</value></data>
+  <data name="EnterMinutesDescription" xml:space="preserve"><value>Enter the desired number of minutes.</value></data>
+  <data name="MinutesMaximum" xml:space="preserve"><value>Minutes (max. {0})</value></data>
+  <data name="EnterMinutesError" xml:space="preserve"><value>Enter a valid time in minutes.</value></data>
+  <data name="Apply" xml:space="preserve"><value>Apply</value></data>
+  <data name="PreviousMonth" xml:space="preserve"><value>Previous month</value></data>
+  <data name="NextMonth" xml:space="preserve"><value>Next month</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Refresh</value></data>
+  <data name="NoSavedErrors" xml:space="preserve"><value>No errors saved.</value></data>
+  <data name="Share" xml:space="preserve"><value>Share</value></data>
+  <data name="ShareError" xml:space="preserve"><value>Share error</value></data>
+  <data name="ShareErrorEmailSubject" xml:space="preserve"><value>FokusApp error report</value></data>
+  <data name="ErrorsLoadFailed" xml:space="preserve"><value>Errors could not be loaded.</value></data>
+  <data name="UnexpectedErrorTitle" xml:space="preserve"><value>An error occurred</value></data>
+  <data name="UnexpectedErrorDescription" xml:space="preserve"><value>The error was saved. You can find it on the Errors page in the navigation menu.</value></data>
+  <data name="ReloadView" xml:space="preserve"><value>Reload view</value></data>
+  <data name="DataActionFailed" xml:space="preserve"><value>Data operation failed.</value></data>
+  <data name="ExportShareTitle" xml:space="preserve"><value>Export FokusApp data</value></data>
+  <data name="ExportCreated" xml:space="preserve"><value>Export created: {0}</value></data>
+  <data name="CalendarExportShareTitle" xml:space="preserve"><value>Export calendar</value></data>
+  <data name="CalendarExportCreated" xml:space="preserve"><value>Calendar export created: {0}</value></data>
+  <data name="ImportPickerTitle" xml:space="preserve"><value>Import FokusApp data</value></data>
+  <data name="ImportCanceled" xml:space="preserve"><value>Import canceled.</value></data>
+  <data name="ImportReadFailed" xml:space="preserve"><value>The import file could not be read.</value></data>
+  <data name="ImportInvalid" xml:space="preserve"><value>The import file does not contain valid FokusApp data.</value></data>
+  <data name="ImportCompleted" xml:space="preserve"><value>Import completed successfully.</value></data>
+  <data name="NotificationRemainingTime" xml:space="preserve"><value>Time remaining: {0}</value></data>
+  <data name="NotificationBreakRemaining" xml:space="preserve"><value>Break time remaining</value></data>
+  <data name="NotificationStop" xml:space="preserve"><value>Stop</value></data>
+  <data name="NotificationResume" xml:space="preserve"><value>Resume</value></data>
+  <data name="NotificationStartBreak" xml:space="preserve"><value>Start break</value></data>
+  <data name="NotificationBreakCompleted" xml:space="preserve"><value>Break completed</value></data>
+  <data name="NotificationFocusCompletedWithBreak" xml:space="preserve"><value>Well done, treat yourself to a break.</value></data>
+  <data name="NotificationFocusCompleted" xml:space="preserve"><value>Well done.</value></data>
+  <data name="NotificationBreakElapsed" xml:space="preserve"><value>The break has ended.</value></data>
+  <data name="NotificationTaskElapsedWithBreak" xml:space="preserve"><value>The task time has ended. Break: {0:00} min.</value></data>
+  <data name="NotificationTaskElapsed" xml:space="preserve"><value>The task time has ended.</value></data>
+  <data name="NotificationRunningChannel" xml:space="preserve"><value>Focus Timer</value></data>
+  <data name="NotificationCompletedChannel" xml:space="preserve"><value>Timer completion</value></data>
+  <data name="StartupLoadingTitle" xml:space="preserve"><value>FokusApp is starting</value></data>
+  <data name="StartupLoadingDescription" xml:space="preserve"><value>Your data and settings are being loaded.</value></data>
+  <data name="StartupFailedTitle" xml:space="preserve"><value>FokusApp could not start</value></data>
+  <data name="StartupFailedDescription" xml:space="preserve"><value>An error occurred while loading your data. The error was logged. Please restart the app.</value></data>
+  <data name="TechnicalDetails" xml:space="preserve"><value>Technical details</value></data>
+  <data name="Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="ImportCanceledTitle" xml:space="preserve"><value>Import canceled</value></data>
+  <data name="ImportCanceledMessage" xml:space="preserve"><value>Nothing was imported. Your existing data is unchanged.</value></data>
+  <data name="ResetData" xml:space="preserve"><value>Reset to starting data</value></data>
+  <data name="ResetConfirmTitle" xml:space="preserve"><value>Reset to starting data?</value></data>
+  <data name="ResetConfirmMessage" xml:space="preserve"><value>All tasks and settings will be deleted and replaced by the starting data. This cannot be undone. Export your data first if you want to keep it.</value></data>
+  <data name="ResetConfirmAction" xml:space="preserve"><value>Reset</value></data>
+  <data name="ResetCompleted" xml:space="preserve"><value>The app data was reset to the starting data.</value></data>
+  <data name="SelectMonth" xml:space="preserve"><value>Select month</value></data>
+  <data name="SelectYear" xml:space="preserve"><value>Select year</value></data>
+  <data name="ImportCalendarScopeLabel" xml:space="preserve"><value>For area</value></data>
+  <data name="ExportCalendarButton" xml:space="preserve"><value>Export calendar (.ics)</value></data>
+  <data name="ImportCalendarButton" xml:space="preserve"><value>Import Android calendar</value></data>
+  <data name="ImportCalendarTitle" xml:space="preserve"><value>Import calendar</value></data>
+  <data name="ImportCalendarLoading" xml:space="preserve"><value>Loading calendars …</value></data>
+  <data name="ImportCalendarSelectCalendars" xml:space="preserve"><value>Select calendars</value></data>
+  <data name="ImportCalendarDeviceHint" xml:space="preserve"><value>Calendars on your device</value></data>
+  <data name="ImportCalendarFrom" xml:space="preserve"><value>From</value></data>
+  <data name="ImportCalendarTo" xml:space="preserve"><value>To</value></data>
+  <data name="ImportCalendarConfirm" xml:space="preserve"><value>Import</value></data>
+  <data name="CalendarImportNoCalendars" xml:space="preserve"><value>No calendars found to import.</value></data>
+  <data name="CalendarImportPermissionMissing" xml:space="preserve"><value>The app has no permission to read the device calendar.</value></data>
+  <data name="CalendarImportCompleted" xml:space="preserve"><value>{0} events imported, {1} already present, {2} skipped.</value></data>
+  <data name="CalendarAutoSyncSetting" xml:space="preserve"><value>Hourly import from Android calendar</value></data>
+  <data name="CalendarAutoSyncPickerButton" xml:space="preserve"><value>Choose calendars to sync</value></data>
+  <data name="CalendarAutoSyncPickerTitle" xml:space="preserve"><value>Calendars for automatic sync</value></data>
+  <data name="CalendarAutoSyncPickerSave" xml:space="preserve"><value>Save</value></data>
+  <data name="CalendarAutoSyncLastRun" xml:space="preserve"><value>Last synced: {0}</value></data>
+  <data name="CalendarAutoSyncMyCalendarExplanation" xml:space="preserve"><value>Events stored only on this device, not synced with any account.</value></data>
+  <data name="CalendarAutoSyncMyCalendarHint" xml:space="preserve"><value>Android's local default calendar</value></data>
+  <data name="CalendarAutoSyncNeverRun" xml:space="preserve"><value>Not synced yet.</value></data>
+  <data name="Today" xml:space="preserve"><value>Today</value></data>
+  <data name="CalendarWeekLabel" xml:space="preserve"><value>Calendar week {0}</value></data>
+  <data name="PastTasksHintOne" xml:space="preserve"><value>You have 1 task waiting for a new day. Give it a place.</value></data>
+  <data name="PastTasksHintMany" xml:space="preserve"><value>You have {0} tasks waiting for a new day. Give them a place.</value></data>
+  <data name="AssignTask" xml:space="preserve"><value>Assign task</value></data>
+  <data name="AssignToday" xml:space="preserve"><value>Today</value></data>
+  <data name="AssignTomorrow" xml:space="preserve"><value>Tomorrow</value></data>
+  <data name="AssignWeekend" xml:space="preserve"><value>This weekend</value></data>
+  <data name="AssignOtherDay" xml:space="preserve"><value>Another day</value></data>
+  <data name="AssignDiscard" xml:space="preserve"><value>Let it go</value></data>
+  <data name="AssignAllTomorrow" xml:space="preserve"><value>All to tomorrow</value></data>
+  <data name="Undo" xml:space="preserve"><value>Undo</value></data>
+  <data name="UndoTaskDiscarded" xml:space="preserve"><value>Task removed.</value></data>
+  <data name="UndoTasksMovedToTomorrow" xml:space="preserve"><value>{0} tasks moved to tomorrow.</value></data>
+  <data name="RewardingTitle" xml:space="preserve"><value>Motivation and support</value></data>
+  <data name="MicroFeedbackSetting" xml:space="preserve"><value>Feedback when completing</value></data>
+  <data name="MicroFeedbackSettingHint" xml:space="preserve"><value>Confetti.</value></data>
+  <data name="ReviewsSetting" xml:space="preserve"><value>Weekly review</value></data>
+  <data name="ReviewsSettingHint" xml:space="preserve"><value>A friendly look at what you got done.</value></data>
+  <data name="CompanionSetting" xml:space="preserve"><value>Plant pot</value></data>
+  <data name="CompanionSettingHint" xml:space="preserve"><value>A plant pot that helps you plan your day.</value></data>
+  <data name="BalanceGoalTitle" xml:space="preserve"><value>Balance goal</value></data>
+  <data name="BalanceGoalHint" xml:space="preserve"><value>Try to find your realistic balance between tasks for your well-being and your duties.</value></data>
+  <data name="BalanceGoalOneToOne" xml:space="preserve"><value>1 ForYou : 1 ToDo</value></data>
+  <data name="BalanceGoalTwoToThree" xml:space="preserve"><value>2 ForYou : 3 ToDo</value></data>
+  <data name="BalanceGoalThreeToTwo" xml:space="preserve"><value>3 ForYou : 2 ToDo</value></data>
+  <data name="BalanceGoalCustom" xml:space="preserve"><value>Custom ratio</value></data>
+  <data name="BalanceCustomForYou" xml:space="preserve"><value>For You</value></data>
+  <data name="BalanceCustomToDo" xml:space="preserve"><value>To Do</value></data>
+  <data name="NavWeeklyReview" xml:space="preserve"><value>Weekly review</value></data>
+  <data name="WeeklyReviewTitle" xml:space="preserve"><value>Weekly review</value></data>
+  <data name="WeeklyReviewPrevious" xml:space="preserve"><value>Previous week</value></data>
+  <data name="WeeklyReviewNext" xml:space="preserve"><value>Next week</value></data>
+  <data name="WeeklyReviewThisWeek" xml:space="preserve"><value>This week</value></data>
+  <data name="WeeklyReviewSoFar" xml:space="preserve"><value>Status so far, the week is still running.</value></data>
+  <data name="WeeklyReviewEmpty" xml:space="preserve"><value>Nothing created or done in this week yet. That is fine, the week is yours.</value></data>
+  <data name="WeeklyReviewDone" xml:space="preserve"><value>Done</value></data>
+  <data name="WeeklyReviewForYou" xml:space="preserve"><value>For You</value></data>
+  <data name="WeeklyReviewToDo" xml:space="preserve"><value>To Do</value></data>
+  <data name="WeeklyReviewGoal" xml:space="preserve"><value>Your goal</value></data>
+  <data name="WeeklyReviewCreated" xml:space="preserve"><value>Created</value></data>
+  <data name="WeeklyReviewCounts" xml:space="preserve"><value>{0} For You : {1} To Do</value></data>
+  <data name="WeeklyReviewProgressReached" xml:space="preserve"><value>Goal reached</value></data>
+  <data name="WeeklyReviewProgressExceeded" xml:space="preserve"><value>Goal exceeded</value></data>
+  <data name="WeeklyReviewProgressOpen" xml:space="preserve"><value>Goal still open</value></data>
+  <data name="WeeklyReviewDaysTitle" xml:space="preserve"><value>Your days</value></data>
+  <data name="WeeklyReviewMostForYou" xml:space="preserve"><value>You did the most For You on {0} ({1}).</value></data>
+  <data name="WeeklyReviewMostToDo" xml:space="preserve"><value>You did the most To Dos on {0} ({1}).</value></data>
+  <data name="WeeklyReviewAnd" xml:space="preserve"><value>and</value></data>
+  <data name="WeeklyReviewDayLabel" xml:space="preserve"><value>{0}: {1} For You and {2} To Do completed</value></data>
+  <data name="WeeklyReviewDisabled" xml:space="preserve"><value>The weekly review is switched off in the settings.</value></data>
+  <data name="WeekdayInsightMostlyDuties" xml:space="preserve"><value>On {0}s you plan almost only duties. Would you like to plan something nice?</value></data>
+  <data name="WeekdayInsightRarelyDone" xml:space="preserve"><value>You like to plan something for yourself on {0}s but rarely manage it. Maybe less, or smaller?</value></data>
+  <data name="WeekdayInsightAction" xml:space="preserve"><value>Create For You task</value></data>
+  <data name="PlantBubble" xml:space="preserve"><value>Need a For You?</value></data>
+  <data name="PlantDismiss" xml:space="preserve"><value>Hide the hint for today</value></data>
+  <data name="PlantClose" xml:space="preserve"><value>Close</value></data>
+  <data name="PlantSuggestionsTitle" xml:space="preserve"><value>Something for you</value></data>
+  <data name="PlantSuggestionsHint" xml:space="preserve"><value>Tap an idea to add it as a For You task for today.</value></data>
+  <data name="ForYouCategoryOwn" xml:space="preserve"><value>Own suggestion</value></data>
+  <data name="ForYouCategoryMovement" xml:space="preserve"><value>Movement</value></data>
+  <data name="ForYouCategoryCalm" xml:space="preserve"><value>Calm</value></data>
+  <data name="ForYouCategoryContact" xml:space="preserve"><value>Contact</value></data>
+  <data name="ForYouCategoryCreativity" xml:space="preserve"><value>Creativity</value></data>
+  <data name="ForYouSuggestionsTitle" xml:space="preserve"><value>For You suggestions</value></data>
+  <data name="ForYouSuggestionsDescription" xml:space="preserve"><value>The plant suggests a ForYou for you when nothing for yourself is planned today. {0} suggestions already come with the app. There are tips to go with them, or add your own. Swipe right to left, or press and hold a task, to edit it.</value></data>
+  <data name="ForYouSuggestionsNew" xml:space="preserve"><value>Add your own suggestion</value></data>
+  <data name="ForYouSuggestionsAdd" xml:space="preserve"><value>Add</value></data>
+  <data name="ForYouSuggestionsRejected" xml:space="preserve"><value>This suggestion already exists, or the field is empty.</value></data>
+  <data name="ForYouSuggestionsEmpty" xml:space="preserve"><value>No suggestions available.</value></data>
+  <data name="ForYouSuggestionsEditLabel" xml:space="preserve"><value>Edit suggestion</value></data>
+  <data name="ForYouPoolMovement1" xml:space="preserve"><value>Take a walk in the fresh air</value></data>
+  <data name="ForYouPoolMovement2" xml:space="preserve"><value>Stretch for ten minutes</value></data>
+  <data name="ForYouPoolMovement3" xml:space="preserve"><value>Go for a bike ride</value></data>
+  <data name="ForYouPoolMovement4" xml:space="preserve"><value>Dance to your favourite song</value></data>
+  <data name="ForYouPoolMovement5" xml:space="preserve"><value>Walk around the block</value></data>
+  <data name="ForYouPoolCalm1" xml:space="preserve"><value>Breathe mindfully for five minutes</value></data>
+  <data name="ForYouPoolCalm2" xml:space="preserve"><value>Drink a tea in peace</value></data>
+  <data name="ForYouPoolCalm3" xml:space="preserve"><value>Take a warm bath</value></data>
+  <data name="ForYouPoolCalm4" xml:space="preserve"><value>Ten minutes without a screen</value></data>
+  <data name="ForYouPoolCalm5" xml:space="preserve"><value>Read a chapter of a book</value></data>
+  <data name="ForYouPoolContact1" xml:space="preserve"><value>Send someone a message</value></data>
+  <data name="ForYouPoolContact2" xml:space="preserve"><value>Call a friend</value></data>
+  <data name="ForYouPoolContact3" xml:space="preserve"><value>Have a coffee with someone</value></data>
+  <data name="ForYouPoolContact4" xml:space="preserve"><value>Thank someone</value></data>
+  <data name="ForYouPoolContact5" xml:space="preserve"><value>Cook together</value></data>
+  <data name="ForYouPoolCreativity1" xml:space="preserve"><value>Draw for ten minutes</value></data>
+  <data name="ForYouPoolCreativity2" xml:space="preserve"><value>Take a photo you like</value></data>
+  <data name="ForYouPoolCreativity3" xml:space="preserve"><value>Cook something new</value></data>
+  <data name="ForYouPoolCreativity4" xml:space="preserve"><value>Write a few lines</value></data>
+  <data name="ForYouPoolCreativity5" xml:space="preserve"><value>Sing or play a song</value></data>
+  <data name="ForYouCategoryTemplate" xml:space="preserve"><value>Template</value></data>
+  <data name="OnboardingTitle" xml:space="preserve"><value>Welcome</value></data>
+  <data name="OnboardingProgress" xml:space="preserve"><value>Step {0} of {1}</value></data>
+  <data name="OnboardingNext" xml:space="preserve"><value>Next</value></data>
+  <data name="OnboardingBack" xml:space="preserve"><value>Back</value></data>
+  <data name="OnboardingFinish" xml:space="preserve"><value>Let’s go</value></data>
+  <data name="OnboardingWelcomeText" xml:space="preserve"><value>Nice to have you here. Let’s set up the app quickly.</value></data>
+  <data name="OnboardingWelcomeHint" xml:space="preserve"><value>Take a moment on the next few pages – it’s worth reading through them.</value></data>
+  <data name="OnboardingWhyTitle" xml:space="preserve"><value>Why this day planner?</value></data>
+  <data name="OnboardingWhyTraining" xml:space="preserve"><value>You train your brain to lose the hurdle and negativity towards tasks / duties of life. This happens by planning For You and To Do tasks.</value></data>
+  <data name="OnboardingWhyPlan" xml:space="preserve"><value>Plan consciously and benefit from the psychological foundations of</value></data>
+  <data name="OnboardingWhyActivation" xml:space="preserve"><value>Behavioral activation</value></data>
+  <data name="OnboardingWhySelfDetermination" xml:space="preserve"><value>Self-determination</value></data>
+  <data name="OnboardingWhySelfCare" xml:space="preserve"><value>Self-care through a plan</value></data>
+  <data name="OnboardingWhyReward" xml:space="preserve"><value>The reward system from learning theory</value></data>
+  <data name="OnboardingSceneMinutes" xml:space="preserve"><value>Minutes</value></data>
+  <data name="OnboardingSceneQuestion" xml:space="preserve"><value>Do you know the Pomodoro technique?</value></data>
+  <data name="OnboardingSceneYes" xml:space="preserve"><value>Yes</value></data>
+  <data name="OnboardingSceneNo" xml:space="preserve"><value>No</value></data>
+  <data name="OnboardingSceneExplain" xml:space="preserve"><value>The Pomodoro technique: 1. Set a task and focus on only that one task, ideally for 30 minutes. 2. Take a short break (have a drink, take a short walk, stretch, etc.) – without distractions that could affect your next focus session, or that are themselves further subtasks (e.g. cleaning one of five windows, continuing to write your novel). 3. Distractions or spontaneous task ideas are normal: jot them down quickly, or add a new task directly in the app and continue with the one you already started.</value></data>
+  <data name="OnboardingSceneTip" xml:space="preserve"><value>Goal: Splitting tasks up and working on them deliberately reduces resistance to big tasks (the typical, overly long and postponed to-do list). It also looks after your mental and physical battery through breaks and a realistic amount of time to work.</value></data>
+  <data name="OnboardingSceneTipExample" xml:space="preserve"><value>An example: vacuum the flat for 20 minutes, then take a 5-minute break with a walk outside for some fresh air. A bad break: watching a video or shorts, or carrying on with a hobby project.</value></data>
+  <data name="OnboardingSceneDayIntro" xml:space="preserve"><value>This is where your day happens. You see a positive to-do book. It has two areas [ For You ] [ To Do ]. In each of these areas you can create tasks.</value></data>
+  <data name="OnboardingSceneScope" xml:space="preserve"><value>You can use this positive to-do book for work and for private life, or set just one area.</value></data>
+  <data name="OnboardingSceneLabel" xml:space="preserve"><value>The plant explains the app</value></data>
+  <data name="OnboardingDemoWalk" xml:space="preserve"><value>Go for a walk</value></data>
+  <data name="OnboardingDemoTaxes" xml:space="preserve"><value>Sort tax documents</value></data>
+  <data name="OnboardingDemoDateNight" xml:space="preserve"><value>Date night</value></data>
+  <data name="OnboardingDemoMeditate" xml:space="preserve"><value>Meditate</value></data>
+  <data name="OnboardingDemoCleanFlat" xml:space="preserve"><value>Clean the flat</value></data>
+  <data name="OnboardingFeaturesTitle" xml:space="preserve"><value>What should be on?</value></data>
+  <data name="OnboardingFeaturesText" xml:space="preserve"><value>You decide which supports are active. You can change everything at any time in the settings.</value></data>
+  <data name="OnboardingBalanceTitle" xml:space="preserve"><value>Your balance goal</value></data>
+  <data name="OnboardingBalanceText" xml:space="preserve"><value>Set your goal for the daily number of ForYou’s and ToDo’s.</value></data>
+  <data name="OnboardingBalanceMore" xml:space="preserve"><value>You find more options, like your own ratio, in the settings.</value></data>
+  <data name="OnboardingCalendarImportTitle" xml:space="preserve"><value>Import calendar</value></data>
+  <data name="OnboardingCalendarImportText" xml:space="preserve"><value>Bring events from your device calendar in as tasks, and use the hourly import from Android calendar if you like, to keep them up to date automatically.</value></data>
+  <data name="OnboardingCalendarImportRangeHint" xml:space="preserve"><value>Events from the next two years are brought in.</value></data>
+  <data name="OnboardingInviteTitle" xml:space="preserve"><value>New options</value></data>
+  <data name="OnboardingInviteText" xml:space="preserve"><value>Update: There is now a helpful plant pot. It supports you with feedback and reviews of your tasks. You can turn everything on and off in the settings. Feel free to take a look now :)</value></data>
+  <data name="OnboardingInviteLater" xml:space="preserve"><value>Not now</value></data>
+  <data name="OnboardingInviteLook" xml:space="preserve"><value>Take a look</value></data>
+  <data name="OnboardingSettingsTitle" xml:space="preserve"><value>Introduction</value></data>
+  <data name="OnboardingSettingsDescription" xml:space="preserve"><value>Learn something about the app and adjust it. Your setting is kept as the preselection.</value></data>
+  <data name="OnboardingRestart" xml:space="preserve"><value>Watch the introduction again</value></data>
+  <data name="UpdateAvailableTitle" xml:space="preserve"><value>New version available</value></data>
+  <data name="UpdateAvailableText" xml:space="preserve"><value>Version {0} is ready to download.</value></data>
+  <data name="UpdateNotNow" xml:space="preserve"><value>Not now</value></data>
+  <data name="UpdateDownloadNow" xml:space="preserve"><value>Download</value></data>
+  <data name="WhatsNewTitle" xml:space="preserve"><value>Great new stuff and fixes</value></data>
+  <data name="WhatsNewText" xml:space="preserve"><value>&lt;p&gt;Feeling it? -&gt; head over to settings ;)&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Sound&lt;/strong&gt; or &lt;strong&gt;vibration&lt;/strong&gt; when the timer ends&lt;ul&gt;&lt;li&gt;optionally linked to the silent mode setting&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;ONE DATA SOURCE&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Import&lt;/strong&gt; / &lt;strong&gt;export&lt;/strong&gt; of the Android calendar + &lt;strong&gt;sync&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Polish&lt;ul&gt;&lt;li&gt;Clearer page navigation&lt;/li&gt;&lt;li&gt;Smoother page transitions&lt;/li&gt;&lt;li&gt;Notification bugfix&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Website now reachable from the navigation menu&lt;ul&gt;&lt;li&gt;Share the app with friends&lt;/li&gt;&lt;li&gt;A look at what's coming (Windows, Linux, iOS, open source code)&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Next up for Android&lt;ul&gt;&lt;li&gt;Calendar widget&lt;/li&gt;&lt;li&gt;Expanding the day planner and weekly review&lt;/li&gt;&lt;li&gt;Your wishes, if you send me an email&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Best regards from your developer Patrick Feeß&lt;/p&gt;</value></data>
+  <data name="WhatsNewContinue" xml:space="preserve"><value>Continue</value></data>
+  <data name="PlantBubblePlanDay" xml:space="preserve"><value>Plan your day?</value></data>
+  <data name="NavDayPlanner" xml:space="preserve"><value>Day planner</value></data>
+  <data name="PlannerTitle" xml:space="preserve"><value>Day planner</value></data>
+  <data name="PlannerOverviewTitle" xml:space="preserve"><value>Today at a glance</value></data>
+  <data name="PlannerOverviewEmpty" xml:space="preserve"><value>Nothing is planned for today yet. That is a good starting point.</value></data>
+  <data name="PlannerOverviewSummary" xml:space="preserve"><value>Planned for today: {0} for you and {1} duties.</value></data>
+  <data name="PlannerAssignTitle" xml:space="preserve"><value>Tasks from before</value></data>
+  <data name="PlannerAssignText" xml:space="preserve"><value>These tasks are still waiting for a day. Assign them as it suits you.</value></data>
+  <data name="PlannerAssignDone" xml:space="preserve"><value>Everything has its place.</value></data>
+  <data name="PlannerForYouTitle" xml:space="preserve"><value>Something for you</value></data>
+  <data name="PlannerForYouText" xml:space="preserve"><value>Your day is a little one-sided so far. Would you like to plan something nice?</value></data>
+  <data name="PlannerForYouTextReached" xml:space="preserve"><value>Hey, great that you keep planning. You have even reached your goal already.</value></data>
+  <data name="PlannerForYouCreate" xml:space="preserve"><value>Create your own For You task</value></data>
+  <data name="PlannerDutiesTitle" xml:space="preserve"><value>Duties</value></data>
+  <data name="PlannerDutiesText" xml:space="preserve"><value>Is there something that has to get done today? Create a new duty or take a regular one.</value></data>
+  <data name="PlannerDutyCreate" xml:space="preserve"><value>Create To Do task</value></data>
+  <data name="PlannerDutyTemplatesTitle" xml:space="preserve"><value>Regular duties</value></data>
+  <data name="PlannerChartLabel" xml:space="preserve"><value>{0} For You and {1} To Do planned, {2} For You and {3} To Do of them done, your goal is {4} For You to {5} To Do</value></data>
+  <data name="PlannerGoalLine" xml:space="preserve"><value>Your goal: {0} For You : {1} To Do</value></data>
+  <data name="PlannerGoalMark" xml:space="preserve"><value>Goal</value></data>
+  <data name="PlannerDoneTitle" xml:space="preserve"><value>Done</value></data>
+  <data name="PlannerDoneNothing" xml:space="preserve"><value>You do not have to plan anything today. Plan as much or as little as feels good.</value></data>
+  <data name="PlannerDonePlanned" xml:space="preserve"><value>Your day is planned. Enjoy it!</value></data>
+  <data name="PlannerNext" xml:space="preserve"><value>Next</value></data>
+  <data name="PlannerBack" xml:space="preserve"><value>Back</value></data>
+  <data name="PlannerFinish" xml:space="preserve"><value>Done</value></data>
+  <data name="PlannerPastForYousTitle" xml:space="preserve"><value>Previous For Yous</value></data>
+  <data name="PlantTap" xml:space="preserve"><value>Show today's goal</value></data>
+  <data name="PlantBubbleGoalReached" xml:space="preserve"><value>Hey, great! You reached your goal of For Yous and To Dos today.</value></data>
+  <data name="PlantBubbleGoalExceeded" xml:space="preserve"><value>Hey, awesome! You even exceeded your goal of For Yous and To Dos today.</value></data>
+  <data name="PlantBubbleAskForYou" xml:space="preserve"><value>Would you like one more For You?</value></data>
+  <data name="ScheduleButton" xml:space="preserve"><value>Set time and repeat</value></data>
+  <data name="ScheduleTitle" xml:space="preserve"><value>Time and repeat</value></data>
+  <data name="ScheduleHours" xml:space="preserve"><value>Hours</value></data>
+  <data name="ScheduleMinutes" xml:space="preserve"><value>Minutes</value></data>
+  <data name="NoTime" xml:space="preserve"><value>No time</value></data>
+  <data name="NoTimeHoursPlaceholder" xml:space="preserve"><value>No</value></data>
+  <data name="NoTimeMinutesPlaceholder" xml:space="preserve"><value>time</value></data>
+  <data name="Reminder" xml:space="preserve"><value>Reminder</value></data>
+  <data name="ReminderNone" xml:space="preserve"><value>No reminder</value></data>
+  <data name="ReminderAtTime" xml:space="preserve"><value>At the time</value></data>
+  <data name="ReminderMinutesBefore" xml:space="preserve"><value>{0} minutes before</value></data>
+  <data name="ReminderHourBefore" xml:space="preserve"><value>1 hour before</value></data>
+  <data name="ReminderHoursBefore" xml:space="preserve"><value>{0} hours before</value></data>
+  <data name="ReminderDayBefore" xml:space="preserve"><value>1 day before</value></data>
+  <data name="ReminderDaysBefore" xml:space="preserve"><value>{0} days before</value></data>
+  <data name="ReminderNeedsTime" xml:space="preserve"><value>A reminder needs a time.</value></data>
+  <data name="Repeat" xml:space="preserve"><value>Repeat</value></data>
+  <data name="RepeatNone" xml:space="preserve"><value>Does not repeat</value></data>
+  <data name="RepeatDaily" xml:space="preserve"><value>Daily</value></data>
+  <data name="RepeatWeekly" xml:space="preserve"><value>Weekly</value></data>
+  <data name="RepeatMonthly" xml:space="preserve"><value>Monthly</value></data>
+  <data name="RepeatYearly" xml:space="preserve"><value>Yearly</value></data>
+  <data name="RepeatEvery" xml:space="preserve"><value>Every</value></data>
+  <data name="RepeatIntervalDecrease" xml:space="preserve"><value>Decrease interval</value></data>
+  <data name="RepeatIntervalIncrease" xml:space="preserve"><value>Increase interval</value></data>
+  <data name="RepeatUnitDay" xml:space="preserve"><value>day</value></data>
+  <data name="RepeatUnitDays" xml:space="preserve"><value>days</value></data>
+  <data name="RepeatUnitWeek" xml:space="preserve"><value>week</value></data>
+  <data name="RepeatUnitWeeks" xml:space="preserve"><value>weeks</value></data>
+  <data name="RepeatUnitMonth" xml:space="preserve"><value>month</value></data>
+  <data name="RepeatUnitMonths" xml:space="preserve"><value>months</value></data>
+  <data name="RepeatUnitYear" xml:space="preserve"><value>year</value></data>
+  <data name="RepeatUnitYears" xml:space="preserve"><value>years</value></data>
+  <data name="RepeatOnWeekdays" xml:space="preserve"><value>On these days</value></data>
+  <data name="RepeatWeekStartLabel" xml:space="preserve"><value>Week starts on</value></data>
+  <data name="RepeatEndsOn" xml:space="preserve"><value>Ends on</value></data>
+  <data name="RepeatMonthlyWeekday" xml:space="preserve"><value>Monthly on weekday</value></data>
+  <data name="RepeatYearlyWeekday" xml:space="preserve"><value>Yearly on weekday</value></data>
+  <data name="RepeatOrdinal" xml:space="preserve"><value>Which weekday of the month</value></data>
+  <data name="RepeatOnMonth" xml:space="preserve"><value>Month</value></data>
+  <data name="OrdinalFirst" xml:space="preserve"><value>1st</value></data>
+  <data name="OrdinalSecond" xml:space="preserve"><value>2nd</value></data>
+  <data name="OrdinalThird" xml:space="preserve"><value>3rd</value></data>
+  <data name="OrdinalFourth" xml:space="preserve"><value>4th</value></data>
+  <data name="OrdinalLast" xml:space="preserve"><value>Last</value></data>
+  <data name="RepeatingTask" xml:space="preserve"><value>Repeating task</value></data>
+  <data name="TemplatesDoNotRepeat" xml:space="preserve"><value>Templates have no date and do not repeat.</value></data>
+  <data name="TaskTimeAria" xml:space="preserve"><value>Time {0}</value></data>
+  <data name="WeekdayMonday" xml:space="preserve"><value>Monday</value></data>
+  <data name="WeekdayTuesday" xml:space="preserve"><value>Tuesday</value></data>
+  <data name="WeekdayWednesday" xml:space="preserve"><value>Wednesday</value></data>
+  <data name="WeekdayThursday" xml:space="preserve"><value>Thursday</value></data>
+  <data name="WeekdayFriday" xml:space="preserve"><value>Friday</value></data>
+  <data name="WeekdaySaturday" xml:space="preserve"><value>Saturday</value></data>
+  <data name="WeekdaySunday" xml:space="preserve"><value>Sunday</value></data>
+  <data name="WeekdayShortMonday" xml:space="preserve"><value>Mon</value></data>
+  <data name="WeekdayShortTuesday" xml:space="preserve"><value>Tue</value></data>
+  <data name="WeekdayShortWednesday" xml:space="preserve"><value>Wed</value></data>
+  <data name="WeekdayShortThursday" xml:space="preserve"><value>Thu</value></data>
+  <data name="WeekdayShortFriday" xml:space="preserve"><value>Fri</value></data>
+  <data name="WeekdayShortSaturday" xml:space="preserve"><value>Sat</value></data>
+  <data name="WeekdayShortSunday" xml:space="preserve"><value>Sun</value></data>
+  <data name="TaskReminderTitle" xml:space="preserve"><value>Reminder</value></data>
+  <data name="TaskReminderContent" xml:space="preserve"><value>{0} – at {1}</value></data>
+  <data name="ContactDeveloper" xml:space="preserve"><value>Contact Developer</value></data>
+  <data name="ContactDeveloperIntro" xml:space="preserve"><value>Hello, my name is Patrick Feeß. If you have feedback or ideas for the development of this app, feel free to contact me. In case of errors or crashes, please copy all error texts from the error page and send them to me by email, together with a detailed description of how you think the error occurred, or how you were using the app at that moment, if possible.</value></data>
+  <data name="Copied" xml:space="preserve"><value>Copied!</value></data>
+  <data name="AppWebsite" xml:space="preserve"><value>App Website</value></data>
+  <data name="AppWebsiteShareLatestVersion" xml:space="preserve"><value>Share Latest App Version</value></data>
+  <data name="AppWebsiteOpenRepository" xml:space="preserve"><value>Website / Repository</value></data>
+</root>

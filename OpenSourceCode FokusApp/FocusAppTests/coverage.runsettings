@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Messung der Zeilen- und Zweigabdeckung inklusive der Razor-Komponenten und der verlinkten App-Dienste:
+
+  dotnet test FokusApp/FocusAppTests/FocusAppTests.csproj --settings FokusApp/FocusAppTests/coverage.runsettings --results-directory <Pfad>
+
+  Die Razor-Komponenten und Dienste der App werden in die Test-Assembly kompiliert, deshalb muss die Test-Assembly
+  (IncludeTestAssembly) mit in die Messung. Der Filter nimmt nur die App-Namespaces auf, nicht die Testklassen.
+-->
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <IncludeTestAssembly>true</IncludeTestAssembly>
+          <Include>[FocusAppTests]FokusApp.Components.*,[FocusAppTests]FokusApp.Services.*,[FokusApp.Core]*,[FokusApp.Presentation]*</Include>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

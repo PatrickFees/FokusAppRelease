@@ -1,0 +1,205 @@
+/*
+ * Ring-Nachbau des Fokus-Timers (siehe FocusTimerPage.razor.css). 120 Minuten sind der volle Ring
+ * (AppConstants.MaximumMinutes); 741,42 ist der Umfang des aeusseren Rings (Radius 118), 596,9 der des inneren (Radius 95).
+ * --n ist die Minutenzahl: eine in app.css registrierte Zahl, die Ring, Anzeige und Blatt gemeinsam lesen.
+ */
+.stage-ring {
+    --n: 25;
+    --ring-size: 16.25rem;
+    --ring-radius: calc(var(--ring-size) * 0.4538);
+    position: fixed;
+    z-index: 1600;
+    width: var(--ring-size);
+    height: var(--ring-size);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.stage-ring-state {
+    position: absolute;
+    inset: 0;
+}
+
+.stage-ring-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.stage-ring-base,
+.stage-ring-selection,
+.stage-ring-progress {
+    fill: transparent;
+    stroke-linecap: round;
+}
+
+.stage-ring-base {
+    stroke: var(--timer-base, var(--color-surface-sunken));
+    stroke-width: 12;
+}
+
+.stage-ring-selection {
+    stroke: var(--timer-selection, var(--color-accent));
+    stroke-width: 12;
+    stroke-dasharray: 741.42px;
+    stroke-dashoffset: calc(741.42px * (1 - var(--n) / 120));
+}
+
+.stage-ring-progress {
+    stroke: var(--timer-progress, var(--color-accent));
+    stroke-width: 14;
+    stroke-dasharray: 596.9px;
+    stroke-dashoffset: calc(596.9px * (1 - var(--prog, 0)));
+}
+
+.stage-ring-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 9.5rem;
+    height: 9.5rem;
+    border-radius: 50%;
+    background: var(--timer-center, var(--color-ink));
+    color: var(--color-surface-alt);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.35);
+    transform: translate(-50%, -50%);
+}
+
+.stage-ring-time {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+    .stage-ring-time-counted::before {
+        counter-reset: n var(--n);
+        content: counter(n, decimal-leading-zero) ":00";
+    }
+
+.stage-ring-minutes {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Das Blatt: aeusserer Teil fliegt hinein und hinaus, innerer Teil sitzt am Ringende und folgt der Minutenzahl. */
+.stage-leaf-fly {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0;
+}
+
+.stage-leaf-follow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    translate: calc(var(--ring-radius) * sin(var(--n) * 3deg)) calc(var(--ring-radius) * -1 * cos(var(--n) * 3deg));
+}
+
+    .stage-leaf-follow svg {
+        position: absolute;
+        top: -34px;
+        left: -9px;
+        width: 18px;
+        height: 36px;
+        rotate: 18deg;
+    }
+
+    .stage-leaf-follow ellipse {
+        fill: var(--companion-leaf-fill);
+    }
+
+    .stage-leaf-follow path {
+        fill: none;
+        stroke: var(--companion-leaf-stroke);
+        stroke-width: 1.2;
+    }
+
+/* Lautsprecher: "es gibt einen Ton" */
+.stage-sound {
+    position: absolute;
+    top: -0.4rem;
+    right: -0.3rem;
+    width: 2.9rem;
+    height: 2.9rem;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+    .stage-sound.stage-sound-visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+.stage-sound-body {
+    fill: var(--color-accent);
+}
+
+.stage-sound-wave {
+    animation: stage-sound-wave 1s ease-in-out infinite;
+}
+
+.stage-sound-wave-2 {
+    animation-delay: 0.25s;
+}
+
+@keyframes stage-sound-wave {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 1; }
+}
+
+/* "demo-run" setzt das JS-Modul; die ganze Demo dauert 8 s: Blatt kommt (0,6-1,5 s), Ring 25-30-45-30, Blatt geht. */
+.stage-ring.demo-run {
+    animation: stage-ring-minutes 8s both;
+}
+
+    .stage-ring.demo-run .stage-leaf-fly {
+        animation: stage-leaf-fly 8s both;
+    }
+
+@keyframes stage-ring-minutes {
+    0%, 21% { --n: 25; animation-timing-function: ease-in-out; }
+    25%, 31% { --n: 30; animation-timing-function: ease-in-out; }
+    50%, 56% { --n: 45; animation-timing-function: ease-in-out; }
+    75%, 100% { --n: 30; }
+}
+
+@keyframes stage-leaf-fly {
+    0%, 7.5% { opacity: 0; translate: var(--lx) var(--ly); animation-timing-function: ease-out; }
+    9% { opacity: 1; }
+    18.75%, 82.5% { opacity: 1; translate: 0 0; animation-timing-function: ease-in; }
+    92.5% { opacity: 1; translate: 320px -20px; }
+    100% { opacity: 0; translate: 320px -20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stage-ring {
+        --n: 30;
+    }
+
+    .stage-leaf-fly {
+        display: none;
+    }
+
+    .stage-sound,
+    .stage-sound-wave {
+        animation: none;
+        transition: none;
+    }
+}

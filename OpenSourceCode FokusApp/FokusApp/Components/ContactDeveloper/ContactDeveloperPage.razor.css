@@ -1,0 +1,52 @@
+.contact-developer-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.contact-developer-header h1 {
+    margin: 0;
+    color: var(--color-ink);
+}
+
+.contact-developer-email-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.contact-developer-email {
+    border-radius: 0.75rem;
+    border: 1px solid rgba(15, 23, 42, 0.18);
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+    font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    overflow-wrap: anywhere;
+}
+
+.contact-developer-copy-button {
+    border: none;
+    border-radius: var(--radius-pill);
+    min-height: 2.4rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 60%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.contact-developer-copied {
+    color: var(--color-ink-muted);
+    font-weight: 600;
+}
+
+.contact-developer-intro {
+    margin: 0;
+    color: var(--color-ink);
+    line-height: 1.5;
+    white-space: pre-wrap;
+}

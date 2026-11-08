@@ -1,0 +1,90 @@
+.time-wheel {
+    --time-wheel-item-height: 2.5rem;
+    --time-wheel-rows: 5;
+
+    position: relative;
+    width: 5rem;
+    height: calc(var(--time-wheel-item-height) * var(--time-wheel-rows));
+    border-radius: var(--radius-md);
+    background: var(--color-surface-sunken);
+    overflow: hidden;
+}
+
+.time-wheel:focus-visible {
+    outline: 3px solid rgb(var(--color-accent-rgb) / 0.4);
+    outline-offset: 2px;
+}
+
+.time-wheel-scroller {
+    height: 100%;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    /* Oben und unten blendet die Liste aus, damit der gewählte Wert im Fokus bleibt. */
+    mask-image: linear-gradient(to bottom, transparent 0, black 30%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 30%, black 70%, transparent 100%);
+}
+
+.time-wheel-scroller::-webkit-scrollbar {
+    display: none;
+}
+
+.time-wheel-pad {
+    height: calc(var(--time-wheel-item-height) * 2);
+}
+
+.time-wheel-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--time-wheel-item-height);
+    scroll-snap-align: center;
+    font-size: 1.1rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink-subtle);
+    cursor: pointer;
+    user-select: none;
+}
+
+.time-wheel-item.selected {
+    color: var(--color-ink);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.time-wheel.is-unset .time-wheel-item.selected {
+    color: var(--color-ink-subtle);
+}
+
+.time-wheel-highlight {
+    position: absolute;
+    left: 0.4rem;
+    right: 0.4rem;
+    top: calc(var(--time-wheel-item-height) * 2);
+    height: var(--time-wheel-item-height);
+    border-radius: var(--radius-sm);
+    border: 2px solid rgb(var(--color-accent-rgb) / 0.55);
+    pointer-events: none;
+}
+
+.time-wheel.is-unset .time-wheel-highlight {
+    border-style: dashed;
+    border-color: rgb(var(--color-accent-rgb) / 0.3);
+}
+
+/* Deckt den Wert in der Mitte ab, bis der Nutzer eine Zeit einstellt. */
+.time-wheel-placeholder {
+    position: absolute;
+    inset: 0.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    font-weight: 500;
+}

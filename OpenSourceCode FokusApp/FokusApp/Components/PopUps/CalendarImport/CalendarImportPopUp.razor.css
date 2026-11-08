@@ -1,0 +1,105 @@
+.calendar-import-backdrop {
+    z-index: 1060;
+    padding: 1rem;
+    background: var(--color-overlay);
+}
+
+.calendar-import-popup {
+    width: min(420px, 100%);
+    max-height: min(34rem, calc(100vh - 2rem));
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--color-surface-alt);
+    box-shadow: 0 18px 46px rgba(15, 23, 42, 0.26);
+}
+
+.calendar-import-title {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.calendar-import-hint {
+    margin: 0;
+    color: var(--color-ink-muted);
+}
+
+.calendar-import-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.calendar-import-section h3 {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.calendar-import-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    max-height: 10rem;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.calendar-import-item {
+    padding: 0.5rem;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 0.5rem;
+    background: var(--color-surface-2);
+}
+
+.calendar-import-item label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.calendar-import-item-name {
+    font-weight: 600;
+    color: var(--color-ink);
+}
+
+.calendar-import-item-account {
+    color: var(--color-ink-muted);
+    font-size: 0.8rem;
+}
+
+.calendar-import-range,
+.calendar-import-scope {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.calendar-import-scope-label {
+    color: var(--color-ink-muted);
+    font-size: 0.85rem;
+}
+
+.calendar-import-result {
+    margin: 0;
+}
+
+.calendar-import-result.success {
+    color: var(--color-success, green);
+}
+
+.calendar-import-result.error {
+    color: var(--color-danger, crimson);
+}
+
+.calendar-import-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}

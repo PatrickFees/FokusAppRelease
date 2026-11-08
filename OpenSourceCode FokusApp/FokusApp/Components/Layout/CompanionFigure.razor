@@ -1,0 +1,49 @@
+@using FokusApp.Core.Services
+
+<svg class="companion-figure companion-figure--@Mood.ToString().ToLowerInvariant()" viewBox="0 0 80 72" focusable="false" aria-hidden="true">
+    <g class="companion-leaves">
+        <ellipse cx="22" cy="22" rx="9" ry="16" transform="rotate(-38 22 22)" />
+        <ellipse cx="58" cy="22" rx="9" ry="16" transform="rotate(38 58 22)" />
+        <ellipse cx="32" cy="16" rx="8" ry="15" transform="rotate(-16 32 16)" />
+        <ellipse cx="48" cy="16" rx="8" ry="15" transform="rotate(16 48 16)" />
+        <ellipse cx="40" cy="16" rx="8" ry="16" />
+    </g>
+    @if (Mood == CompanionMood.Budding)
+    {
+        <g class="companion-bud">
+            <ellipse cx="40" cy="6" rx="4.5" ry="6" />
+        </g>
+    }
+    else if (Mood == CompanionMood.Blooming)
+    {
+        <g class="companion-flower">
+            <circle cx="33" cy="9" r="4.5" />
+            <circle cx="47" cy="9" r="4.5" />
+            <circle cx="40" cy="4.5" r="4.5" />
+            <circle cx="40" cy="13" r="4.5" />
+            <circle class="companion-flower-center" cx="40" cy="9" r="3" />
+        </g>
+    }
+    <path class="plant-pot" d="M17 36 H63 L58 60 Q58 72 40 72 Q22 72 22 60 Z" />
+    <rect class="plant-pot-rim" x="14" y="32" width="52" height="10" rx="3" />
+    @if (Mood == CompanionMood.Resting)
+    {
+        <path class="companion-eye-closed" d="M26 53 Q31 57 36 53" />
+        <path class="companion-eye-closed" d="M44 53 Q49 57 54 53" />
+        <path class="plant-smile" d="M36 63 Q40 65 44 63" />
+        <path class="companion-zzz" d="M60 40 H67 L60 48 H67" />
+    }
+    else
+    {
+        <circle class="plant-eye-white" cx="31" cy="52" r="5.2" />
+        <circle class="plant-eye-white" cx="49" cy="52" r="5.2" />
+        <circle class="plant-eye" cx="32" cy="53" r="2.6" />
+        <circle class="plant-eye" cx="50" cy="53" r="2.6" />
+        <path class="plant-smile" d="M33 62 Q40 68 47 62" />
+    }
+</svg>
+
+@code {
+    [Parameter]
+    public CompanionMood Mood { get; set; } = CompanionMood.Awake;
+}

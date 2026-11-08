@@ -1,0 +1,189 @@
+@using FokusApp.Components.Calender
+@using FokusApp.Components.PopUps.Calendar
+@using FokusApp.Core.Models
+@using Microsoft.AspNetCore.Components.Web
+@using System.Globalization
+@inherits ObservableComponentBase
+@inject ICalendarPopupViewModel ViewModel
+
+@if (IsOpen)
+{
+    <div class="calendar-popup-backdrop popup-overlay">
+        <div class="calendar-popup-shell"
+             role="dialog"
+             aria-modal="true"
+             @onpointerdown="HandlePointerDown"
+             @onpointerup="HandlePointerUp"
+             @onpointerleave="ResetSwipeTracking"
+             @onpointercancel="ResetSwipeTracking">
+            <header class="calendar-popup-header">
+                <button type="button"
+                        class="month-nav-button"
+                        @onclick="ViewModel.GoToPreviousMonth"
+                        aria-label="@Localizer["PreviousMonth"]">
+                    &#x2039;
+                </button>
+                <h2 class="calendar-popup-month-year">
+                    <select class="calendar-popup-month-select"
+                            aria-label="@Localizer["SelectMonth"]"
+                            @onchange="OnMonthChanged">
+                        @foreach (var month in MonthOptions)
+                        {
+                            <option @key="month" value="@month" selected="@(ViewModel.VisibleMonth.Month == month)">@GetMonthName(month)</option>
+                        }
+                    </select>
+                    <select class="calendar-popup-year-select"
+                            aria-label="@Localizer["SelectYear"]"
+                            @onchange="OnYearChanged">
+                        @foreach (var year in YearOptions)
+                        {
+                            <option @key="year" value="@year" selected="@(ViewModel.VisibleMonth.Year == year)">@year</option>
+                        }
+                    </select>
+                </h2>
+                <button type="button"
+                        class="month-nav-button"
+                        @onclick="ViewModel.GoToNextMonth"
+                        aria-label="@Localizer["NextMonth"]">
+                    &#x203A;
+                </button>
+            </header>
+
+            <section class="calendar-popup-content">
+                <CalenderMonthGrid Weeks="ViewModel.Weeks" OnDayClick="ViewModel.SelectDate" />
+
+                <div class="calendar-popup-day-list">
+                    <h3 class="calendar-popup-day-title">@ViewModel.SelectedDate.ToString("D", CultureInfo.CurrentCulture)</h3>
+                    @foreach (var (title, tasks) in TaskSections)
+                    {
+                        <section class="calendar-popup-task-section">
+                            <h4>@title</h4>
+                            @if (tasks.Count == 0)
+                            {
+                                <p class="calendar-popup-task-empty">@Localizer["NoTasksForDay"]</p>
+                            }
+                            else
+                            {
+                                <ul class="calendar-popup-task-list">
+                                    @foreach (var task in tasks)
+                                    {
+                                        <li @key="task.Id" class="calendar-popup-task @(task.IsDone ? "is-done" : string.Empty)">
+                                            <span class="calendar-popup-task-dot @PriorityFormatter.GetCssClass(task.Priority)" aria-hidden="true"></span>
+                                            <span class="calendar-popup-task-note">@task.Note</span>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </section>
+                    }
+                </div>
+            </section>
+
+            <footer class="calendar-popup-actions">
+                <button type="button" class="btn btn-secondary" data-escape-close @onclick="HandleCancel">@Localizer["Cancel"]</button>
+                <button type="button" class="btn btn-primary" @onclick="HandleConfirm">OK</button>
+            </footer>
+        </div>
+    </div>
+}
+
+@code {
+    private static readonly int[] MonthOptions = Enumerable.Range(1, 12).ToArray();
+
+    private double? _swipeStartX;
+    private bool _initializedForOpenCycle;
+
+    private IEnumerable<int> YearOptions => Enumerable.Range(ViewModel.VisibleMonth.Year - 10, 21);
+
+    private IEnumerable<(string Title, IReadOnlyList<TaskDto> Tasks)> TaskSections =>
+    [
+        (Localizer["TaskTypeForYou"], ViewModel.ForYouTasks),
+        (Localizer["TaskTypeToDo"], ViewModel.ToDoTasks)
+    ];
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public DateTime InitialDate { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime> OnConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Observe(ViewModel);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (!IsOpen)
+        {
+            _initializedForOpenCycle = false;
+            return;
+        }
+
+        if (!_initializedForOpenCycle)
+        {
+            ViewModel.Open(InitialDate.Date);
+            _initializedForOpenCycle = true;
+        }
+    }
+
+    private static string GetMonthName(int month) =>
+        CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+
+    private void OnMonthChanged(ChangeEventArgs args)
+    {
+        if (int.TryParse(args.Value?.ToString(), out var month))
+        {
+            ViewModel.GoToMonth(ViewModel.VisibleMonth.Year, month);
+        }
+    }
+
+    private void OnYearChanged(ChangeEventArgs args)
+    {
+        if (int.TryParse(args.Value?.ToString(), out var year))
+        {
+            ViewModel.GoToMonth(year, ViewModel.VisibleMonth.Month);
+        }
+    }
+
+    private async Task HandleConfirm()
+    {
+        await OnConfirm.InvokeAsync(ViewModel.SelectedDate);
+    }
+
+    private async Task HandleCancel()
+    {
+        await OnCancel.InvokeAsync();
+    }
+
+    private void HandlePointerDown(PointerEventArgs args)
+    {
+        _swipeStartX = args.ClientX;
+    }
+
+    private void HandlePointerUp(PointerEventArgs args)
+    {
+        if (!_swipeStartX.HasValue)
+        {
+            return;
+        }
+
+        var swipeDelta = args.ClientX - _swipeStartX.Value;
+        ViewModel.HandleHorizontalSwipe(swipeDelta);
+        _swipeStartX = null;
+    }
+
+    private void ResetSwipeTracking()
+    {
+        _swipeStartX = null;
+    }
+}

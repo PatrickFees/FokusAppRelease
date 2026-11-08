@@ -1,0 +1,225 @@
+/*
+ * Die Pflanzen-Szene der Einfuehrung. Alles liegt fest im Fenster ueber der App (unter dem Einfuehrungs-Fenster mit
+ * z-index 2000), die Pflanze wird per JS ueber die Variablen --x, --y, --r, --s bewegt (wwwroot/js/onboardingStage.js).
+ * Die Pflanze steht auf dem Boden: Unterkante des Fensters, bei Geraeten mit Systemleiste darueber.
+ */
+.stage {
+    --stage-floor: calc(36px + env(safe-area-inset-bottom, 0px));
+}
+
+.stage-blocker {
+    position: fixed;
+    inset: 0;
+    z-index: 1500;
+    cursor: not-allowed;
+}
+
+.stage-floor {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1500;
+    height: var(--stage-floor);
+    border-top: 2px solid var(--color-border, #94a3b8);
+    background: var(--color-surface-sunken, #e2e8f0);
+}
+
+.stage-plant {
+    --x: 0px;
+    --y: 0px;
+    --r: 180deg;
+    --s: 1;
+    --dur: 1s;
+    --ease: ease-in-out;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1999;
+    width: 4.4rem;
+    height: 3.96rem;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(var(--s));
+    transition: transform var(--dur) var(--ease);
+}
+
+    .stage-plant.notrans {
+        transition: none;
+    }
+
+.stage-plant-inner {
+    width: 100%;
+    height: 100%;
+    transform-origin: 50% 100%;
+}
+
+    .stage-plant-inner ::deep svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .stage-plant-inner.shake {
+        animation: stage-shake 0.7s ease-in-out;
+    }
+
+    .stage-plant-inner.squash {
+        animation: stage-squash 0.45s ease-out;
+    }
+
+@keyframes stage-shake {
+    0%, 100% { rotate: 0deg; }
+    15% { rotate: -9deg; }
+    35% { rotate: 8deg; }
+    55% { rotate: -6deg; }
+    75% { rotate: 4deg; }
+}
+
+@keyframes stage-squash {
+    0% { scale: 1.12 0.8; }
+    50% { scale: 0.96 1.06; }
+    100% { scale: 1 1; }
+}
+
+/* ---------- Sprechblase ---------- */
+
+.stage-bubble {
+    position: fixed;
+    z-index: 1999;
+    bottom: calc(var(--stage-floor) + 6.6rem);
+    left: 0.9rem;
+    right: 0.9rem;
+    max-width: 26rem;
+    max-height: calc(100vh - var(--stage-floor) - 11rem);
+    padding: 0.9rem 1rem;
+    overflow-y: auto;
+    border: 1px solid rgba(248, 250, 252, 0.3);
+    border-radius: 14px;
+    background: rgba(30, 41, 82, 0.97);
+    color: var(--color-on-shell, #f8fafc);
+    font-size: 0.92rem;
+    line-height: 1.45;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.35);
+    transform-origin: 25% 100%;
+    animation: stage-bubble-in 0.3s ease-out;
+}
+
+    .stage-bubble p {
+        margin: 0;
+    }
+
+        .stage-bubble p + p {
+            margin-top: 0.6rem;
+        }
+
+.stage-tail {
+    position: fixed;
+    z-index: 1999;
+    bottom: calc(var(--stage-floor) + 6rem);
+    left: calc(74px - 0.6rem);
+    width: 0;
+    height: 0;
+    border: 0.6rem solid transparent;
+    border-bottom: 0;
+    border-top-color: rgba(30, 41, 82, 0.97);
+    animation: stage-bubble-in 0.3s ease-out;
+}
+
+.stage-answers {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+}
+
+.stage-answer {
+    flex: 1;
+    padding: 0.55rem;
+    border: 0;
+    border-radius: var(--radius-pill, 999px);
+    background: rgba(219, 234, 254, 0.9);
+    color: #1e2952;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+    .stage-answer.stage-no {
+        background: #f8fafc;
+    }
+
+.stage-next {
+    position: fixed;
+    z-index: 1999;
+    bottom: calc(var(--stage-floor) + 0.9rem);
+    left: 8rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.35);
+}
+
+/* "Weiter" erscheint erst, wenn die Ring-Demo zu Ende ist (7,6 s; die Demo dauert 8 s). */
+.stage-next-delayed {
+    animation: stage-reveal 0.35s 7.6s both;
+}
+
+@keyframes stage-reveal {
+    from { opacity: 0; visibility: hidden; }
+    to { opacity: 1; visibility: visible; }
+}
+
+@keyframes stage-bubble-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+}
+
+
+/* ---------- Kopfhoerer: die Pflanze hoert Musik, solange der Klingelton der Demo erklingt ---------- */
+
+.stage-plant-inner {
+    position: relative;
+}
+
+.stage-phones {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    animation: stage-bubble-in 0.25s ease-out;
+}
+
+.stage-phones-band {
+    fill: none;
+    stroke: #334155;
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+.stage-phones-cup {
+    fill: #334155;
+}
+
+.stage-phones-sound {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    animation: stage-phones-pulse 1s ease-in-out infinite;
+}
+
+.stage-phones-sound-2 {
+    animation-delay: 0.3s;
+}
+
+@keyframes stage-phones-pulse {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stage-plant,
+    .stage-bubble,
+    .stage-tail,
+    .stage-phones,
+    .stage-phones-sound,
+    .stage-next-delayed {
+        animation: none;
+        transition: none;
+    }
+}

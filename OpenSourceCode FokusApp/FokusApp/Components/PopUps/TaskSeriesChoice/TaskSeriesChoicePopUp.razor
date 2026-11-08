@@ -1,0 +1,43 @@
+@using FokusApp.Components.PopUps.TaskSeriesChoice
+@using FokusApp.Core.Enums
+
+@if (IsOpen)
+{
+    <div class="series-choice-overlay popup-overlay" @onclick="OnCancel">
+        <div class="series-choice-popup"
+             role="dialog"
+             aria-modal="true"
+             aria-label="@Localizer["SeriesChoiceTitle"]"
+             @onclick:stopPropagation>
+            <h3>@Localizer["SeriesChoiceTitle"]</h3>
+            <p class="series-choice-text">@(SeriesAction == TaskSeriesAction.Delete ? Localizer["SeriesChoiceDeleteText"] : Localizer["SeriesChoiceEditText"])</p>
+            <button type="button"
+                    class="series-choice-button this-task"
+                    @onclick="() => OnChoose.InvokeAsync(TaskSeriesScope.ThisTaskOnly)">
+                @Localizer["SeriesChoiceThisTask"]
+            </button>
+            <button type="button"
+                    class="series-choice-button whole-series @(SeriesAction == TaskSeriesAction.Delete ? "is-delete" : "is-edit")"
+                    @onclick="() => OnChoose.InvokeAsync(TaskSeriesScope.WholeSeries)">
+                @Localizer["SeriesChoiceWholeSeries"]
+            </button>
+            <button type="button" class="series-choice-button cancel" @onclick="OnCancel">
+                @Localizer["Cancel"]
+            </button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public TaskSeriesAction SeriesAction { get; set; }
+
+    [Parameter]
+    public EventCallback<TaskSeriesScope> OnChoose { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+}

@@ -1,0 +1,28 @@
+@inherits ObservableComponentBase
+@inject FokusApp.Components.UpdateNotice.IUpdateNoticeViewModel ViewModel
+
+@if (ViewModel.IsOpen)
+{
+    <div class="update-notice-backdrop"></div>
+    <div class="update-notice-dialog" role="dialog" aria-modal="true" aria-label="@Localizer["UpdateAvailableTitle"]">
+        <h2>@Localizer["UpdateAvailableTitle"]</h2>
+        <p class="update-notice-text">@Localizer["UpdateAvailableText", ViewModel.LatestVersion ?? string.Empty]</p>
+        <div class="update-notice-actions">
+            <button type="button" class="app-button app-button--secondary update-notice-dismiss" @onclick="ViewModel.DismissAsync">
+                @Localizer["UpdateNotNow"]
+            </button>
+            <button type="button" class="app-button app-button--primary update-notice-download" @onclick="ViewModel.DownloadAsync">
+                @Localizer["UpdateDownloadNow"]
+            </button>
+        </div>
+    </div>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+}

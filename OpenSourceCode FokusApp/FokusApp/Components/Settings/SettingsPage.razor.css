@@ -1,0 +1,142 @@
+.settings-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.settings-description {
+    color: var(--color-ink-muted);
+    margin: 0;
+}
+
+.settings-empty {
+    color: var(--color-ink-subtle);
+    font-style: italic;
+}
+
+.settings-label {
+    font-weight: 600;
+}
+
+.settings-select {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface-2);
+    font-size: 1rem;
+    max-width: 320px;
+}
+
+.settings-custom-balance {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.settings-input {
+    width: 5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface-2);
+    font-size: 1rem;
+}
+
+.settings-actions {
+    display: flex;
+    align-items: center;
+}
+
+.settings-preview-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.settings-transfer-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+}
+
+.settings-transfer-button {
+    min-width: 220px;
+}
+
+.settings-transfer-message {
+    margin: 0;
+    font-weight: 600;
+}
+
+.settings-transfer-message.success {
+    color: var(--color-success);
+}
+
+.settings-transfer-message.error {
+    color: var(--color-danger);
+}
+
+.theme-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+    gap: 0.75rem;
+}
+
+.theme-modes {
+    margin-bottom: 1.25rem;
+}
+
+.theme-option {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.6rem;
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-surface-2);
+    color: var(--color-ink);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.theme-option[aria-checked="true"] {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(var(--color-accent-rgb) / 0.3);
+}
+
+.theme-option:focus-visible {
+    outline: 3px solid rgb(var(--color-accent-rgb) / 0.5);
+    outline-offset: 2px;
+}
+
+/* .theme-swatch* Regeln liegen zentral in wwwroot/css/shared.css (von Settings und Onboarding gemeinsam genutzt) */
+
+.settings-toggle {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    cursor: pointer;
+}
+
+    .settings-toggle input[type="checkbox"] {
+        flex: 0 0 auto;
+        width: 1.3rem;
+        height: 1.3rem;
+        margin-top: 0.15rem;
+        accent-color: var(--color-accent);
+    }
+
+.settings-toggle-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.settings-toggle-title {
+    font-weight: 600;
+}

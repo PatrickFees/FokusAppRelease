@@ -1,0 +1,148 @@
+@page "/wochenrueckblick"
+@inherits ObservableComponentBase
+@inject FokusApp.Components.WeeklyReviewComponent.IWeeklyReviewViewModel ViewModel
+
+@using System.Globalization
+@using FokusApp.Core.Enums
+
+<PageTitle>@Localizer["WeeklyReviewTitle"]</PageTitle>
+
+<div class="weekly-page">
+    <h1>@Localizer["WeeklyReviewTitle"]</h1>
+
+    @if (!ViewModel.IsReviewEnabled)
+    {
+        <p class="weekly-disabled">@Localizer["WeeklyReviewDisabled"]</p>
+    }
+    else if (ViewModel.IsLoaded)
+    {
+        <nav class="weekly-nav" aria-label="@Localizer["WeeklyReviewTitle"]">
+            <button type="button" class="app-button app-button--secondary app-button--small weekly-previous" @onclick="ViewModel.ShowPreviousWeekAsync">
+                @Localizer["WeeklyReviewPrevious"]
+            </button>
+            <span class="weekly-range">@WeekRange</span>
+            <button type="button" class="app-button app-button--secondary app-button--small weekly-next" disabled="@(!ViewModel.CanShowNextWeek)" @onclick="ViewModel.ShowNextWeekAsync">
+                @Localizer["WeeklyReviewNext"]
+            </button>
+        </nav>
+
+        <section class="weekly-card" aria-label="@Localizer["WeeklyReviewTitle"]">
+            @if (ViewModel.IsCurrentWeek)
+            {
+                <p class="weekly-so-far">@Localizer["WeeklyReviewSoFar"]</p>
+            }
+
+            @if (ViewModel.IsEmpty)
+            {
+                <p class="weekly-summary">@Localizer["WeeklyReviewEmpty"]</p>
+            }
+
+            <ul class="weekly-stats">
+                <li class="weekly-goal">
+                    <span class="weekly-stat-label">@Localizer["WeeklyReviewGoal"]</span>
+                    <strong class="weekly-goal-value">@Localizer["WeeklyReviewCounts", ViewModel.GoalForYou, ViewModel.GoalToDo]</strong>
+                </li>
+                <li class="weekly-created">
+                    <span class="weekly-stat-label">@Localizer["WeeklyReviewCreated"]</span>
+                    <strong class="weekly-created-value">@Localizer["WeeklyReviewCounts", ViewModel.CreatedForYou, ViewModel.CreatedToDo]</strong>
+                    @if (ProgressText(ViewModel.CreatedProgress) is { } createdProgress)
+                    {
+                        <span class="weekly-progress weekly-created-progress">@createdProgress</span>
+                    }
+                </li>
+                <li class="weekly-done">
+                    <span class="weekly-stat-label">@Localizer["WeeklyReviewDone"]</span>
+                    <strong class="weekly-done-value">@Localizer["WeeklyReviewCounts", ViewModel.DoneForYou, ViewModel.DoneToDo]</strong>
+                    @if (ProgressText(ViewModel.DoneProgress) is { } doneProgress)
+                    {
+                        <span class="weekly-progress weekly-done-progress">@doneProgress</span>
+                    }
+                </li>
+            </ul>
+        </section>
+
+        <section class="weekly-card weekly-days" aria-label="@Localizer["WeeklyReviewDaysTitle"]">
+            <h2>@Localizer["WeeklyReviewDaysTitle"]</h2>
+
+            <div class="weekly-chart">
+                @foreach (var day in ViewModel.Days)
+                {
+                    <div class="weekly-day"
+                         role="img"
+                         aria-label="@DayLabel(day)">
+                        <div class="weekly-bars" aria-hidden="true">
+                            <div class="weekly-bar weekly-bar-todo" style="height: @Percent(day.ToDoHeightPercent)%"></div>
+                            <div class="weekly-bar weekly-bar-for-you" style="height: @Percent(day.ForYouHeightPercent)%"></div>
+                        </div>
+                        <span class="weekly-day-name">@DayName(day.Date)</span>
+                    </div>
+                }
+            </div>
+
+            <ul class="weekly-legend">
+                <li>
+                    <span class="weekly-swatch weekly-swatch-for-you" aria-hidden="true"></span>
+                    <span>@Localizer["WeeklyReviewForYou"]</span>
+                </li>
+                <li>
+                    <span class="weekly-swatch weekly-swatch-todo" aria-hidden="true"></span>
+                    <span>@Localizer["WeeklyReviewToDo"]</span>
+                </li>
+            </ul>
+
+            @if (ViewModel.MostForYouDays is { } mostForYou)
+            {
+                <p class="weekly-peak weekly-peak-for-you">@Localizer["WeeklyReviewMostForYou", DayNames(mostForYou), mostForYou.Count]</p>
+            }
+
+            @if (ViewModel.MostToDoDays is { } mostToDo)
+            {
+                <p class="weekly-peak weekly-peak-todo">@Localizer["WeeklyReviewMostToDo", DayNames(mostToDo), mostToDo.Count]</p>
+            }
+        </section>
+
+        @if (!ViewModel.IsCurrentWeek)
+        {
+            <button type="button" class="app-button app-button--secondary app-button--small weekly-current" @onclick="ViewModel.ShowCurrentWeekAsync">
+                @Localizer["WeeklyReviewThisWeek"]
+            </button>
+        }
+    }
+</div>
+
+@code {
+    private static CultureInfo Culture => CultureInfo.CurrentUICulture;
+
+    private string WeekRange =>
+        $"{ViewModel.WeekStart.ToString("d", Culture)} – {ViewModel.WeekEnd.ToString("d", Culture)}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+
+    private string? ProgressText(GoalProgress? progress) => progress switch
+    {
+        GoalProgress.Exceeded => Localizer["WeeklyReviewProgressExceeded"],
+        GoalProgress.Reached => Localizer["WeeklyReviewProgressReached"],
+        GoalProgress.Open => Localizer["WeeklyReviewProgressOpen"],
+        _ => null
+    };
+
+    private string DayNames(FokusApp.Components.WeeklyReviewComponent.WeeklyReviewPeak peak)
+    {
+        var names = peak.Days.Select(day => day.ToString("dddd", Culture)).ToList();
+        return names.Count == 1
+            ? names[0]
+            : $"{string.Join(", ", names.Take(names.Count - 1))} {Localizer["WeeklyReviewAnd"]} {names[^1]}";
+    }
+
+    private static string DayName(DateTime date) => date.ToString("ddd", Culture);
+
+    private string DayLabel(FokusApp.Components.WeeklyReviewComponent.WeeklyReviewDay day) =>
+        Localizer["WeeklyReviewDayLabel", day.Date.ToString("dddd", Culture), day.DoneForYou, day.DoneToDo];
+
+    private static string Percent(double value) => value.ToString("0.#", CultureInfo.InvariantCulture);
+}

@@ -1,0 +1,85 @@
+@inherits ObservableComponentBase
+@inject FokusApp.Components.ForYouSuggestions.IForYouSuggestionsViewModel ViewModel
+
+<CollapsibleSection Title="@Localizer["ForYouSuggestionsTitle"]">
+    <p class="suggestions-description">@Localizer["ForYouSuggestionsDescription", ViewModel.BuiltInCount]</p>
+
+    <div class="suggestions-add">
+        <label class="suggestions-label" for="newSuggestionInput">@Localizer["ForYouSuggestionsNew"]</label>
+        <div class="suggestions-row">
+            <input id="newSuggestionInput"
+                   class="suggestions-input"
+                   type="text"
+                   maxlength="@ViewModel.MaximumTextLength"
+                   value="@ViewModel.NewText"
+                   @oninput="OnNewTextInput"
+                   @onkeydown="OnNewTextKeyDown" />
+            <button type="button" class="app-button app-button--primary suggestions-add-button" @onclick="ViewModel.AddAsync">
+                @Localizer["ForYouSuggestionsAdd"]
+            </button>
+        </div>
+    </div>
+
+    @if (ViewModel.IsRejected)
+    {
+        <p class="suggestions-rejected" role="alert">@Localizer["ForYouSuggestionsRejected"]</p>
+    }
+
+    @if (ViewModel.Suggestions.Count == 0)
+    {
+        <p class="suggestions-empty">@Localizer["ForYouSuggestionsEmpty"]</p>
+    }
+    else
+    {
+        <ul class="suggestions-list">
+            @foreach (var suggestion in ViewModel.Suggestions)
+            {
+                var key = suggestion.Key;
+                if (ViewModel.EditingKey == key)
+                {
+                    <li class="suggestions-item" data-suggestion-key="@key">
+                        <input class="suggestions-input suggestions-edit-input"
+                               type="text"
+                               maxlength="@ViewModel.MaximumTextLength"
+                               aria-label="@Localizer["ForYouSuggestionsEditLabel"]"
+                               value="@ViewModel.EditText"
+                               @oninput="OnEditTextInput" />
+                        <button type="button" class="app-button app-button--primary app-button--small suggestions-save" @onclick="ViewModel.SaveEditAsync">@Localizer["Save"]</button>
+                        <button type="button" class="app-button app-button--secondary app-button--small suggestions-cancel" @onclick="ViewModel.CancelEdit">@Localizer["Cancel"]</button>
+                    </li>
+                }
+                else
+                {
+                    <SuggestionSwipeItem @key="key"
+                                         Key="@key"
+                                         Text="@suggestion.Text"
+                                         OnEdit="OnStartEdit"
+                                         OnDelete="ViewModel.DeleteAsync" />
+                }
+            }
+        </ul>
+    }
+</CollapsibleSection>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Observe(ViewModel);
+        await ViewModel.InitializeAsync();
+    }
+
+    private void OnNewTextInput(ChangeEventArgs args) => ViewModel.SetNewText(args.Value?.ToString());
+
+    private void OnStartEdit(string key) => ViewModel.StartEdit(key);
+
+    private void OnEditTextInput(ChangeEventArgs args) => ViewModel.SetEditText(args.Value?.ToString());
+
+    private async Task OnNewTextKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await ViewModel.AddAsync();
+        }
+    }
+}

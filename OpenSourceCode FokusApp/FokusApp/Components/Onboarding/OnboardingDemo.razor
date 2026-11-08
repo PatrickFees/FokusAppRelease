@@ -1,0 +1,528 @@
+@implements IAsyncDisposable
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@inject IOnboardingDemoViewModel ViewModel
+
+@using System.Globalization
+@using FokusApp.Components.PopUps.TaskEdit
+@using FokusApp.Components.SharedUI.TaskDayButton
+@using FokusApp.Components.ToDoBook
+@using FokusApp.Core.Enums
+@using FokusApp.Core.Models
+@using Microsoft.JSInterop
+
+
+<div class="stage-demo" aria-hidden="true">
+    @if (_areListsVisible)
+    {
+        <div class="demo-lists @(_areListsFading ? "demo-lists-fading" : string.Empty)" @ref="_lists">
+            <ToDoBookTaskList Title="@Localizer["TaskTypeForYou"]"
+                              AddButtonAriaLabel="@Localizer["AddForYouTask"]"
+                              Tasks="ForYouTasks"
+                              JustCompletedTaskId="_justDoneId" />
+            <ToDoBookTaskList Title="@Localizer["TaskTypeToDo"]"
+                              AddButtonAriaLabel="@Localizer["AddToDoTask"]"
+                              Tasks="ToDoTasks"
+                              JustCompletedTaskId="_justDoneId" />
+        </div>
+    }
+
+    @if (_isEditorOpen)
+    {
+        <div class="demo-backdrop">
+            <div class="demo-editor">
+                <h2>@Localizer["NewTask"]</h2>
+
+                <div class="demo-group">
+                    <label>@Localizer["Task"]</label>
+                    <div class="demo-note @(_isTyping ? "demo-typing" : string.Empty) @(_note.Length == 0 ? "demo-placeholder" : string.Empty)">@(_note.Length == 0 ? Localizer["DescribeTask"] : _note)</div>
+                </div>
+
+                <div class="demo-group demo-priority">
+                    <span class="demo-priority-badge priority-keine">@Localizer["Priority", PriorityFormatter.Format(TaskPriority.Keine)]</span>
+                    <input class="demo-priority-slider" type="range" min="0" max="4" value="0" tabindex="-1" />
+                </div>
+
+                <div class="demo-focus">
+                    <TaskTimerSelector Label="@Localizer["FocusTime"]"
+                                       Display="@MinutesText(_focusMinutes)"
+                                       DecreaseAriaLabel="@Localizer["DecreaseFocusTime"]"
+                                       IncreaseAriaLabel="@Localizer["IncreaseFocusTime"]"
+                                       ManualInputAriaLabel="@Localizer["SetFocusTimeManually"]" />
+                </div>
+
+                <div class="demo-break">
+                    <TaskTimerSelector Label="@Localizer["Break"]"
+                                       Display="@MinutesText(_breakMinutes)"
+                                       DecreaseAriaLabel="@Localizer["DecreaseBreakTime"]"
+                                       IncreaseAriaLabel="@Localizer["IncreaseBreakTime"]"
+                                       ManualInputAriaLabel="@Localizer["SetBreakTimeManually"]" />
+                </div>
+
+                <div class="demo-group">
+                    <label>@Localizer["TaskType"]</label>
+                    <div class="demo-positivity">
+                        <span class="demo-positivity-button pill-button @(_isForYou ? "selected" : string.Empty)">@Localizer["TaskTypeForYou"]</span>
+                        <span class="demo-positivity-button pill-button @(_isForYou ? string.Empty : "selected")">@Localizer["TaskTypeToDo"]</span>
+                    </div>
+                </div>
+
+                <div class="demo-group">
+                    <TaskDayButton Model="ViewModel.DayButton" />
+                </div>
+
+                <div class="demo-actions">
+                    <span class="demo-save popup-action-button popup-action-button--pill popup-action-button--primary">@Localizer["Save"]</span>
+                    <span class="popup-action-button popup-action-button--pill popup-action-button--secondary">@Localizer["Cancel"]</span>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (_isManualOpen)
+    {
+        <div class="demo-backdrop demo-backdrop-top">
+            <div class="demo-manual">
+                <h3>@Localizer["SetTimer"]</h3>
+                <div class="demo-manual-field @(_isTyping ? "demo-typing" : string.Empty)">@_manualText</div>
+                <div class="demo-actions">
+                    <span class="demo-manual-ok popup-action-button popup-action-button--pill popup-action-button--primary">@Localizer["Ok"]</span>
+                    <span class="popup-action-button popup-action-button--pill popup-action-button--secondary">@Localizer["Cancel"]</span>
+                </div>
+            </div>
+        </div>
+    }
+
+    
+    <div class="demo-popup-layer">
+        <ToDoBookActionPopup IsOpen="_isActionOpen"
+                             PrimaryActionText="@Localizer["StartTask"]"
+                             CanStart="true"
+                             CanComplete="true"
+                             CanDelete="true" />
+    </div>
+
+    @if (_isTimerVisible)
+    {
+        <div class="demo-timer-panel" @ref="_timerPanel">
+            @if (_isBreak)
+            {
+                <h2 class="demo-break-title">@Localizer["Break"]</h2>
+            }
+            else
+            {
+                <div class="demo-task-chip">@_taskNote</div>
+            }
+        </div>
+
+        <OnboardingTimerRing @ref="_ring"
+                             Minutes="_ringMinutes"
+                             ClockText="@_clockText"
+                             Progress="_progress"
+                             ShowSound="_isSoundVisible" />
+
+        <div class="demo-timer-actions" @ref="_timerActions">
+            <span class="demo-timer-start btn btn-primary @(_isRunning ? "is-running" : string.Empty)">@(_isRunning ? Localizer["Break"] : Localizer["Start"])</span>
+            <span class="btn btn-secondary">@(_isBreak ? Localizer["EndBreak"] : Localizer["Reset"])</span>
+        </div>
+    }
+
+    @if (_isScopeVisible)
+    {
+        <div class="demo-scope" @ref="_scope">
+            <span class="scope-label @(_isPrivate ? "inactive" : "active")">@Localizer["Work"]</span>
+            <span class="scope-toggle @(_isPrivate ? "demo-scope-private" : "demo-scope-work")" data-onboarding="scope-toggle">
+                <span class="scope-toggle-thumb @(_isPrivate ? "is-private" : "is-work")"></span>
+            </span>
+            <span class="scope-label @(_isPrivate ? "active" : "inactive")">@Localizer["Private"]</span>
+        </div>
+    }
+
+    <svg class="demo-pointer" @ref="_pointer" viewBox="0 0 20 44">
+        <ellipse cx="10" cy="22" rx="8" ry="21" />
+        <path d="M10 3 V40" />
+    </svg>
+</div>
+
+@code {
+    private const int FocusMinutes = 30;
+    private const int BreakMinutes = 10;
+    private const int StepMinutes = 5;
+    private const int SettleMilliseconds = 80;
+    private const int PointerMilliseconds = 750;
+    private const int QuickClickMilliseconds = 120;
+
+    private readonly CancellationTokenSource _disposed = new();
+
+    private ElementReference _lists;
+    private ElementReference _timerPanel;
+    private ElementReference _timerActions;
+    private ElementReference _scope;
+    private ElementReference _pointer;
+    private OnboardingTimerRing? _ring;
+    private IJSObjectReference? _module;
+
+    private bool _areListsVisible;
+    private bool _areListsFading;
+    private bool _isPrivate;
+    private bool _isEditorOpen;
+    private bool _isForYou;
+    private bool _isTyping;
+    private bool _isManualOpen;
+    private bool _isActionOpen;
+    private bool _isTimerVisible;
+    private bool _isBreak;
+    private bool _isRunning;
+    private bool _isSoundVisible;
+    private bool _isScopeVisible;
+    private int _focusMinutes;
+    private int _breakMinutes;
+    private int? _ringMinutes;
+    private double _progress;
+    private string _note = string.Empty;
+    private string _manualText = string.Empty;
+    private string _taskNote = string.Empty;
+    private string? _clockText;
+    private Guid? _justDoneId;
+
+    [Parameter]
+    public ElementReference Plant { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnHeadphonesChanged { get; set; }
+
+    [Parameter]
+    public double TimeScale { get; set; } = 1;
+
+    private IReadOnlyList<TaskDto> ForYouTasks => _isPrivate ? ViewModel.PrivateForYou : ViewModel.WorkForYou;
+
+    private IReadOnlyList<TaskDto> ToDoTasks => _isPrivate ? ViewModel.PrivateToDo : ViewModel.WorkToDo;
+
+    public async Task PlayDayDemoAsync()
+    {
+        var module = await GetModuleAsync();
+        ResetData();
+        await ShowListsAsync();
+        await module.InvokeVoidAsync("pointerAppear", _pointer, Plant);
+        await PauseAsync(300);
+
+        await AddTaskAsync(isForYou: true, Localizer["OnboardingDemoWalk"]);
+        await AddTaskAsync(isForYou: false, Localizer["OnboardingDemoTaxes"]);
+
+        _taskNote = Localizer["OnboardingDemoTaxes"];
+        await ClickAsync(".stage-demo [data-onboarding=\"todo-task-item\"]", 1);
+        _isActionOpen = true;
+        await RenderAsync();
+        await PauseAsync(450);
+        await ClickAsync(".stage-demo [data-onboarding=\"todo-action-start\"]");
+        _isActionOpen = false;
+        await RenderAsync();
+        await module.InvokeVoidAsync("pointerLeave", _pointer);
+
+        await OpenTimerPageAsync();
+        await ShowTimerAsync(isBreak: false);
+        await PauseAsync(500);
+        await CountdownAsync(FocusMinutes * 60, 2000);
+
+        _isSoundVisible = true;
+        await RenderAsync();
+        await OnHeadphonesChanged.InvokeAsync(true);
+        await PauseAsync(2200);
+        _isSoundVisible = false;
+        await RenderAsync();
+        await OnHeadphonesChanged.InvokeAsync(false);
+        await PauseAsync(300);
+
+        await ShowTimerAsync(isBreak: true);
+        await PauseAsync(500);
+        await module.InvokeVoidAsync("pointerAppear", _pointer, Plant);
+        await ClickAsync(".stage-demo .demo-timer-start");
+        await module.InvokeVoidAsync("pointerLeave", _pointer);
+        await CountdownAsync(BreakMinutes * 60, 2000);
+        await PauseAsync(300);
+
+        await module.InvokeVoidAsync("setDemoMode", "lists", true);
+        await NavigateAsync("/", "[data-onboarding=\"your-day-list\"]", SettleMilliseconds);
+        _justDoneId = ViewModel.MarkFirstWorkToDoDone();
+        await ShowListsAsync();
+        await module.InvokeVoidAsync("releaseRing");
+        await PauseAsync(600);
+    }
+
+    public async Task ShowDayResultAsync()
+    {
+        ResetData();
+        ViewModel.AddWorkTask(true, Localizer["OnboardingDemoWalk"], _breakMinutes);
+        ViewModel.AddWorkTask(false, Localizer["OnboardingDemoTaxes"], _breakMinutes);
+        ViewModel.MarkFirstWorkToDoDone();
+        await ShowListsAsync();
+    }
+
+    public async Task ShowScopeAsync()
+    {
+        var module = await GetModuleAsync();
+        _isScopeVisible = true;
+        await RenderAsync();
+        await module.InvokeVoidAsync("placeOver", _scope, "[data-onboarding=\"scope-switcher\"]", false);
+        await module.InvokeVoidAsync("setDemoMode", "scope", true);
+    }
+
+    public async Task SetPrivateAsync(bool isPrivate)
+    {
+        if (_isPrivate == isPrivate)
+        {
+            return;
+        }
+
+        _areListsFading = true;
+        await RenderAsync();
+        await PauseAsync(300);
+        _isPrivate = isPrivate;
+        _areListsFading = false;
+        await RenderAsync();
+        await PauseAsync(350);
+    }
+
+    public async Task HideAllAsync()
+    {
+        _areListsVisible = false;
+        _areListsFading = false;
+        _isPrivate = false;
+        _isEditorOpen = false;
+        _isManualOpen = false;
+        _isActionOpen = false;
+        _isTimerVisible = false;
+        _isSoundVisible = false;
+        _isScopeVisible = false;
+        _isTyping = false;
+
+        if (_module is not null)
+        {
+            await _module.InvokeVoidAsync("resetDemo", _pointer);
+        }
+
+        await RenderAsync();
+    }
+
+    private async Task AddTaskAsync(bool isForYou, string note)
+    {
+        await ClickAsync(".stage-demo [data-onboarding=\"todo-add-button\"]", isForYou ? 0 : 1);
+
+        _isForYou = isForYou;
+        _note = string.Empty;
+        _focusMinutes = 0;
+        _breakMinutes = 5;
+        _isEditorOpen = true;
+        await RenderAsync();
+        await PauseAsync(450);
+
+        await ClickAsync(".stage-demo .demo-note");
+        await TypeAsync(note, characterMilliseconds: 75, setter: character => _note += character, clear: () => _note = string.Empty);
+
+        if (isForYou)
+        {
+            for (var click = 0; click < 2; click++)
+            {
+                await ClickAsync(".stage-demo .demo-focus [data-onboarding=\"timer-increase\"]");
+                _focusMinutes += 5;
+                await RenderAsync();
+            }
+
+            await ClickAsync(".stage-demo .demo-focus [data-onboarding=\"timer-display\"]");
+            _manualText = string.Empty;
+            _isManualOpen = true;
+            await RenderAsync();
+            await PauseAsync(350);
+            await PointAsync(".stage-demo .demo-manual-field");
+            await TypeAsync(FocusMinutes.ToString(CultureInfo.CurrentCulture), characterMilliseconds: 200, setter: character => _manualText += character, clear: () => _manualText = string.Empty);
+            await ClickAsync(".stage-demo .demo-manual-ok");
+            _isManualOpen = false;
+            _focusMinutes = FocusMinutes;
+            await RenderAsync();
+            await PauseAsync(300);
+        }
+        else
+        {
+
+            for (var click = 0; click < FocusMinutes / StepMinutes; click++)
+            {
+                await ClickAsync(".stage-demo .demo-focus [data-onboarding=\"timer-increase\"]", milliseconds: click == 0 ? PointerMilliseconds : QuickClickMilliseconds);
+                _focusMinutes += StepMinutes;
+                await RenderAsync();
+            }
+
+            await ClickAsync(".stage-demo .demo-break [data-onboarding=\"timer-increase\"]");
+            _breakMinutes += StepMinutes;
+            await RenderAsync();
+        }
+
+        await ClickAsync(".stage-demo .demo-save");
+        _isEditorOpen = false;
+        ViewModel.AddWorkTask(isForYou, note, _breakMinutes);
+        await RenderAsync();
+        await PauseAsync(700);
+    }
+
+    private void ResetData()
+    {
+        ViewModel.ResetData(_breakMinutes);
+        _isPrivate = false;
+        _justDoneId = null;
+    }
+
+    private async Task ShowListsAsync()
+    {
+        var module = await GetModuleAsync();
+        _areListsVisible = true;
+        _isTimerVisible = false;
+        await RenderAsync();
+        await module.InvokeVoidAsync("placeOver", _lists, "[data-onboarding=\"your-day-list\"] [data-onboarding=\"todo-section\"]", false);
+        await module.InvokeVoidAsync("setDemoMode", "lists", true);
+    }
+
+    private async Task OpenTimerPageAsync()
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("setDemoMode", "timer", true);
+        await NavigateAsync("/focus-timer", "[data-onboarding=\"timer-clock\"]", SettleMilliseconds);
+    }
+
+    private async Task NavigateAsync(string route, string readySelector, int settleMilliseconds)
+    {
+        var module = await GetModuleAsync();
+        Navigation.NavigateTo(route);
+        await module.InvokeAsync<bool>("waitFor", readySelector, 2000);
+        await PauseAsync(settleMilliseconds);
+    }
+
+    private async Task ShowTimerAsync(bool isBreak)
+    {
+        var module = await GetModuleAsync();
+        _isBreak = isBreak;
+        _isTimerVisible = true;
+        _areListsVisible = false;
+        _ringMinutes = isBreak ? BreakMinutes : FocusMinutes;
+        _clockText = FormatClock((isBreak ? BreakMinutes : FocusMinutes) * 60);
+        _progress = 0;
+        await RenderAsync();
+
+        await module.InvokeVoidAsync("placeOver", _timerPanel, "[data-onboarding=\"timer-panel\"]", true);
+        await module.InvokeVoidAsync("placeOver", _timerActions, "[data-onboarding=\"timer-actions\"]", true);
+        if (_ring is not null)
+        {
+            await module.InvokeAsync<bool>("placeRing", _ring.Root);
+        }
+
+        await module.InvokeVoidAsync("setDemoMode", "timer", true);
+    }
+
+    private async Task CountdownAsync(int totalSeconds, int milliseconds)
+    {
+        _isRunning = true;
+        try
+        {
+            await RunCountdownAsync(totalSeconds, milliseconds);
+        }
+        finally
+        {
+            _isRunning = false;
+            await RenderAsync();
+        }
+    }
+
+    private async Task RunCountdownAsync(int totalSeconds, int milliseconds)
+    {
+        var scaled = (int)(milliseconds * TimeScale);
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        double share;
+        do
+        {
+            share = scaled <= 0 ? 1 : Math.Min(1, (double)stopwatch.ElapsedMilliseconds / scaled);
+            _progress = 1 - share;
+            _clockText = FormatClock((int)Math.Ceiling(totalSeconds * (1 - share)));
+            await RenderAsync();
+            if (share < 1)
+            {
+                await Task.Delay(40, _disposed.Token);
+            }
+        }
+        while (share < 1);
+    }
+
+    private static string FormatClock(int seconds)
+    {
+        return string.Create(CultureInfo.InvariantCulture, $"{seconds / 60:00}:{seconds % 60:00}");
+    }
+
+    private string MinutesText(int minutes)
+    {
+        return $"{minutes} {Localizer["MinutesShort"]}";
+    }
+
+    private async Task TypeAsync(string text, int characterMilliseconds, Action<string> setter, Action clear)
+    {
+        clear();
+        _isTyping = true;
+        foreach (var character in text)
+        {
+            setter(character.ToString());
+            await RenderAsync();
+            await PauseAsync(characterMilliseconds);
+        }
+
+        await PauseAsync(200);
+        _isTyping = false;
+        await RenderAsync();
+    }
+
+    private async Task PointAsync(string selector, int index = 0)
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("pointerMove", _pointer, selector, index, Scaled(PointerMilliseconds));
+    }
+
+    private async Task ClickAsync(string selector, int index = 0, int milliseconds = PointerMilliseconds)
+    {
+        var module = await GetModuleAsync();
+        await module.InvokeVoidAsync("pointerClick", _pointer, selector, index, Scaled(milliseconds));
+    }
+
+    private int Scaled(int milliseconds)
+    {
+        return (int)(milliseconds * TimeScale);
+    }
+
+    private Task PauseAsync(int milliseconds)
+    {
+        return Task.Delay(Scaled(milliseconds), _disposed.Token);
+    }
+
+    private async Task RenderAsync()
+    {
+        await InvokeAsync(StateHasChanged);
+        await Task.Yield();
+    }
+
+    private async Task<IJSObjectReference> GetModuleAsync()
+    {
+        _module ??= await JS.InvokeAsync<IJSObjectReference>("import", "./js/onboardingStage.js");
+        return _module;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _disposed.Cancel();
+
+        try
+        {
+            if (_module is not null)
+            {
+                await _module.InvokeVoidAsync("resetDemo", _pointer);
+                await _module.DisposeAsync();
+            }
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+    }
+}

@@ -1,0 +1,296 @@
+.shared-priority-buttons .priority-button {
+    --priority-color: var(--priority-keine-color);
+    --priority-text-color: var(--priority-keine-text);
+    min-width: 5.5rem;
+    padding: 0.65rem 1.3rem;
+    font-size: 0.9rem;
+    border-radius: var(--radius-pill);
+    border: none;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: var(--priority-color);
+    color: var(--priority-text-color);
+    box-shadow: 0 12px 26px color-mix(in srgb, var(--priority-color) 45%, rgba(15, 23, 42, 0.25));
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.shared-priority-buttons .priority-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px color-mix(in srgb, var(--priority-color) 55%, rgba(15, 23, 42, 0.28));
+}
+
+.shared-priority-buttons .priority-button:not(:disabled):active {
+    transform: translateY(0);
+    filter: brightness(0.96);
+}
+
+.shared-priority-buttons .priority-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+.shared-priority-buttons .priority-button.selected {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px color-mix(in srgb, var(--priority-color) 65%, rgba(15, 23, 42, 0.32));
+}
+
+.shared-priority-buttons .priority-button:not(.selected) {
+    opacity: 0.9;
+}
+
+.shared-priority-buttons .priority-button:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--priority-color) 45%, var(--color-accent) 20%);
+    outline-offset: 2px;
+}
+
+.shared-priority-buttons .priority-keine {
+    --priority-color: var(--priority-keine-color);
+    --priority-text-color: var(--priority-keine-text);
+}
+
+.shared-priority-buttons .priority-wenig {
+    --priority-color: var(--priority-wenig-color);
+    --priority-text-color: var(--priority-wenig-text);
+}
+
+.shared-priority-buttons .priority-mittel {
+    --priority-color: var(--priority-mittel-color);
+    --priority-text-color: var(--priority-mittel-text);
+}
+
+.shared-priority-buttons .priority-hoch {
+    --priority-color: var(--priority-hoch-color);
+    --priority-text-color: var(--priority-hoch-text);
+}
+
+.shared-priority-buttons .priority-dringend {
+    --priority-color: var(--priority-dringend-color);
+    --priority-text-color: var(--priority-dringend-text);
+}
+
+.popup-action-button {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.popup-action-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.popup-action-button:not(:disabled):active {
+    transform: translateY(0);
+    filter: brightness(0.97);
+}
+
+.popup-action-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .popup-action-button {
+        transition: none;
+    }
+
+    .popup-action-button:not(:disabled):hover {
+        transform: none;
+    }
+}
+
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pill-button {
+    border: none;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+
+/* Standard-Knoepfe der App (wie in den Popups): Pille, Grossbuchstaben, primaer mit Akzentverlauf, sekundaer mit Rahmen. */
+.app-button {
+    min-width: 6rem;
+    padding: 0.72rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease, filter 0.35s ease, background 0.35s ease;
+}
+
+.app-button--primary {
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 50%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
+    box-shadow: 0 16px 28px rgb(var(--color-accent-rgb) / 0.28);
+}
+
+.app-button--secondary {
+    background: transparent;
+    color: var(--color-accent-ink);
+    border: 2px solid rgb(var(--color-accent-rgb) / 0.65);
+    padding: calc(0.72rem - 2px) calc(1.5rem - 2px);
+}
+
+.app-button--ghost {
+    min-width: 0;
+    padding: 0.5rem 0.8rem;
+    background: transparent;
+    color: var(--color-ink-muted);
+    box-shadow: none;
+}
+
+.app-button--small {
+    min-width: 0;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+}
+
+.app-button--secondary.app-button--small {
+    padding: calc(0.4rem - 2px) calc(1rem - 2px);
+}
+
+.app-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.app-button--primary:not(:disabled):hover {
+    box-shadow: 0 20px 32px rgb(var(--color-accent-rgb) / 0.32);
+}
+
+.app-button:not(:disabled):active {
+    transform: translateY(0);
+    filter: brightness(0.97);
+}
+
+.app-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    box-shadow: none;
+}
+
+.app-button:focus-visible {
+    outline: 3px solid rgb(var(--color-accent-rgb) / 0.45);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-button {
+        transition: none;
+    }
+
+    .app-button:not(:disabled):hover {
+        transform: none;
+    }
+}
+
+/*
+ * Eindrueck-Effekt fuer alle Knoepfe: Beim Druecken sinkt der Knopf ein, wird etwas kleiner und wirft einen inneren
+ * Schatten statt des aeusseren (wie ein echter Knopf, der in die Oberflaeche gedrueckt wird).
+ * Die Regel hat durch :where() die Spezifitaet 0 und gilt nur fuer Knoepfe ohne eigenen :active-Zustand (Liste in
+ * :not() unten, bei neuem Knopf-Feedback dort ergaenzen) und ohne eigene Gesten (Navigation, Kalender, Pflanze).
+ * scale/translate sind einzelne Eigenschaften und kollidieren daher nicht mit dem transform der Knoepfe.
+ * box-shadow braucht !important, weil die :hover-Regeln der Knoepfe mit hoeherer Spezifitaet sonst gewinnen (auf dem
+ * Handy bleibt :hover nach dem Tippen aktiv).
+ */
+:where(
+    button,
+    [role="button"]
+):where(
+    :not(
+        :disabled,
+        .app-button,
+        .popup-action-button,
+        .shared-priority-buttons .priority-button,
+        .timer-actions .btn,
+        .timer-input-actions .btn,
+        .task-header .btn,
+        .month-nav-button,
+        .positivity-button,
+        .timer-step-button,
+        .time-display,
+        .task-day-button,
+        .task-item-actions .task-action,
+        .suggestion-action,
+        .todo-action-button,
+        .todo-book-add-button,
+        .timer-display,
+        .nav-fan-item,
+        .navbar-toggler,
+        .scope-toggle,
+        .calender-day,
+        .plant-button
+    )
+):where(:active) {
+    scale: 0.96;
+    translate: 0 2px;
+    box-shadow: inset 0 3px 8px rgb(0 0 0 / 0.32), inset 0 1px 2px rgb(0 0 0 / 0.2) !important;
+    transition: scale 0.08s ease, translate 0.08s ease, box-shadow 0.08s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where(button, [role="button"]):where(:active) {
+        scale: none;
+        translate: none;
+        transition: none;
+    }
+}
+
+/* Theme-Auswahl-Vorschau (Settings und Onboarding teilen sich dieses Markup/diese Klassen) */
+
+.theme-swatch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.6rem 1.1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(15, 23, 42, 0.2);
+    background: var(--swatch-bg);
+}
+
+.theme-swatch-card {
+    grid-column: 1 / 2;
+    margin: 0.25rem 0 0.2rem 0.25rem;
+    border-radius: 4px;
+    background: var(--swatch-card);
+}
+
+.theme-swatch-accent {
+    grid-column: 2 / 3;
+    margin: 0.25rem 0.25rem 0.2rem;
+    border-radius: 4px;
+    background: var(--swatch-accent);
+}
+
+.theme-swatch-bar {
+    grid-column: 1 / 3;
+    background: var(--swatch-shell);
+}
+
+.theme-swatch-blue.theme-swatch-light { --swatch-bg: #ffffff; --swatch-card: #e2e8f0; --swatch-accent: #2563eb; --swatch-shell: #0f172a; }
+.theme-swatch-blue.theme-swatch-dark { --swatch-bg: #0b1020; --swatch-card: #263248; --swatch-accent: #3a6de0; --swatch-shell: #1a2250; }
+.theme-swatch-pink.theme-swatch-light { --swatch-bg: #f9d3e3; --swatch-card: #fff0f6; --swatch-accent: #c2185b; --swatch-shell: #7d1a4a; }
+.theme-swatch-pink.theme-swatch-dark { --swatch-bg: #1f0b16; --swatch-card: #432036; --swatch-accent: #d3226f; --swatch-shell: #4a1a34; }
+.theme-swatch-green.theme-swatch-light { --swatch-bg: #d3ebd5; --swatch-card: #f0f9f1; --swatch-accent: #2e7d32; --swatch-shell: #14501d; }
+.theme-swatch-green.theme-swatch-dark { --swatch-bg: #0a1a0d; --swatch-card: #1f3a27; --swatch-accent: #2d8433; --swatch-shell: #143a1b; }
+.theme-swatch-red.theme-swatch-light { --swatch-bg: #f8d6d1; --swatch-card: #fff1ef; --swatch-accent: #b71c1c; --swatch-shell: #751717; }
+.theme-swatch-red.theme-swatch-dark { --swatch-bg: #1f0c0b; --swatch-card: #452220; --swatch-accent: #cf3131; --swatch-shell: #4a1816; }
+.theme-swatch-yellow.theme-swatch-light { --swatch-bg: #f8e9a1; --swatch-card: #fff8dc; --swatch-accent: #9a6a00; --swatch-shell: #755800; }
+.theme-swatch-yellow.theme-swatch-dark { --swatch-bg: #1c1505; --swatch-card: #3b2d10; --swatch-accent: #9c6a00; --swatch-shell: #483506; }

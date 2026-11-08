@@ -1,0 +1,29 @@
+.app-website-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.app-website-header h1 {
+    margin: 0;
+    color: var(--color-ink);
+}
+
+.app-website-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.app-website-button {
+    border: none;
+    border-radius: var(--radius-pill);
+    min-height: 2.4rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 60%, var(--color-accent-deep) 100%);
+    color: var(--color-on-accent);
+    font-weight: 700;
+    cursor: pointer;
+}

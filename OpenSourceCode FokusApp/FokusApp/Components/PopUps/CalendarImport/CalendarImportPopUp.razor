@@ -1,0 +1,198 @@
+@using FokusApp.Components.PopUps.Calendar
+@using FokusApp.Components.PopUps.CalendarImport
+@using System.Globalization
+@inherits ObservableComponentBase
+@inject ICalendarImportPopUpViewModel ViewModel
+@inject FokusApp.Services.IUiBackPressService UiBackPressService
+
+@if (IsOpen)
+{
+    <div class="calendar-import-backdrop popup-overlay" @onclick="CancelAsync">
+        <div class="calendar-import-popup"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="@_titleId"
+             @onclick:stopPropagation>
+            <h2 id="@_titleId" class="calendar-import-title">@Localizer["ImportCalendarTitle"]</h2>
+
+            @if (ViewModel.IsLoading)
+            {
+                <p class="calendar-import-hint">@Localizer["ImportCalendarLoading"]</p>
+            }
+            else if (ViewModel.Calendars.Count == 0)
+            {
+                <p class="calendar-import-hint">@Localizer["CalendarImportNoCalendars"]</p>
+            }
+            else
+            {
+                <section class="calendar-import-section">
+                    <h3>@Localizer["ImportCalendarSelectCalendars"]</h3>
+                    <p class="calendar-import-hint">@Localizer["ImportCalendarDeviceHint"]</p>
+                    <ul class="calendar-import-list">
+                        @foreach (var calendar in ViewModel.Calendars)
+                        {
+                            <li @key="calendar.Id" class="calendar-import-item">
+                                <label>
+                                    <input type="checkbox"
+                                           checked="@calendar.IsSelected"
+                                           @onchange="() => ViewModel.ToggleCalendar(calendar.Id)" />
+                                    <span class="calendar-import-item-name">@calendar.DisplayName</span>
+                                    <span class="calendar-import-item-account">@calendar.AccountName</span>
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
+
+            <section class="calendar-import-section calendar-import-range">
+                <button type="button" class="app-button app-button--secondary" @onclick="() => _isFromPickerOpen = true">
+                    @Localizer["ImportCalendarFrom"]: @ViewModel.From.ToString("d", CultureInfo.CurrentCulture)
+                </button>
+                <button type="button" class="app-button app-button--secondary" @onclick="() => _isToPickerOpen = true">
+                    @Localizer["ImportCalendarTo"]: @ViewModel.To.ToString("d", CultureInfo.CurrentCulture)
+                </button>
+            </section>
+
+            @if (ViewModel.CanChangeScope)
+            {
+                <section class="calendar-import-section calendar-import-scope">
+                    <span class="calendar-import-scope-label">@Localizer["ImportCalendarScopeLabel"]</span>
+                    <button type="button"
+                            class="app-button @(ViewModel.IsWorkTask ? "app-button--primary" : "app-button--secondary")"
+                            @onclick="() => ViewModel.SetIsWorkTask(true)">
+                        @Localizer["Work"]
+                    </button>
+                    <button type="button"
+                            class="app-button @(!ViewModel.IsWorkTask ? "app-button--primary" : "app-button--secondary")"
+                            @onclick="() => ViewModel.SetIsWorkTask(false)">
+                        @Localizer["Private"]
+                    </button>
+                </section>
+            }
+
+            @if (ViewModel.ResultMessage is not null)
+            {
+                <p class="calendar-import-result @(ViewModel.ResultIsSuccess == true ? "success" : "error")">
+                    @ViewModel.ResultMessage
+                </p>
+            }
+
+            <div class="calendar-import-actions">
+                <button type="button" class="app-button app-button--secondary" @onclick="CancelAsync">@Localizer["Cancel"]</button>
+                <button type="button"
+                        class="app-button app-button--primary"
+                        disabled="@(!ViewModel.CanImport)"
+                        @onclick="ImportAsync">
+                    @Localizer["ImportCalendarConfirm"]
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <CalendarPopup IsOpen="_isFromPickerOpen"
+                   InitialDate="ViewModel.From"
+                   OnConfirm="OnFromConfirmed"
+                   OnCancel="() => _isFromPickerOpen = false" />
+    <CalendarPopup IsOpen="_isToPickerOpen"
+                   InitialDate="ViewModel.To"
+                   OnConfirm="OnToConfirmed"
+                   OnCancel="() => _isToPickerOpen = false" />
+}
+
+@code {
+    private readonly string _titleId = "calendar-import-title";
+    private bool _initializedForOpenCycle;
+    private bool _isFromPickerOpen;
+    private bool _isToPickerOpen;
+    private IDisposable? _backPressRegistration;
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Observe(ViewModel);
+        _backPressRegistration = UiBackPressService.RegisterHandler(HandleBackPressed);
+    }
+
+    private bool HandleBackPressed()
+    {
+        if (!IsOpen)
+        {
+            return false;
+        }
+
+        if (_isFromPickerOpen)
+        {
+            _isFromPickerOpen = false;
+            _ = InvokeAsync(StateHasChanged);
+            return true;
+        }
+
+        if (_isToPickerOpen)
+        {
+            _isToPickerOpen = false;
+            _ = InvokeAsync(StateHasChanged);
+            return true;
+        }
+
+        _ = InvokeAsync(async () =>
+        {
+            await CancelAsync();
+            StateHasChanged();
+        });
+
+        return true;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _backPressRegistration?.Dispose();
+        }
+
+        base.Dispose(disposing);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        if (!IsOpen)
+        {
+            _initializedForOpenCycle = false;
+            return;
+        }
+
+        if (!_initializedForOpenCycle)
+        {
+            _initializedForOpenCycle = true;
+            await ViewModel.OpenAsync();
+        }
+    }
+
+    private void OnFromConfirmed(DateTime date)
+    {
+        ViewModel.SetFrom(date);
+        _isFromPickerOpen = false;
+    }
+
+    private void OnToConfirmed(DateTime date)
+    {
+        ViewModel.SetTo(date);
+        _isToPickerOpen = false;
+    }
+
+    private async Task ImportAsync()
+    {
+        await ViewModel.ImportAsync();
+    }
+
+    private Task CancelAsync() => OnClose.InvokeAsync();
+}
