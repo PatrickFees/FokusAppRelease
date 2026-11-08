@@ -6,7 +6,7 @@
 
 FokusApp ist ein Tages- und Wochenplaner. Aufgaben werden in **„For You“** und **„To Do“** eingeteilt. So hältst du nicht nur fest, was erledigt werden muss, sondern planst auch bewusst positive Aktivitäten für dich ein.
 
-Die App verbindet diese Planung mit der Pomodoro-Technik. Überschaubare Aufgaben  können dabei helfen, diese Schritt für Schritt anzugehen. Eigene Aktivitäten bekommen einen festen Platz neben den Pflichten des Alltags. Somit setzt du automatisch viele  Grundlagen der positiven Verhaltensspychologie
+Die App verbindet diese Planung mit der Pomodoro-Technik (Ein Zeitraum mit Timer für die Aufgabe und eine anschließende Pause). Überschaubare Aufgaben  können dabei helfen, diese Schritt für Schritt anzugehen. Eigene Aktivitäten bekommen einen festen Platz neben den Pflichten des Alltags. Somit setzt du automatisch viele  Grundlagen der positiven Verhaltensspychologie
 
 ## Inhaltsübersicht
 
