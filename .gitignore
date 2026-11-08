@@ -1,0 +1,10 @@
+## .NET / MAUI build output
+bin/
+obj/
+*.user
+*.suo
+
+## OS / editor
+.vs/
+.vscode/
+*.DS_Store
