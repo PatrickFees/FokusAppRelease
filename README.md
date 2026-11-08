@@ -2,14 +2,6 @@
 
 [Lizenz: PolyForm Noncommercial 1.0.0](LICENSE) · [Repository öffnen](https://github.com/PatrickFees/FokusAppRelease)
 
-### Was du hier findest
-
-- [`APKs_ForMyTestUser/`](APKs_ForMyTestUser/)  Android FokusApp
-- [`IOS WebApp (coming)/`](IOS%20WebApp%20%28coming%29/)  geplante iOS-WebApp
-- [`Windows FokusApp (coming)/`](Windows%20FokusApp%20%28coming%29/)  geplante Windows-FokusApp
-- [`Linux FokusApp (coming)/`](Linux%20FokusApp%20%28coming%29/)  geplante Linux-FokusApp
-- [`Open Source Code (coming)/`](Open%20Source%20Code%20%28coming%29/)  Quellcode-Veröffentlichung in Vorbereitung
-
 ## Willkommen
 
 FokusApp ist ein Tages- und Wochenplaner. Aufgaben werden in **„For You“** und **„To Do“** eingeteilt. So hältst du nicht nur fest, was erledigt werden muss, sondern planst auch bewusst positive Aktivitäten für dich ein.
@@ -36,20 +28,26 @@ FokusApp orientiert sich an Ansätzen aus Verhaltensaktivierung, Selbstbestimmun
 - **Sichtbarer Fortschritt:** Abgehakte Aufgaben machen erledigte Schritte sichtbar.
 - **Pomodoro-Technik:** Arbeitsphasen lassen sich in überschaubare Einheiten gliedern.
 
-## Ein Blick in die App
-
-Screenshots und Erklärungen der wichtigsten Ansichten werden ergänzt, sobald die Bilder vorliegen.
-
-> **Screenshot folgt:** Tages- und Wochenübersicht
-
-> **Screenshot folgt:** Aufgabenbereiche „For You“ und „To Do“
+## Ein Blick in die FokusApp
 
 ## Android
 
-Im Repository liegt eine Android-Testversion. Sie ist **nur für Testnutzer** gedacht und kein öffentlicher Release-Download.
+### Hauptseiten
 
-- [Ordner mit Android-Testdateien öffnen](APKs_ForMyTestUser/)
-- [FokusApp-1.4.1.apk ansehen (Testdatei)](APKs_ForMyTestUser/FokusApp-1.4.1.apk)
+![Übersicht der Hauptseiten der FokusApp](Bilder/Hauptseiten.png)
+
+### Tagesplaner
+
+![Ansicht des Tagesplaners](Bilder/Tagesplaner.png)
+
+### Einstellungen und Nebenseiten
+
+![Einstellungen und weitere Seiten der FokusApp](Bilder/Einstellungen%20und%20Nebenseiten.png)
+
+Die FokusApp befindet sich aktuell in der Testphase. Nach dieser Phase wird die App im Google Play Store veröffentlicht. 
+
+- [Ordner mit Android-FokusApp öffnen](APKs_ForMyTestUser/)
+- [Installierungsdatei FokusApp-1.4.1.apk ansehen ](APKs_ForMyTestUser/FokusApp-1.4.1.apk)
 
 ## iOS und iPadOS
 
@@ -57,15 +55,11 @@ Die iOS-Unterstützung ist als Progressive Web App (PWA) geplant. Sie läuft im 
 
 **Status: in Vorbereitung.** [Zum iOS-WebApp-Ordner](IOS%20WebApp%20%28coming%29/)
 
-## Windows
+## Windows / Linux
 
-Eine Windows-Version ist in Arbeit; Tests laufen. Ein Veröffentlichungstermin steht noch nicht fest.
+Eine Linux- und Windows-Version ist in Arbeit. Ein Veröffentlichungstermin steht noch nicht fest.
 
 **Status: in Vorbereitung.** [Zum Windows-Ordner](Windows%20FokusApp%20%28coming%29/)
-
-## Linux
-
-Eine Linux-Version ist geplant, damit FokusApp auch auf offenen Betriebssystemen genutzt werden kann.
 
 **Status: in Vorbereitung.** [Zum Linux-Ordner](Linux%20FokusApp%20%28coming%29/)
 
