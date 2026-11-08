@@ -1,6 +1,6 @@
 # FokusApp
 
-[Lizenz: PolyForm Noncommercial 1.0.0](LICENSE) · [Repository öffnen](https://github.com/PatrickFees/FokusAppRelease)
+[Lizenz: PolyForm Noncommercial 1.0.0](LICENSE) 
 
 ## Willkommen
 
